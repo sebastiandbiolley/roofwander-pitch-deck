@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Slide 2 — Market Context</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#fafaf9;
+  --text:#1c1917;
+  --text-muted:#78716c;
+  --accent:#166534;
+  --accent-light:#dcfce7;
+  --border:#e7e5e4;
+  --shadow:0 1px 3px rgba(0,0,0,0.04);
+  --shadow-hover:0 4px 12px rgba(0,0,0,0.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+/* Pills + eyebrow — same as hero */
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.pill{display:inline-flex;align-items:center;padding:10px 16px;background:#fff;border:1px solid var(--border);border-radius:100px;font-size:14px;font-weight:500;color:var(--text);box-shadow:var(--shadow);transition:all 0.2s}
+.pill:hover{border-color:#a8a29e;box-shadow:var(--shadow-hover)}
+/* Section */
+.market-section{padding:80px 24px;max-width:1280px;margin:0 auto;opacity:0;animation:marketFadeIn 0.7s ease forwards}
+@keyframes marketFadeIn{to{opacity:1}}
+.market-inner{width:100%}
+.market-grid{display:grid;grid-template-columns:2fr 1fr;gap:64px;align-items:start}
+@media (max-width:900px){
+.market-grid{grid-template-columns:1fr;gap:48px}
+.market-right{order:2}
+}
+.market-left{min-width:0}
+.market-heading{font-size:clamp(28px,3.2vw,36px);font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin-bottom:16px;color:var(--text)}
+.market-supporting{font-size:16px;color:var(--text-muted);line-height:1.6;margin-bottom:24px}
+.market-pills{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+@media (max-width:900px){.market-pills{justify-content:flex-start}}
+.market-right{display:flex;justify-content:center;align-items:start}
+.brands-card{width:100%;max-width:320px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px 24px;box-shadow:var(--shadow)}
+.brands-row{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;align-items:center;margin-bottom:16px}
+.brand-item{min-width:80px;display:flex;align-items:center;justify-content:center}
+.brand-placeholder{min-width:80px;padding:10px 16px;border-radius:999px;border:1px dashed var(--border);font-size:13px;font-weight:500;color:var(--text-muted);background:#f9fafb}
+.brands-caption{font-size:13px;color:var(--text-muted);text-align:center;margin:0;line-height:1.5}
+</style>
+</head>
+<body>
+
+<section class="market-section">
+<div class="market-inner">
+<div class="market-grid">
+
+<div class="market-left">
+<p class="eyebrow">Market Context</p>
+<h2 class="market-heading">Rooftop tent travel is booming</h2>
+<p class="market-supporting">Outdoor travel and road-trip culture have accelerated in recent years.<br />Rooftop tents are emerging as a flexible alternative to camper vans and traditional camping.</p>
+<div class="market-pills">
+<span class="pill">Search interest for "rooftop tent" increased 2–2.5× in the last three years</span>
+<span class="pill">Major outdoor brands have entered the category, like Decathlon</span>
+</div>
+</div>
+
+<div class="market-right">
+<div class="brands-card">
+<div class="brands-row">
+<div class="brand-item"><div class="brand-placeholder">Decathlon</div></div>
+<div class="brand-item"><div class="brand-placeholder">Thule</div></div>
+<div class="brand-item"><div class="brand-placeholder">Dometic</div></div>
+</div>
+<p class="brands-caption">Major outdoor brands have entered the rooftop tent category.</p>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+<!-- Dropdowns BELOW Slide 2 — Market Context -->
+<section class="market-dropdowns">
+    <div class="market-dropdowns-inner">
+      <!-- DROPDOWN 1 -->
+      <div class="market-dd" data-dd="rooftop">
+        <button class="market-dd-header" type="button" aria-expanded="false">
+          <span class="market-dd-title">What is a rooftop tent?</span>
+          <span class="market-dd-icon">▾</span>
+        </button>
+        <div class="market-dd-body" aria-hidden="true">
+          <div class="market-dd-content">
+            <p>
+              A rooftop tent is a foldable sleeping system mounted on a vehicle’s roof rack.
+            </p>
+  
+            <p class="market-dd-sub">Typical characteristics:</p>
+            <ul>
+              <li>Price range: €1,200 – €4,000+</li>
+              <li>Installed on vehicle roof bars</li>
+              <li>Setup time typically under 5 minutes</li>
+              <li>Allows sleeping anywhere while road-tripping</li>
+            </ul>
+  
+            <p class="market-dd-sub">Two main categories exist:</p>
+  
+            <div class="market-dd-comparison">
+              <div class="market-dd-card">
+                <div class="market-dd-card-img">
+                  <span class="market-dd-img-placeholder">Soft shell image</span>
+                </div>
+                <div class="market-dd-card-title">Soft shell</div>
+                <ul class="market-dd-card-list">
+                  <li>lighter</li>
+                  <li>lower price</li>
+                  <li>manual unfolding</li>
+                </ul>
+              </div>
+  
+              <div class="market-dd-card">
+                <div class="market-dd-card-img">
+                  <span class="market-dd-img-placeholder">Hard shell image</span>
+                </div>
+                <div class="market-dd-card-title">Hard shell</div>
+                <ul class="market-dd-card-list">
+                  <li>faster setup</li>
+                  <li>more durable</li>
+                  <li>higher price</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- DROPDOWN 2 -->
+      <div class="market-dd" data-dd="whynow">
+        <button class="market-dd-header" type="button" aria-expanded="false">
+          <span class="market-dd-title">Why now for marketplaces?</span>
+          <span class="market-dd-icon">▾</span>
+        </button>
+        <div class="market-dd-body" aria-hidden="true">
+          <div class="market-dd-content">
+            <p>
+              Marketplaces are a strong investment opportunity: once the leader is in place, network effects and liquidity make it very hard for others to displace them.
+            </p>
+            <p>
+              You need to move fast. The first player to build trusted supply, engaged users, and real liquidity gains a structural advantage—no one is coming to take you down once you own the category.
+            </p>
+            <p>
+              AI reduces the cost of building software, but communities, trust, and real marketplace liquidity remain difficult to replicate.
+            </p>
+            <p>
+              In rooftop tent travel, what matters is building:
+            </p>
+            <ul>
+              <li>trusted supply</li>
+              <li>engaged travelers</li>
+              <li>real usage data</li>
+              <li>product discovery based on real experience</li>
+            </ul>
+            <p>
+              Early marketplaces that create strong communities and supply density gain long-term defensibility.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <style>
+  /* Market dropdowns — appended below Slide 2, same design system as hero/market slide */
+  
+  .market-dropdowns {
+    padding: 40px 24px 80px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  
+  .market-dropdowns-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* Dropdown block */
+  
+  .market-dd {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .market-dd:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: #d6d3d1;
+  }
+  
+  .market-dd-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: background 0.15s ease;
+  }
+  
+  .market-dd-header:hover {
+    background: #f9fafb;
+  }
+  
+  .market-dd-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  
+  .market-dd-icon {
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: transform 0.25s ease;
+  }
+  
+  .market-dd.open .market-dd-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* Body */
+  
+  .market-dd-body {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease;
+  }
+  
+  .market-dd.open .market-dd-body {
+    max-height: 900px; /* large enough for content */
+    opacity: 1;
+  }
+  
+  .market-dd-content {
+    padding: 10px 18px 18px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  
+  .market-dd-content p {
+    margin: 0 0 10px;
+  }
+  
+  .market-dd-content ul {
+    margin: 0 0 14px 18px;
+    padding: 0;
+  }
+  
+  /* Comparison area for dropdown 1 */
+  
+  .market-dd-sub {
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 12px;
+    margin-bottom: 6px;
+  }
+  
+  .market-dd-comparison {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  
+  @media (max-width: 700px) {
+    .market-dd-comparison {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .market-dd-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 14px 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .market-dd-card-img {
+    aspect-ratio: 4/3;
+    border-radius: 8px;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .market-dd-img-placeholder {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  
+  .market-dd-card-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+  }
+  
+  .market-dd-card-list {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  </style>
+  
+  <script>
+  /* Dropdown behaviour for market context slide */
+  (function () {
+    var dropdowns = document.querySelectorAll('.market-dd');
+  
+    function closeAll(except) {
+      dropdowns.forEach(function (dd) {
+        if (dd === except) return;
+        dd.classList.remove('open');
+        var header = dd.querySelector('.market-dd-header');
+        var body = dd.querySelector('.market-dd-body');
+        if (header) header.setAttribute('aria-expanded', 'false');
+        if (body) body.setAttribute('aria-hidden', 'true');
+      });
+    }
+  
+    dropdowns.forEach(function (dd) {
+      var header = dd.querySelector('.market-dd-header');
+      var body = dd.querySelector('.market-dd-body');
+      if (!header || !body) return;
+  
+      header.addEventListener('click', function () {
+        var isOpen = dd.classList.toggle('open');
+        header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        body.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+        if (isOpen) {
+          closeAll(dd);
+        }
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

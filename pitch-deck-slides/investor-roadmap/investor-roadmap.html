@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product Roadmap — Roofwander</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#fafaf9;
+  --text:#1c1917;
+  --text-muted:#78716c;
+  --accent:#166534;
+  --accent-light:#dcfce7;
+  --border:#e7e5e4;
+  --shadow:0 1px 3px rgba(0,0,0,0.04);
+  --shadow-hover:0 4px 12px rgba(0,0,0,0.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+
+/* Product Roadmap section */
+.roadmap-section{
+  padding:80px 24px;
+  max-width:1280px;
+  margin:0 auto;
+  opacity:0;
+  animation:roadmapFadeIn 0.6s ease forwards;
+}
+@keyframes roadmapFadeIn{to{opacity:1}}
+
+.roadmap-intro{
+  margin-bottom:40px;
+}
+.roadmap-eyebrow{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:16px;
+}
+.roadmap-heading{
+  font-size:clamp(28px,3.2vw,36px);
+  font-weight:700;
+  line-height:1.2;
+  letter-spacing:-0.02em;
+  color:var(--text);
+}
+
+.roadmap-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+  align-items:start;
+}
+@media (max-width:900px){
+  .roadmap-grid{
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+  .roadmap-flywheel-wrap{order:2}
+}
+
+/* Left: Roadmap cards */
+.roadmap-column{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.roadmap-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  transition:box-shadow 0.2s ease,border-color 0.2s ease,transform 0.18s ease;
+}
+.roadmap-card:hover{
+  box-shadow:var(--shadow-hover);
+  border-color:#d6d3d1;
+  transform:translateY(-2px);
+}
+.roadmap-card.open{
+  border-color:var(--accent);
+  box-shadow:var(--shadow-hover);
+}
+.roadmap-card.open:hover{
+  border-color:var(--accent);
+  transform:translateY(-2px);
+}
+.roadmap-card-trigger{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:16px 18px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  text-align:left;
+  font-family:inherit;
+  transition:background 0.15s ease;
+}
+.roadmap-card-trigger:hover{
+  background:#fafaf9;
+}
+.roadmap-card.open .roadmap-card-trigger{
+  background:var(--accent-light);
+}
+.roadmap-card-left{
+  min-width:0;
+}
+.roadmap-card-status{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:4px;
+}
+.roadmap-card.open .roadmap-card-status{color:var(--accent)}
+.roadmap-card-title{
+  font-size:15px;
+  font-weight:600;
+  color:var(--text);
+}
+.roadmap-card-icon{
+  flex-shrink:0;
+  font-size:14px;
+  color:var(--text-muted);
+  transition:transform 0.25s ease;
+}
+.roadmap-card.open .roadmap-card-icon{
+  transform:rotate(180deg);
+  color:var(--accent);
+}
+.roadmap-card-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.35s ease;
+}
+.roadmap-card.open .roadmap-card-body{
+  max-height:420px;
+}
+.roadmap-card-inner{
+  padding:0 18px 18px;
+  border-top:1px solid var(--border);
+}
+.roadmap-card.open .roadmap-card-inner{border-top-color:rgba(22,101,52,0.2)}
+.roadmap-card-inner ul{
+  margin:0 0 12px;
+  padding-left:18px;
+  font-size:14px;
+  color:var(--text-muted);
+  line-height:1.6;
+}
+.roadmap-card-inner li{margin-bottom:4px}
+.roadmap-card-inner p{
+  margin:0 0 10px;
+  font-size:14px;
+  color:var(--text-muted);
+  line-height:1.6;
+}
+.roadmap-timeline{
+  font-size:13px;
+  color:var(--text-muted);
+  margin-top:8px;
+}
+.roadmap-timeline strong{color:var(--text)}
+
+.roadmap-arrow{
+  display:flex;
+  justify-content:center;
+  padding:6px 0;
+  color:var(--border);
+  font-size:12px;
+}
+.roadmap-arrow span{
+  width:20px;
+  height:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#fff;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+
+/* Right: Flywheel */
+.roadmap-flywheel-wrap{
+  position:sticky;
+  top:24px;
+}
+@media (max-width:900px){.roadmap-flywheel-wrap{position:static}}
+.roadmap-flywheel-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  padding:28px 24px 24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.roadmap-flywheel{
+  position:relative;
+  width:200px;
+  height:200px;
+  margin:0 auto 20px;
+}
+.roadmap-flywheel svg{
+  width:100%;
+  height:100%;
+}
+.roadmap-flywheel-ring{
+  fill:none;
+  stroke:var(--border);
+  stroke-width:1.5;
+}
+.roadmap-flywheel-arrow{
+  fill:none;
+  stroke:var(--accent);
+  stroke-width:1.2;
+  stroke-linecap:round;
+  opacity:0.6;
+}
+.roadmap-flywheel-node{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:12px;
+  font-weight:600;
+  color:var(--text);
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:8px 12px;
+  box-shadow:var(--shadow);
+}
+.roadmap-flywheel-node--1{top:8px;left:50%;transform:translateX(-50%)}
+.roadmap-flywheel-node--2{bottom:28px;left:8px}
+.roadmap-flywheel-node--3{bottom:28px;right:8px}
+.roadmap-flywheel-caption{
+  font-size:14px;
+  color:var(--text-muted);
+  line-height:1.55;
+  text-align:center;
+  margin:0;
+}
+
+/* Roadmap dropdowns below section */
+.roadmap-dropdowns{
+  padding:40px 24px 80px;
+  max-width:1280px;
+  margin:0 auto;
+}
+.roadmap-dropdowns-inner{
+  max-width:860px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.roadmap-dd{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  transition:box-shadow 0.2s ease,border-color 0.2s ease,transform 0.18s ease;
+}
+.roadmap-dd:hover{
+  box-shadow:var(--shadow-hover);
+  border-color:#d6d3d1;
+  transform:translateY(-1px);
+}
+.roadmap-dd-header{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 18px;
+  background:#fff;
+  border:none;
+  cursor:pointer;
+  text-align:left;
+  font-family:inherit;
+  transition:background 0.15s ease;
+}
+.roadmap-dd-header:hover{
+  background:#f9fafb;
+}
+.roadmap-dd-title{
+  font-size:14px;
+  font-weight:600;
+  color:var(--text);
+}
+.roadmap-dd-icon{
+  font-size:16px;
+  color:var(--text-muted);
+  transition:transform 0.25s ease;
+}
+.roadmap-dd.open .roadmap-dd-icon{
+  transform:rotate(180deg);
+}
+.roadmap-dd-body{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:max-height 0.35s ease,opacity 0.25s ease;
+}
+.roadmap-dd.open .roadmap-dd-body{
+  max-height:700px;
+  opacity:1;
+}
+.roadmap-dd-content{
+  padding:10px 18px 18px;
+  font-size:14px;
+  color:var(--text-muted);
+  line-height:1.6;
+}
+.roadmap-flow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:stretch;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.roadmap-flow-step{
+  flex:1 1 180px;
+  min-width:0;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  padding:12px 12px 14px;
+  display:flex;
+  gap:10px;
+}
+.roadmap-flow-pill{
+  width:24px;
+  height:24px;
+  border-radius:999px;
+  background:var(--accent-light);
+  color:var(--accent);
+  font-size:12px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.roadmap-flow-text{
+  font-size:13px;
+}
+.roadmap-flow-title{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:2px;
+}
+.roadmap-flow-text p{
+  margin:0;
+  color:var(--text-muted);
+}
+.roadmap-flow-arrow{
+  align-self:center;
+  font-size:16px;
+  color:var(--border);
+  flex:0 0 auto;
+}
+.roadmap-flow-summary{
+  background:#fafaf9;
+  border-radius:12px;
+  border:1px solid var(--border);
+  padding:12px 14px 14px;
+}
+.roadmap-flow-summary p{
+  margin:0 0 6px;
+}
+.roadmap-flow-summary ul{
+  margin:0 0 6px 18px;
+  padding:0;
+  font-size:13px;
+  color:var(--text-muted);
+}
+.roadmap-flow-summary li{
+  margin-bottom:3px;
+}
+.roadmap-flow-footnote{
+  font-size:12px;
+  color:var(--text-muted);
+  margin:0;
+}
+.roadmap-mono-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-bottom:10px;
+}
+.roadmap-mono-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  padding:12px 12px 14px;
+}
+.roadmap-mono-label{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.roadmap-mono-card ul{
+  margin:0;
+  padding-left:18px;
+  font-size:13px;
+  color:var(--text-muted);
+  line-height:1.55;
+}
+.roadmap-mono-card li{
+  margin-bottom:4px;
+}
+.roadmap-mono-summary{
+  margin:4px 0 0;
+  font-size:13px;
+  color:var(--text);
+}
+@media (max-width:900px){
+  .roadmap-dropdowns{
+    padding:32px 20px 64px;
+  }
+  .roadmap-dd-content{
+    padding:8px 16px 16px;
+  }
+  .roadmap-flow{
+    flex-direction:column;
+  }
+  .roadmap-flow-arrow{
+    display:none;
+  }
+  .roadmap-mono-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<section class="roadmap-section">
+  <div class="roadmap-intro">
+    <p class="roadmap-eyebrow">PRODUCT ROADMAP</p>
+    <h2 class="roadmap-heading">Product roadmap</h2>
+  </div>
+
+  <div class="roadmap-grid">
+    <!-- Left: Roadmap stages -->
+    <div class="roadmap-column">
+      <!-- Card 1: P2P rentals -->
+      <div class="roadmap-card open" data-roadmap="1">
+        <button class="roadmap-card-trigger" type="button" aria-expanded="true">
+          <div class="roadmap-card-left">
+            <div class="roadmap-card-status">Live today</div>
+            <div class="roadmap-card-title">P2P rentals</div>
+          </div>
+          <span class="roadmap-card-icon">▾</span>
+        </button>
+        <div class="roadmap-card-body">
+          <div class="roadmap-card-inner">
+            <ul>
+              <li>Owners can create listings</li>
+              <li>Travelers can search and request bookings</li>
+              <li>Payments, deposits, and reviews are already handled through the platform</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-arrow" aria-hidden="true"><span>↓</span></div>
+
+      <!-- Card 2: Professional rentals -->
+      <div class="roadmap-card" data-roadmap="2">
+        <button class="roadmap-card-trigger" type="button" aria-expanded="false">
+          <div class="roadmap-card-left">
+            <div class="roadmap-card-status">Next step</div>
+            <div class="roadmap-card-title">Professional rentals (B2C)</div>
+          </div>
+          <span class="roadmap-card-icon">▾</span>
+        </button>
+        <div class="roadmap-card-body">
+          <div class="roadmap-card-inner">
+            <ul>
+              <li>Outdoor shops and rental operators can list inventory directly on the platform</li>
+              <li>This expands supply and improves booking availability</li>
+            </ul>
+            <p class="roadmap-timeline"><strong>MVP ready:</strong> end of April · <strong>Full version:</strong> end of the year</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-arrow" aria-hidden="true"><span>↓</span></div>
+
+      <!-- Card 3: Buy side -->
+      <div class="roadmap-card" data-roadmap="3">
+        <button class="roadmap-card-trigger" type="button" aria-expanded="false">
+          <div class="roadmap-card-left">
+            <div class="roadmap-card-status">Then</div>
+            <div class="roadmap-card-title">Buy side</div>
+          </div>
+          <span class="roadmap-card-icon">▾</span>
+        </button>
+        <div class="roadmap-card-body">
+          <div class="roadmap-card-inner">
+            <ul>
+              <li>Users compare rooftop tent models based on real-world rental experience</li>
+              <li>Product discovery connects to purchases through affiliate links</li>
+              <li>This converts rental demand into equipment sales</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-arrow" aria-hidden="true"><span>↓</span></div>
+
+      <!-- Card 4: Pro Hub -->
+      <div class="roadmap-card" data-roadmap="4">
+        <button class="roadmap-card-trigger" type="button" aria-expanded="false">
+          <div class="roadmap-card-left">
+            <div class="roadmap-card-status">Later</div>
+            <div class="roadmap-card-title">Pro Hub (B2B)</div>
+          </div>
+          <span class="roadmap-card-icon">▾</span>
+        </button>
+        <div class="roadmap-card-body">
+          <div class="roadmap-card-inner">
+            <ul>
+              <li>Tools for professional partners and brands</li>
+              <li>Examples: partner dashboards, booking analytics, operational insights</li>
+              <li>This layer is built only after validating the core rental marketplace and buy-side loop</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Flywheel -->
+    <div class="roadmap-flywheel-wrap">
+      <div class="roadmap-flywheel-card">
+        <div class="roadmap-flywheel" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <circle class="roadmap-flywheel-ring" cx="100" cy="100" r="78"/>
+            <!-- Curved arrow path: top -> bottom-left -> bottom-right -> top -->
+            <path class="roadmap-flywheel-arrow" d="M 100 28 A 78 78 0 0 1 32 100" fill="none" stroke-width="2"/>
+            <path class="roadmap-flywheel-arrow" d="M 32 100 A 78 78 0 0 1 100 172" fill="none" stroke-width="2"/>
+            <path class="roadmap-flywheel-arrow" d="M 100 172 A 78 78 0 0 1 168 100" fill="none" stroke-width="2"/>
+            <path class="roadmap-flywheel-arrow" d="M 168 100 A 78 78 0 0 1 100 28" fill="none" stroke-width="2"/>
+          </svg>
+          <div class="roadmap-flywheel-node roadmap-flywheel-node--1">Cheap traffic</div>
+          <div class="roadmap-flywheel-node roadmap-flywheel-node--2">Trust</div>
+          <div class="roadmap-flywheel-node roadmap-flywheel-node--3">Usage data</div>
+        </div>
+        <p class="roadmap-flywheel-caption">Marketplace activity generates traffic, trust, and real usage data, strengthening the platform over time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="roadmap-dropdowns">
+  <div class="roadmap-dropdowns-inner">
+    <!-- DROPDOWN 1: How the rental marketplace works -->
+    <div class="roadmap-dd" data-rdd="rental-flow">
+      <button class="roadmap-dd-header" type="button" aria-expanded="false">
+        <span class="roadmap-dd-title">How the rental marketplace works</span>
+        <span class="roadmap-dd-icon">▾</span>
+      </button>
+      <div class="roadmap-dd-body" aria-hidden="true">
+        <div class="roadmap-dd-content">
+          <div class="roadmap-flow">
+            <div class="roadmap-flow-step">
+              <div class="roadmap-flow-pill">1</div>
+              <div class="roadmap-flow-text">
+                <div class="roadmap-flow-title">Owner lists tent</div>
+                <p>Owners publish rooftop tents with photos, pricing, and availability.</p>
+              </div>
+            </div>
+            <div class="roadmap-flow-arrow" aria-hidden="true">→</div>
+            <div class="roadmap-flow-step">
+              <div class="roadmap-flow-pill">2</div>
+              <div class="roadmap-flow-text">
+                <div class="roadmap-flow-title">Traveler books</div>
+                <p>Travelers search, select dates, and pay securely through Roofwander.</p>
+              </div>
+            </div>
+            <div class="roadmap-flow-arrow" aria-hidden="true">→</div>
+            <div class="roadmap-flow-step">
+              <div class="roadmap-flow-pill">3</div>
+              <div class="roadmap-flow-text">
+                <div class="roadmap-flow-title">Trip happens</div>
+                <p>The trip takes place, with deposits and reviews handled by the platform.</p>
+              </div>
+            </div>
+            <div class="roadmap-flow-arrow" aria-hidden="true">→</div>
+            <div class="roadmap-flow-step">
+              <div class="roadmap-flow-pill">4</div>
+              <div class="roadmap-flow-text">
+                <div class="roadmap-flow-title">Owner gets paid</div>
+                <p>Payouts are released after the trip, with disputes and support managed centrally.</p>
+              </div>
+            </div>
+          </div>
+          <div class="roadmap-flow-summary">
+            <p><strong>Simple economics:</strong></p>
+            <ul>
+              <li>owners set prices (typically €20–€60 / night)</li>
+              <li>average booking value is around €200</li>
+              <li>Roofwander takes ~15% commission per booking</li>
+            </ul>
+            <p class="roadmap-flow-footnote">
+              This reassures investors that the business model is simple and transaction-driven.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROPDOWN 2: Monetization expansion -->
+    <div class="roadmap-dd" data-rdd="monetization">
+      <button class="roadmap-dd-header" type="button" aria-expanded="false">
+        <span class="roadmap-dd-title">Monetization expansion</span>
+        <span class="roadmap-dd-icon">▾</span>
+      </button>
+      <div class="roadmap-dd-body" aria-hidden="true">
+        <div class="roadmap-dd-content">
+          <div class="roadmap-mono-grid">
+            <div class="roadmap-mono-card">
+              <div class="roadmap-mono-label">Pro rentals</div>
+              <ul>
+                <li>lower CAC through B2C and B2B relationships</li>
+                <li>more availability and model coverage</li>
+                <li>strong inbound demand from outdoor shops and rental operators</li>
+              </ul>
+            </div>
+            <div class="roadmap-mono-card">
+              <div class="roadmap-mono-label">Buy side</div>
+              <ul>
+                <li>comparison-first product discovery based on real trips</li>
+                <li>~10% affiliate commissions on rooftop tent sales</li>
+                <li>~€220 average revenue per sale</li>
+              </ul>
+            </div>
+            <div class="roadmap-mono-card">
+              <div class="roadmap-mono-label">Pro Hub</div>
+              <ul>
+                <li>tools for brands and resellers</li>
+                <li>analytics and professional features</li>
+                <li>activated only after marketplace validation</li>
+              </ul>
+            </div>
+          </div>
+          <p class="roadmap-mono-summary">
+            Non-rental revenue can reach ~50% of total revenue by Year 3.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROPDOWN 3: Technology -->
+    <div class="roadmap-dd" data-rdd="technology">
+      <button class="roadmap-dd-header" type="button" aria-expanded="false">
+        <span class="roadmap-dd-title">Technology</span>
+        <span class="roadmap-dd-icon">▾</span>
+      </button>
+      <div class="roadmap-dd-body" aria-hidden="true">
+        <div class="roadmap-dd-content">
+          <p>
+            Roofwander is built in-house by the founding team. This allows rapid iteration, direct control over the product, and keeps development costs extremely low.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var cards = document.querySelectorAll('.roadmap-card');
+  cards.forEach(function(card){
+    var btn = card.querySelector('.roadmap-card-trigger');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var isOpen = card.classList.contains('open');
+      cards.forEach(function(c){
+        c.classList.remove('open');
+        var b = c.querySelector('.roadmap-card-trigger');
+        if(b) b.setAttribute('aria-expanded', 'false');
+      });
+      if(!isOpen){
+        card.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

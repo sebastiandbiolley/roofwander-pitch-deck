@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Event-Based Communication at Roofwander</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f5f6f8;margin:0;padding:24px;color:#111}
+.container{max-width:1000px;margin:auto}
+h1{font-size:28px;margin:0 0 6px;line-height:1.2}
+p{color:#555;font-size:14px;margin:0}
+.card{background:white;border-radius:12px;padding:16px 20px;margin-top:14px;box-shadow:0 10px 25px rgba(0,0,0,0.08)}
+.section{margin-bottom:16px}
+.section:last-child{margin-bottom:0}
+.section-title{font-weight:700;font-size:15px;margin-bottom:8px;color:#333}
+.list{display:flex;flex-direction:column;gap:6px}
+.list-item{background:#fff;border:1px solid #dcdcdc;border-radius:8px;padding:10px 14px;font-size:14px;color:#334155}
+.flow-row{display:flex;align-items:center;gap:10px;margin:6px 0;flex-wrap:wrap}
+.flow-label{font-size:13px;color:#666}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:10px}
+@media (max-width:700px){.grid{grid-template-columns:1fr}}
+@media print{
+@page{size:A4 landscape;margin:10mm}
+body{background:white;padding:6px;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:11px}
+.container{max-width:100%}
+h1{font-size:22px;margin-bottom:4px}
+p{font-size:12px}
+.card{padding:10px 14px;margin-top:8px;box-shadow:none;border-radius:8px}
+.section{margin-bottom:12px}
+.list-item{padding:8px 12px;font-size:12px}
+.grid{gap:12px}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>Event-Based Communication</h1>
+<p>Communication that follows user actions, not just schedules.</p>
+
+<div class="card">
+<div class="section">
+<div class="section-title">User actions → communication</div>
+<div class="flow-row">
+<span class="flow-label">creates account</span>
+<span class="flow-label">→</span>
+<span class="flow-label">onboarding</span>
+</div>
+<div class="flow-row">
+<span class="flow-label">views / saves listing</span>
+<span class="flow-label">→</span>
+<span class="flow-label">reminders</span>
+</div>
+<div class="flow-row">
+<span class="flow-label">contacts owner / books</span>
+<span class="flow-label">→</span>
+<span class="flow-label">transactional + follow-ups</span>
+</div>
+</div>
+<div class="grid">
+<div class="section">
+<div class="section-title">Transactional</div>
+<div class="list">
+<div class="list-item">Booking confirmations</div>
+<div class="list-item">Payment updates</div>
+<div class="list-item">Account notifications</div>
+</div>
+</div>
+<div class="section">
+<div class="section-title">Event-based</div>
+<div class="list">
+<div class="list-item">Onboarding after signup</div>
+<div class="list-item">Reminders after save</div>
+<div class="list-item">Follow-ups after actions</div>
+</div>
+</div>
+<div class="section">
+<div class="section-title">Retargeting</div>
+<div class="list">
+<div class="list-item">Before signup</div>
+<div class="list-item">Based on browsing</div>
+<div class="list-item">Consent-dependent</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

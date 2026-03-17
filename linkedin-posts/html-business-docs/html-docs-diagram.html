@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HTML Business Documents</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f5f6f8;margin:0;padding:24px;color:#111}
+.container{max-width:1000px;margin:auto}
+h1{font-size:28px;margin:0 0 6px;line-height:1.2}
+p{color:#555;font-size:14px;margin:0}
+.card{background:white;border-radius:12px;padding:16px 20px;margin-top:14px;box-shadow:0 10px 25px rgba(0,0,0,0.08)}
+.flow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:10px 0}
+.box{background:#fff;border:1px solid #dcdcdc;border-radius:10px;padding:12px 20px;font-weight:600;font-size:14px}
+.arrow{font-size:20px;color:#888}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.grid-item{background:#fff;border:1px solid #dcdcdc;border-radius:8px;padding:10px 14px;font-size:14px;color:#334155}
+.section-title{font-weight:700;font-size:15px;margin-bottom:10px;color:#333}
+.list{display:flex;flex-direction:column;gap:6px}
+@media print{
+@page{size:A4 landscape;margin:10mm}
+body{background:white;padding:6px;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:11px}
+.container{max-width:100%}
+h1{font-size:22px;margin-bottom:4px}
+p{font-size:12px}
+.card{padding:10px 14px;margin-top:8px;box-shadow:none;border-radius:8px}
+.box{padding:10px 16px;font-size:12px}
+.grid-item{padding:8px 12px;font-size:12px}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>HTML for Business Documents</h1>
+<p>Between design and ops — clean, versioned, reusable.</p>
+
+<div class="card">
+<div class="flow">
+<div class="box">HTML files</div>
+<div class="arrow">→</div>
+<div class="box">Git version control</div>
+<div class="arrow">→</div>
+<div class="box">Export as PDF</div>
+</div>
+<div class="section-title" style="margin-top:16px">Benefits</div>
+<div class="grid">
+<div class="grid-item">Cleaner, consistent layouts</div>
+<div class="grid-item">Easy to duplicate and translate</div>
+<div class="grid-item">Reuse across partners</div>
+<div class="grid-item">No messy Word editing</div>
+</div>
+<div class="section-title" style="margin-top:14px">Document types</div>
+<div class="grid">
+<div class="grid-item">Partnership one-pagers</div>
+<div class="grid-item">Reseller documents</div>
+<div class="grid-item">Contract templates</div>
+<div class="grid-item">Invoice examples</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

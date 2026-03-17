@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Finance — Roofwander</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#fafaf9;
+  --text:#1c1917;
+  --text-muted:#78716c;
+  --accent:#166534;
+  --accent-light:#dcfce7;
+  --border:#e7e5e4;
+  --shadow:0 1px 3px rgba(0,0,0,0.04);
+  --shadow-hover:0 4px 12px rgba(0,0,0,0.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+
+.finance-section{
+  padding:80px 24px;
+  max-width:960px;
+  margin:0 auto;
+  opacity:0;
+  animation:financeFadeIn 0.6s ease forwards;
+}
+@keyframes financeFadeIn{to{opacity:1}}
+
+.finance-inner{max-width:100%;}
+.finance-eyebrow{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:16px;
+}
+.finance-heading{
+  font-size:clamp(28px,3.2vw,36px);
+  font-weight:700;
+  line-height:1.2;
+  letter-spacing:-0.02em;
+  color:var(--text);
+  margin-bottom:12px;
+}
+.finance-subtitle{
+  font-size:16px;
+  color:var(--text-muted);
+  line-height:1.6;
+  max-width:560px;
+  margin:0 0 40px;
+}
+
+.finance-main{
+  display:grid;
+  grid-template-columns:55fr 45fr;
+  gap:32px;
+  align-items:stretch;
+  margin-bottom:40px;
+}
+
+.finance-chart-wrap{
+  display:flex;
+  flex-direction:column;
+  background:#fff;
+  padding:24px 20px 28px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+.finance-chart-wrap[data-finance-panel]{
+  cursor:pointer;
+  transition:box-shadow 0.2s ease,border-color 0.2s ease,background 0.18s ease;
+}
+.finance-chart-wrap[data-finance-panel]:hover{
+  box-shadow:var(--shadow-hover);
+  border-color:rgba(22,101,52,0.35);
+  background:#f0fdf4;
+}
+.finance-chart-title{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  margin-bottom:16px;
+}
+.finance-chart{
+  width:100%;
+  height:220px;
+  overflow:visible;
+}
+.finance-chart-axis{font-size:11px;fill:var(--text-muted);}
+.finance-chart-bar{fill:var(--accent);opacity:0.85;}
+.finance-chart-bar:hover{opacity:1;}
+
+.finance-table-wrap{
+  display:flex;
+  flex-direction:column;
+  background:#fff;
+  padding:24px 20px 28px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+.finance-table-wrap[data-finance-panel]{
+  cursor:pointer;
+  transition:box-shadow 0.2s ease,border-color 0.2s ease,background 0.18s ease;
+}
+.finance-table-wrap[data-finance-panel]:hover{
+  box-shadow:var(--shadow-hover);
+  border-color:rgba(22,101,52,0.35);
+  background:#f0fdf4;
+}
+.finance-table-title{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  margin-bottom:16px;
+}
+.finance-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+.finance-table th{
+  text-align:left;
+  padding:8px 12px 8px 0;
+  font-weight:600;
+  color:var(--text-muted);
+  border-bottom:1px solid var(--border);
+}
+.finance-table td{
+  padding:10px 12px 10px 0;
+  border-bottom:1px solid var(--border);
+}
+.finance-table-year{text-align:right !important;}
+.finance-table td:not(:first-child){
+  font-weight:700;
+  color:var(--text);
+  text-align:right;
+}
+
+.finance-hint{margin-top:12px;font-size:12px;color:var(--text-muted);text-align:center;}
+
+/* Detail panel (chart / table clickables) */
+.finance-detail{
+  margin-top:24px;
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.4s ease;
+}
+.finance-detail.is-open{max-height:1000px;}
+.finance-detail-inner{
+  position:relative;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  padding:24px 24px 28px;
+}
+.finance-detail-close{
+  position:absolute;
+  top:12px;right:12px;
+  width:36px;height:36px;
+  border:none;
+  background:#f5f5f4;
+  border-radius:10px;
+  font-size:22px;
+  line-height:1;
+  color:var(--text-muted);
+  cursor:pointer;
+  transition:background 0.15s,color 0.15s;
+}
+.finance-detail-close:hover{
+  background:var(--border);
+  color:var(--text);
+}
+.finance-detail-panel{display:none;}
+.finance-detail-panel.is-visible{display:block;}
+.finance-detail-title{
+  font-size:18px;
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:16px;
+  padding-right:44px;
+}
+.finance-chart-wrap.finance-panel--active,.finance-table-wrap.finance-panel--active{
+  border-color:var(--accent);
+  background:var(--accent-light);
+  box-shadow:0 0 0 2px rgba(22,101,52,0.15);
+}
+
+/* Dropdowns */
+.finance-dropdowns{margin-top:24px;display:flex;flex-direction:column;gap:12px;}
+.finance-dd{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  transition:box-shadow 0.2s ease,border-color 0.2s ease,transform 0.18s ease;
+}
+.finance-dd:hover{
+  box-shadow:var(--shadow-hover);
+  border-color:#d6d3d1;
+  transform:translateY(-1px);
+}
+.finance-dd-header{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 18px;
+  background:#fff;
+  border:none;
+  cursor:pointer;
+  text-align:left;
+  font-family:inherit;
+  transition:background 0.15s ease;
+}
+.finance-dd-header:hover{background:#f9fafb;}
+.finance-dd-title{font-size:14px;font-weight:600;color:var(--text);}
+.finance-dd-icon{font-size:16px;color:var(--text-muted);transition:transform 0.25s ease;}
+.finance-dd.open .finance-dd-icon{transform:rotate(180deg);}
+.finance-dd-body{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:max-height 0.35s ease,opacity 0.25s ease;
+}
+.finance-dd.open .finance-dd-body{
+  max-height:min(1400px,80vh);
+  opacity:1;
+  overflow-y:auto;
+}
+.finance-dd-content{
+  padding:10px 18px 18px;
+  font-size:14px;
+  color:var(--text-muted);
+  line-height:1.6;
+}
+.finance-dd-content p{margin:0 0 10px;}
+.finance-dd-section{
+  font-size:14px;
+  font-weight:600;
+  color:var(--accent);
+  margin:16px 0 8px;
+}
+.finance-dd-section:first-of-type{margin-top:0;}
+.finance-dd-list{margin:8px 0;padding-left:20px;}
+.finance-dd-list li{margin:6px 0;}
+.finance-dd-note{margin:12px 0 0;font-size:13px;color:var(--text-muted);}
+.finance-dd-intro{margin:0 0 12px;font-size:13px;color:var(--text);}
+
+/* Cost structure — card-style sections like clickables */
+.finance-cost-card{
+  background:#fafaf9;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 16px;
+  margin:10px 0;
+}
+.finance-cost-card-title{
+  font-size:14px;
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:8px;
+}
+.finance-cost-card ul{
+  margin:0;
+  padding-left:18px;
+  font-size:13px;
+  color:var(--text-muted);
+  line-height:1.5;
+}
+.finance-cost-card li{margin:4px 0;}
+.finance-cost-takeaway{
+  margin-top:20px;
+  padding:16px 18px;
+  background:var(--accent-light);
+  border:1px solid rgba(22,101,52,0.2);
+  border-radius:12px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--accent);
+  line-height:1.5;
+}
+
+/* Pie chart */
+.finance-pie-wrap{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:24px;
+  margin-top:20px;
+  padding:20px 0;
+}
+.finance-pie-chart{
+  flex-shrink:0;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:conic-gradient(
+    #7c3aed 0deg 130deg,
+    #2563eb 130deg 230deg,
+    #64748b 230deg 306deg,
+    #166534 306deg 338deg,
+    #ea580c 338deg 360deg
+  );
+}
+.finance-pie-legend{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  font-size:13px;
+}
+.finance-pie-legend-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.finance-pie-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+.finance-pie-label{color:var(--text);}
+.finance-pie-pct{font-weight:600;color:var(--text-muted);}
+
+.finance-stmt-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+  margin:12px 0;
+}
+.finance-stmt-table th{
+  text-align:left;
+  padding:6px 10px 6px 0;
+  font-weight:600;
+  color:var(--text-muted);
+  border-bottom:1px solid var(--border);
+}
+.finance-stmt-table td{
+  padding:6px 10px 6px 0;
+  border-bottom:1px solid var(--border);
+}
+.finance-stmt-table td:first-child{color:var(--text-muted);font-weight:500;}
+.finance-stmt-total{font-weight:700 !important;color:var(--text) !important;}
+
+@media (max-width:900px){
+  .finance-main{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<section class="finance-section">
+  <div class="finance-inner">
+    <p class="finance-eyebrow">FINANCE</p>
+    <h2 class="finance-heading">Forecast based on demand, capture rate & geographic rollout</h2>
+    <p class="finance-subtitle">
+      Low fixed costs. Marketing is the main lever. Revenue scales with demand.
+    </p>
+
+  <div class="finance-main">
+    <div class="finance-chart-wrap" data-finance-panel="chart" role="button" tabindex="0" aria-label="Rental activity — click for details">
+      <p class="finance-chart-title">Rental activity (core marketplace)</p>
+      <svg class="finance-chart" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid meet">
+        <text x="20" y="30" class="finance-chart-axis">Bookings</text>
+        <line x1="50" y1="40" x2="50" y2="180" stroke="var(--border)" stroke-width="1"/>
+        <line x1="50" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="1"/>
+        <text x="42" y="45" class="finance-chart-axis" text-anchor="end">2.2k</text>
+        <text x="42" y="110" class="finance-chart-axis" text-anchor="end">1.1k</text>
+        <text x="42" y="180" class="finance-chart-axis" text-anchor="end">0</text>
+        <rect class="finance-chart-bar" x="55" y="179" width="8" height="1" data-value="0" data-month="1"/>
+        <rect class="finance-chart-bar" x="64" y="179" width="8" height="1" data-value="0" data-month="2"/>
+        <rect class="finance-chart-bar" x="73" y="179" width="8" height="2" data-value="20" data-month="3"/>
+        <rect class="finance-chart-bar" x="82" y="178" width="8" height="2" data-value="50" data-month="4"/>
+        <rect class="finance-chart-bar" x="91" y="176" width="8" height="4" data-value="82" data-month="5"/>
+        <rect class="finance-chart-bar" x="100" y="175" width="8" height="5" data-value="121" data-month="6"/>
+        <rect class="finance-chart-bar" x="109" y="173" width="8" height="7" data-value="144" data-month="7"/>
+        <rect class="finance-chart-bar" x="118" y="174" width="8" height="6" data-value="103" data-month="8"/>
+        <rect class="finance-chart-bar" x="127" y="176" width="8" height="4" data-value="51" data-month="9"/>
+        <rect class="finance-chart-bar" x="136" y="178" width="8" height="2" data-value="16" data-month="10"/>
+        <rect class="finance-chart-bar" x="145" y="179" width="8" height="1" data-value="15" data-month="11"/>
+        <rect class="finance-chart-bar" x="154" y="179" width="8" height="1" data-value="33" data-month="12"/>
+        <rect class="finance-chart-bar" x="163" y="175" width="8" height="5" data-value="252" data-month="13"/>
+        <rect class="finance-chart-bar" x="172" y="155" width="8" height="25" data-value="236" data-month="14"/>
+        <rect class="finance-chart-bar" x="181" y="156" width="8" height="24" data-value="326" data-month="15"/>
+        <rect class="finance-chart-bar" x="190" y="151" width="8" height="29" data-value="561" data-month="16"/>
+        <rect class="finance-chart-bar" x="199" y="141" width="8" height="39" data-value="780" data-month="17"/>
+        <rect class="finance-chart-bar" x="208" y="130" width="8" height="50" data-value="1004" data-month="18"/>
+        <rect class="finance-chart-bar" x="217" y="118" width="8" height="62" data-value="1077" data-month="19"/>
+        <rect class="finance-chart-bar" x="226" y="110" width="8" height="70" data-value="709" data-month="20"/>
+        <rect class="finance-chart-bar" x="235" y="107" width="8" height="73" data-value="325" data-month="21"/>
+        <rect class="finance-chart-bar" x="244" y="125" width="8" height="55" data-value="99" data-month="22"/>
+        <rect class="finance-chart-bar" x="253" y="156" width="8" height="24" data-value="86" data-month="23"/>
+        <rect class="finance-chart-bar" x="262" y="175" width="8" height="5" data-value="177" data-month="24"/>
+        <rect class="finance-chart-bar" x="271" y="176" width="8" height="4" data-value="592" data-month="25"/>
+        <rect class="finance-chart-bar" x="280" y="175" width="8" height="5" data-value="536" data-month="26"/>
+        <rect class="finance-chart-bar" x="289" y="169" width="8" height="11" data-value="715" data-month="27"/>
+        <rect class="finance-chart-bar" x="298" y="147" width="8" height="33" data-value="1198" data-month="28"/>
+        <rect class="finance-chart-bar" x="307" y="148" width="8" height="32" data-value="1623" data-month="29"/>
+        <rect class="finance-chart-bar" x="316" y="151" width="8" height="29" data-value="2039" data-month="30"/>
+        <rect class="finance-chart-bar" x="325" y="143" width="8" height="37" data-value="2141" data-month="31"/>
+        <rect class="finance-chart-bar" x="334" y="133" width="8" height="47" data-value="1381" data-month="32"/>
+        <rect class="finance-chart-bar" x="343" y="121" width="8" height="59" data-value="623" data-month="33"/>
+        <rect class="finance-chart-bar" x="352" y="92" width="8" height="88" data-value="186" data-month="34"/>
+        <rect class="finance-chart-bar" x="361" y="140" width="8" height="40" data-value="159" data-month="35"/>
+        <rect class="finance-chart-bar" x="370" y="159" width="8" height="21" data-value="324" data-month="36"/>
+        <text x="112" y="198" class="finance-chart-axis" text-anchor="middle">Y1</text>
+        <text x="217" y="198" class="finance-chart-axis" text-anchor="middle">Y2</text>
+        <text x="322" y="198" class="finance-chart-axis" text-anchor="middle">Y3</text>
+      </svg>
+    </div>
+
+    <div class="finance-table-wrap" data-finance-panel="table" role="button" tabindex="0" aria-label="Monetization — click for details">
+      <p class="finance-table-title">Monetization</p>
+      <table class="finance-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="finance-table-year">Y1</th>
+            <th class="finance-table-year">Y2</th>
+            <th class="finance-table-year">Y3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>P2P bookings</td>
+            <td><strong>636</strong></td>
+            <td><strong>5.1k</strong></td>
+            <td><strong>9.2k</strong></td>
+          </tr>
+          <tr>
+            <td>Pro bookings</td>
+            <td><strong>0</strong></td>
+            <td><strong>563</strong></td>
+            <td><strong>2.3k</strong></td>
+          </tr>
+          <tr>
+            <td>Affiliate sales (units)</td>
+            <td><strong>0</strong></td>
+            <td><strong>1k</strong></td>
+            <td><strong>2.3k</strong></td>
+          </tr>
+          <tr>
+            <td>Marketplace revenue (€)</td>
+            <td><strong>€23k</strong></td>
+            <td><strong>€207k</strong></td>
+            <td><strong>€436k</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="finance-hint">Click chart or table for details</p>
+
+  <div class="finance-detail" id="finance-detail" aria-live="polite">
+    <div class="finance-detail-inner">
+      <button type="button" class="finance-detail-close" aria-label="Close panel">×</button>
+      <div class="finance-detail-panel" id="panel-chart" aria-hidden="true">
+        <h3 class="finance-detail-title">Rental activity (core marketplace)</h3>
+        <div class="finance-dd-content">
+          <p class="finance-dd-section">1. Demand (top-down)</p>
+          <p class="finance-dd-intro">We start from high-intent Google search volume for queries like "rooftop tent rental". This represents people actively looking to rent, not general interest.</p>
+          <p class="finance-dd-section">2. Geographic rollout</p>
+          <p class="finance-dd-intro">We scale demand based on where we operate:</p>
+          <ul class="finance-dd-list">
+            <li><strong>Y1:</strong> limited markets (BE, FR partial)</li>
+            <li><strong>Y2:</strong> expansion (DE, NL, IT)</li>
+            <li><strong>Y3:</strong> broader European coverage</li>
+          </ul>
+          <p class="finance-dd-intro">→ Demand grows as new countries go live</p>
+          <p class="finance-dd-section">3. Formula</p>
+          <div class="finance-cost-card">
+            <div class="finance-cost-card-title">Bookings = Demand × Capture rate</div>
+            <p style="margin:8px 0 0;font-size:13px;color:var(--text-muted);">We apply a conservative conversion rate (search → booking) that improves with liquidity, trust, and acquisition efficiency.</p>
+          </div>
+          <p class="finance-dd-note">Capture rate: Y1 2.4% · Y2 7.3% · Y3 12.1%</p>
+          <p class="finance-dd-note">We convert real search demand into bookings, scaling with rollout and improving execution.</p>
+        </div>
+      </div>
+      <div class="finance-detail-panel" id="panel-table" aria-hidden="true">
+        <h3 class="finance-detail-title">Monetization</h3>
+        <div class="finance-dd-content">
+          <p class="finance-dd-section">How we estimate affiliate sales</p>
+          <p class="finance-dd-section">1. Two demand sources</p>
+          <p class="finance-dd-intro">Affiliate sales come from:</p>
+          <ul class="finance-dd-list">
+            <li><strong>Rental conversions (~10%)</strong> — renters who decide to buy after trying</li>
+            <li><strong>Buy-side demand (market capture)</strong> — people directly searching to purchase</li>
+          </ul>
+          <p class="finance-dd-section">2. Market-based capture</p>
+          <p class="finance-dd-intro">We estimate total tents sold using public market data and apply a conservative capture rate that grows as SEO, comparison pages, and brand awareness improve. Buy-side becomes increasingly independent from rentals.</p>
+          <p class="finance-dd-note">Capture rate: Y1 0.0% · Y2 0.56% · Y3 1.56%</p>
+          <p class="finance-dd-section">3. Final logic</p>
+          <div class="finance-cost-card">
+            <div class="finance-cost-card-title">Affiliate sales = (10% × rental users) + (capture rate × total tents sold)</div>
+            <p style="margin:8px 0 0;font-size:13px;color:var(--text-muted);">Affiliate combines rental conversion with independent market capture.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="finance-dropdowns">
+    <!-- COST STRUCTURE — first, before Summary data and Financials -->
+    <div class="finance-dd" data-financedd="cost-structure">
+      <button class="finance-dd-header" type="button" aria-expanded="false">
+        <span class="finance-dd-title">Cost Structure</span>
+        <span class="finance-dd-icon">▾</span>
+      </button>
+      <div class="finance-dd-body" aria-hidden="true">
+        <div class="finance-dd-content">
+          <div class="finance-cost-card">
+            <div class="finance-cost-card-title">1. COGS (Direct costs)</div>
+            <ul>
+              <li>Payment processing, support, basic ops per booking</li>
+              <li>Scales directly with revenue (~4–9%)</li>
+              <li>Stable and predictable</li>
+            </ul>
+          </div>
+          <div class="finance-cost-card">
+            <div class="finance-cost-card-title">2. Marketing (Main growth lever)</div>
+            <ul>
+              <li>Paid acquisition (Google Ads, etc.)</li>
+              <li>Scales with demand</li>
+              <li>Optimized to stay below CAC ceiling</li>
+              <li>Primary driver of growth</li>
+            </ul>
+          </div>
+          <div class="finance-cost-card">
+            <div class="finance-cost-card-title">3. Salaries (Growth-driven, not fixed-heavy)</div>
+            <ul>
+              <li>Focus on marketing, supply acquisition, and operations</li>
+              <li>Team expands with volume</li>
+              <li>Limited overhead roles</li>
+              <li>Closely tied to revenue generation</li>
+            </ul>
+          </div>
+          <div class="finance-cost-card">
+            <div class="finance-cost-card-title">4. Development & Product</div>
+            <ul>
+              <li>Built in-house → very low cost</li>
+              <li>Maintenance + incremental improvements</li>
+              <li>No heavy tech burn</li>
+            </ul>
+          </div>
+          <div class="finance-cost-card">
+            <div class="finance-cost-card-title">5. G&A + Support</div>
+            <ul>
+              <li>Admin, legal, basic tools</li>
+              <li>Customer support scales with volume</li>
+              <li>Remains controlled</li>
+            </ul>
+          </div>
+
+          <p class="finance-cost-takeaway">Cost structure is variable-heavy: growth is driven by marketing, while fixed costs remain relatively low.</p>
+
+          <p class="finance-dd-section">Long-term cost mix (Y5 onwards)</p>
+          <div class="finance-pie-wrap">
+            <div class="finance-pie-chart" aria-hidden="true"></div>
+            <div class="finance-pie-legend">
+              <div class="finance-pie-legend-item">
+                <span class="finance-pie-dot" style="background:#7c3aed"></span>
+                <span class="finance-pie-label">Salaries</span>
+                <span class="finance-pie-pct">36%</span>
+              </div>
+              <div class="finance-pie-legend-item">
+                <span class="finance-pie-dot" style="background:#2563eb"></span>
+                <span class="finance-pie-label">Marketing</span>
+                <span class="finance-pie-pct">28%</span>
+              </div>
+              <div class="finance-pie-legend-item">
+                <span class="finance-pie-dot" style="background:#64748b"></span>
+                <span class="finance-pie-label">G&A + Support</span>
+                <span class="finance-pie-pct">21%</span>
+              </div>
+              <div class="finance-pie-legend-item">
+                <span class="finance-pie-dot" style="background:#166534"></span>
+                <span class="finance-pie-label">COGS</span>
+                <span class="finance-pie-pct">9%</span>
+              </div>
+              <div class="finance-pie-legend-item">
+                <span class="finance-pie-dot" style="background:#ea580c"></span>
+                <span class="finance-pie-label">Development</span>
+                <span class="finance-pie-pct">6%</span>
+              </div>
+            </div>
+          </div>
+          <p class="finance-dd-note">Based on Year 5 cost structure. Salaries and marketing dominate; COGS and development stay lean.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="finance-dd" data-financedd="financial-statement">
+      <button class="finance-dd-header" type="button" aria-expanded="false">
+        <span class="finance-dd-title">Financial statements</span>
+        <span class="finance-dd-icon">▾</span>
+      </button>
+      <div class="finance-dd-body" aria-hidden="true">
+        <div class="finance-dd-content">
+          <p class="finance-dd-note">We assume entering the U.S. market in Year 4. No equity or debt included; cash deficit indicates required funding. We share full financial statements on demand.</p>
+          <p class="finance-dd-section">IS — Income Statement</p>
+          <table class="finance-stmt-table">
+            <thead><tr><th></th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr></thead>
+            <tbody>
+              <tr><td>P2P Revenue</td><td>€23k</td><td>€189k</td><td>€358k</td><td>€579k</td><td>€848k</td></tr>
+              <tr><td>Affiliate Revenue</td><td>—</td><td>€165k</td><td>€373k</td><td>€999k</td><td>€1.5M</td></tr>
+              <tr><td>Pro Revenue</td><td>—</td><td>€18k</td><td>€78k</td><td>€169k</td><td>€320k</td></tr>
+              <tr><td class="finance-stmt-total">Total Sales</td><td class="finance-stmt-total">€23k</td><td class="finance-stmt-total">€372k</td><td class="finance-stmt-total">€808k</td><td class="finance-stmt-total">€1.7M</td><td class="finance-stmt-total">€2.7M</td></tr>
+              <tr><td>COGS</td><td>€2k</td><td>€19k</td><td>€43k</td><td>€76k</td><td>€123k</td></tr>
+              <tr><td class="finance-stmt-total">Gross Margin</td><td class="finance-stmt-total">€21k</td><td class="finance-stmt-total">€353k</td><td class="finance-stmt-total">€766k</td><td class="finance-stmt-total">€1.7M</td><td class="finance-stmt-total">€2.6M</td></tr>
+              <tr><td>Operating Expenses</td><td>€95k</td><td>€527k</td><td>€779k</td><td>€961k</td><td>€1.2M</td></tr>
+              <tr><td class="finance-stmt-total">Net Income</td><td class="finance-stmt-total">€(74k)</td><td class="finance-stmt-total">€(175k)</td><td class="finance-stmt-total">€(13k)</td><td class="finance-stmt-total">€532k</td><td class="finance-stmt-total">€1M</td></tr>
+              <tr><td>EBITDA</td><td>€(74k)</td><td>€(175k)</td><td>€(13k)</td><td>€710k</td><td>€1.4M</td></tr>
+            </tbody>
+          </table>
+          <p class="finance-dd-section">BS — Balance Sheet</p>
+          <table class="finance-stmt-table">
+            <thead><tr><th></th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr></thead>
+            <tbody>
+              <tr><td>Cash</td><td>€(61k)</td><td>€(259k)</td><td>€(355k)</td><td>€108k</td><td>€912k</td></tr>
+              <tr><td>Total Current Assets</td><td>€(61k)</td><td>€(253k)</td><td>€(344k)</td><td>€152k</td><td>€978k</td></tr>
+              <tr><td>Total Fixed Assets Net</td><td>€1.4k</td><td>€1.1k</td><td>€720</td><td>€360</td><td>€—</td></tr>
+              <tr><td class="finance-stmt-total">Total Assets</td><td class="finance-stmt-total">€(59k)</td><td class="finance-stmt-total">€(252k)</td><td class="finance-stmt-total">€(343k)</td><td class="finance-stmt-total">€153k</td><td class="finance-stmt-total">€978k</td></tr>
+              <tr><td>Accounts Payable</td><td>—</td><td>—</td><td>—</td><td>€133k</td><td>€256k</td></tr>
+              <tr><td>Paid In Capital</td><td>€15k</td><td>€15k</td><td>€15k</td><td>€15k</td><td>€15k</td></tr>
+              <tr><td>Retained Earnings</td><td>€(74k)</td><td>€(249k)</td><td>€(262k)</td><td>€270k</td><td>€1.3M</td></tr>
+              <tr><td class="finance-stmt-total">Total Equity</td><td class="finance-stmt-total">€(59k)</td><td class="finance-stmt-total">€(234k)</td><td class="finance-stmt-total">€(247k)</td><td class="finance-stmt-total">€285k</td><td class="finance-stmt-total">€1.3M</td></tr>
+            </tbody>
+          </table>
+          <p class="finance-dd-section">CF — Cash Flow</p>
+          <table class="finance-stmt-table">
+            <thead><tr><th></th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr></thead>
+            <tbody>
+              <tr><td>Cash From Sales</td><td>€23k</td><td>€347k</td><td>€725k</td><td>€1.5M</td><td>€2.3M</td></tr>
+              <tr><td>Net Cash from Operating</td><td>€(74k)</td><td>€(199k)</td><td>€(96k)</td><td>€463k</td><td>€804k</td></tr>
+              <tr><td>Cash from New Investments</td><td>€15k</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr><td>Cash paid for Fixed Assets</td><td>€(1.8k)</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr><td class="finance-stmt-total">Net Cash Inflow (Outflow)</td><td class="finance-stmt-total">€(61k)</td><td class="finance-stmt-total">€(199k)</td><td class="finance-stmt-total">€(96k)</td><td class="finance-stmt-total">€463k</td><td class="finance-stmt-total">€804k</td></tr>
+              <tr><td>Cash at End of Period</td><td>€(61k)</td><td>€(259k)</td><td>€(355k)</td><td>€108k</td><td>€912k</td></tr>
+            </tbody>
+          </table>
+          <p class="finance-dd-note">No equity or debt included; cash deficit indicates required funding.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="finance-dd" data-financedd="summary-data">
+      <button class="finance-dd-header" type="button" aria-expanded="false">
+        <span class="finance-dd-title">Summary data</span>
+        <span class="finance-dd-icon">▾</span>
+      </button>
+      <div class="finance-dd-body" aria-hidden="true">
+        <div class="finance-dd-content">
+          <p class="finance-dd-section">Summary data (B15:K44)</p>
+          <p class="finance-dd-intro">Rental-side</p>
+          <table class="finance-stmt-table">
+            <thead><tr><th></th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr></thead>
+            <tbody>
+              <tr><td>Cumulative Owners Acquired</td><td>212</td><td>1,877</td><td>3,809</td><td>6,323</td><td>9,499</td></tr>
+              <tr><td>Active Owner (year end)</td><td>193</td><td>1,738</td><td>3,359</td><td>5,353</td><td>7,752</td></tr>
+              <tr><td>Cumulative Travelers Acquired</td><td>649</td><td>6,021</td><td>15,186</td><td>28,754</td><td>47,314</td></tr>
+              <tr><td>Active Travelers (Year-End)</td><td>384</td><td>3,062</td><td>5,741</td><td>8,655</td><td>12,105</td></tr>
+              <tr><td>P2P bookings</td><td>636</td><td>5,069</td><td>9,214</td><td>14,293</td><td>20,011</td></tr>
+              <tr><td>Avg commission per Booking</td><td>€36</td><td>€37</td><td>€39</td><td>€41</td><td>€42</td></tr>
+              <tr><td>P2P Annual Revenue</td><td>€23k</td><td>€189k</td><td>€358k</td><td>€579k</td><td>€848k</td></tr>
+              <tr><td>Pro bookings</td><td>—</td><td>563</td><td>2,303</td><td>4,764</td><td>8,576</td></tr>
+              <tr><td>Pro Avg commission</td><td>—</td><td>€32</td><td>€34</td><td>€36</td><td>€37</td></tr>
+              <tr><td>Pro Annual revenue</td><td>—</td><td>€18k</td><td>€78k</td><td>€169k</td><td>€320k</td></tr>
+            </tbody>
+          </table>
+          <p class="finance-dd-intro">Buy-side</p>
+          <table class="finance-stmt-table">
+            <thead><tr><th></th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr></thead>
+            <tbody>
+              <tr><td>Rooftop Tents Sold (Units)</td><td>—</td><td>687</td><td>1,507</td><td>3,918</td><td>5,734</td></tr>
+              <tr><td>Avg Affiliate commission (tents)</td><td>—</td><td>€230</td><td>€237</td><td>€244</td><td>€251</td></tr>
+              <tr><td>Rooftop Tents Affiliate Revenue</td><td>—</td><td>€158k</td><td>€356k</td><td>€955k</td><td>€1.4M</td></tr>
+              <tr><td>Accessories Sold (Units)</td><td>—</td><td>343</td><td>754</td><td>1,959</td><td>2,867</td></tr>
+              <tr><td>Accessories Affiliate Revenue</td><td>—</td><td>€7k</td><td>€16k</td><td>€43k</td><td>€65k</td></tr>
+            </tbody>
+          </table>
+          <table class="finance-stmt-table">
+            <thead><tr><th></th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr></thead>
+            <tbody>
+              <tr><td>Total revenue</td><td>€23k</td><td>€372k</td><td>€808k</td><td>€1.7M</td><td>€2.7M</td></tr>
+              <tr><td>Employees</td><td>3</td><td>7</td><td>8</td><td>8</td><td>8</td></tr>
+              <tr><td>Revenue per Employee</td><td>€7.6k</td><td>€53k</td><td>€101k</td><td>€218k</td><td>€334k</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  /* Chart / table clickables → detail panel */
+  var detail = document.getElementById('finance-detail');
+  var closeBtn = detail && detail.querySelector('.finance-detail-close');
+  var panels = detail && detail.querySelectorAll('.finance-detail-panel');
+  var clickables = document.querySelectorAll('[data-finance-panel]');
+
+  function openPanel(panelId){
+    if(!detail||!panels) return;
+    panels.forEach(function(p){
+      var match = p.id === 'panel-' + panelId;
+      p.classList.toggle('is-visible', match);
+      p.setAttribute('aria-hidden', !match);
+    });
+    detail.classList.add('is-open');
+    clickables.forEach(function(el){
+      el.classList.toggle('finance-panel--active', el.getAttribute('data-finance-panel') === panelId);
+    });
+  }
+  function closePanel(){
+    if(!detail) return;
+    detail.classList.remove('is-open');
+    panels.forEach(function(p){ p.classList.remove('is-visible'); p.setAttribute('aria-hidden','true'); });
+    clickables.forEach(function(el){ el.classList.remove('finance-panel--active'); });
+  }
+
+  clickables.forEach(function(el){
+    el.addEventListener('click', function(){
+      var panelId = el.getAttribute('data-finance-panel');
+      if(!panelId) return;
+      var isAlreadyOpen = detail.classList.contains('is-open') && document.getElementById('panel-' + panelId).classList.contains('is-visible');
+      if(isAlreadyOpen){ closePanel(); return; }
+      openPanel(panelId);
+    });
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); el.click(); }
+    });
+  });
+  if(closeBtn) closeBtn.addEventListener('click', closePanel);
+
+  /* Dropdowns */
+  var dropdowns = document.querySelectorAll('.finance-dd');
+  function closeAll(except){
+    dropdowns.forEach(function(dd){
+      if(dd===except) return;
+      dd.classList.remove('open');
+      var h=dd.querySelector('.finance-dd-header');
+      var b=dd.querySelector('.finance-dd-body');
+      if(h) h.setAttribute('aria-expanded','false');
+      if(b) b.setAttribute('aria-hidden','true');
+    });
+  }
+  dropdowns.forEach(function(dd){
+    var header=dd.querySelector('.finance-dd-header');
+    var body=dd.querySelector('.finance-dd-body');
+    if(!header||!body) return;
+    header.addEventListener('click',function(){
+      var isOpen=dd.classList.toggle('open');
+      header.setAttribute('aria-expanded',isOpen);
+      body.setAttribute('aria-hidden',!isOpen);
+      if(isOpen) closeAll(dd);
+    });
+  });
+})();
+</script>
+</body>
+</html>

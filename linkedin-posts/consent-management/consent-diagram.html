@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Consent Management Flow</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f5f6f8;margin:0;padding:24px;color:#111}
+.container{max-width:1000px;margin:auto}
+h1{font-size:28px;margin:0 0 6px;line-height:1.2}
+p{color:#555;font-size:14px;margin:0}
+.card{background:white;border-radius:12px;padding:16px 20px;margin-top:14px;box-shadow:0 10px 25px rgba(0,0,0,0.08)}
+.flow{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:10px}
+.box{background:#fff;border:1px solid #dcdcdc;border-radius:10px;padding:10px 20px;font-weight:600;font-size:14px;text-align:center}
+.box .label{display:block}
+.box .small{display:block;font-weight:400;color:#666;font-size:12px;margin-top:4px}
+.box.list .small{margin-top:6px}
+.arrow{font-size:18px;color:#888}
+@media print{
+@page{size:A4 landscape;margin:10mm}
+body{background:white;padding:6px;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:11px}
+.container{max-width:100%}
+h1{font-size:22px;margin-bottom:4px}
+p{font-size:12px}
+.card{padding:10px 14px;margin-top:8px;box-shadow:none;border-radius:8px}
+.flow{gap:6px}
+.box{padding:8px 16px;font-size:12px}
+.box .small{font-size:11px}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>Consent Management Flow</h1>
+<p>How we handle consent at Roofwander with Google Consent Mode v2.</p>
+
+<div class="card">
+<div class="flow">
+<div class="box">User visits website</div>
+<div class="arrow">↓</div>
+<div class="box">Cookie Banner (Accept / Reject / Customize)</div>
+<div class="arrow">↓</div>
+<div class="box"><span class="label">User choice saved</span><span class="small">(user_consent_choice cookie)</span></div>
+<div class="arrow">↓</div>
+<div class="box">ConsentContext updates state</div>
+<div class="arrow">↓</div>
+<div class="box">updateGTMConsent() triggered</div>
+<div class="arrow">↓</div>
+<div class="box">Google Tag Manager receives consent signals</div>
+<div class="arrow">↓</div>
+<div class="box"><span class="label">Consent Mode v2</span><span class="small">analytics_storage / ad_storage</span></div>
+<div class="arrow">↓</div>
+<div class="box list">
+<span class="label">Tags activate conditionally</span>
+<span class="small">• GA4 analytics • Marketing tags • Advertising pixels</span>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>
