@@ -15,64 +15,118 @@
   --accent:#166534;
   --accent-light:#dcfce7;
   --border:#e7e5e4;
-  --shadow:0 1px 3px rgba(0,0,0,0.04);
-  --shadow-hover:0 4px 12px rgba(0,0,0,0.06);
+  --shadow:0 2px 6px rgba(22,101,52,0.12);
+  --shadow-hover:0 6px 20px rgba(22,101,52,0.15);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;position:relative}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;background:radial-gradient(ellipse 120% 100% at 0% 0%,rgba(187,247,208,0.35),transparent 60%);z-index:0}
 /* Pills + eyebrow — same as hero */
 .eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
-.pill{display:inline-flex;align-items:center;padding:10px 16px;background:#fff;border:1px solid var(--border);border-radius:100px;font-size:14px;font-weight:500;color:var(--text);box-shadow:var(--shadow);transition:all 0.2s}
-.pill:hover{border-color:#a8a29e;box-shadow:var(--shadow-hover)}
+.market-pills{display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+.market-card{display:flex;align-items:center;gap:16px;width:100%;padding:18px 20px;background:#fff;border:1px solid var(--border);border-radius:12px;font-size:17px;font-weight:500;color:var(--text);box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s,background 0.2s}
+.market-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-color:#d6d3d1}
+.market-card.market-card--clickable{cursor:pointer}
+.market-card.market-card--clickable:hover{border-color:rgba(22,101,52,0.35);box-shadow:0 6px 20px rgba(22,101,52,0.12);background:#f0fdf4}
+.market-card.market-card--clickable.market-pill--active{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 2px rgba(22,101,52,0.15)}
+.market-card-icon{flex-shrink:0;width:24px;height:24px;opacity:0.7}
+.market-card.market-card--clickable .market-card-icon{color:var(--accent)}
+.market-card--brands .market-card-icon{color:#64748b}
+.market-card-text{flex:1}
+.market-card-info{flex-shrink:0;font-size:16px;color:var(--accent);opacity:0.85;font-weight:500}
+.market-pill-card{display:flex;flex-direction:column;gap:12px}
+.market-detail{margin-top:24px;max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.market-detail.is-open{max-height:900px}
+.market-detail-inner{position:relative;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:24px 24px 28px}
+.market-detail-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border:none;background:#f5f5f4;border-radius:10px;font-size:22px;line-height:1;color:var(--text-muted);cursor:pointer;transition:background 0.15s,color 0.15s}
+.market-detail-close:hover{background:var(--border);color:var(--text)}
+.market-detail-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:16px;padding-right:44px}
+.market-chart-wrap{margin:16px 0;padding:16px;background:#fafaf9;border-radius:12px;border:1px solid var(--border)}
+.market-chart{width:100%;min-height:240px;height:auto;overflow:visible}
+.market-chart--trends{min-height:220px}
+.market-chart-grid{stroke:var(--border);stroke-width:0.5;stroke-dasharray:2}
+.market-chart-axis{font-size:11px;fill:var(--text-muted)}
+.market-chart-line{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.market-chart-line--de{stroke:var(--accent)}
+.market-chart-line--fr{stroke:#2563eb}
+.market-chart-line--us{stroke:#ea580c}
+.market-chart-line--uk{stroke:#7c3aed}
+.market-chart-legend{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:12px;font-size:13px;font-weight:500}
+.market-chart-legend-de{color:var(--accent)}
+.market-chart-legend-fr{color:#2563eb}
+.market-chart-legend-us{color:#ea580c}
+.market-chart-legend-uk{color:#7c3aed}
+.market-dd-intro{margin:0 0 12px;font-size:13px;color:var(--text)}
+.market-dd-note{margin:12px 0 0;font-size:13px;color:var(--text-muted)}
 /* Section */
-.market-section{padding:80px 24px;max-width:1280px;margin:0 auto;opacity:0;animation:marketFadeIn 0.7s ease forwards}
-@keyframes marketFadeIn{to{opacity:1}}
-.market-inner{width:100%}
-.market-grid{display:grid;grid-template-columns:2fr 1fr;gap:64px;align-items:start}
-@media (max-width:900px){
-.market-grid{grid-template-columns:1fr;gap:48px}
-.market-right{order:2}
-}
-.market-left{min-width:0}
+.market-section{padding:80px 24px 80px;max-width:960px;margin:0 auto;position:relative;z-index:1}
 .market-heading{font-size:clamp(28px,3.2vw,36px);font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin-bottom:16px;color:var(--text)}
-.market-supporting{font-size:16px;color:var(--text-muted);line-height:1.6;margin-bottom:24px}
-.market-pills{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
-@media (max-width:900px){.market-pills{justify-content:flex-start}}
-.market-right{display:flex;justify-content:center;align-items:start}
-.brands-card{width:100%;max-width:320px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px 24px;box-shadow:var(--shadow)}
-.brands-row{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;align-items:center;margin-bottom:16px}
-.brand-item{min-width:80px;display:flex;align-items:center;justify-content:center}
-.brand-placeholder{min-width:80px;padding:10px 16px;border-radius:999px;border:1px dashed var(--border);font-size:13px;font-weight:500;color:var(--text-muted);background:#f9fafb}
-.brands-caption{font-size:13px;color:var(--text-muted);text-align:center;margin:0;line-height:1.5}
+.market-inner{width:100%}
+.market-supporting{font-size:16px;color:var(--text-muted);line-height:1.6;margin-bottom:40px}
+.market-brands{display:flex;gap:28px;align-items:center;justify-content:center;width:100%}
+@keyframes cardReveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cardIconReveal{from{opacity:0}to{opacity:0.7}}
+@keyframes cardFadeIn{from{opacity:0}to{opacity:1}}
+.market-card.market-card--clickable .market-card-icon,.market-card.market-card--brands .market-card-icon{opacity:0;animation:cardIconReveal 0.45s ease both}
+.market-pill-card .market-card{opacity:0;animation:cardReveal 0.7s ease both}
+.market-pill-card .market-card .market-card-icon{animation-delay:0.38s}
+.market-pill-card .market-card .market-card-text{opacity:0;animation:cardFadeIn 0.4s ease both;animation-delay:0.48s}
+.market-pill-card .market-card .market-card-info{opacity:0;animation:cardFadeIn 0.35s ease both;animation-delay:0.58s}
+.market-pill-card .market-card{animation-delay:0.3s}
+.market-card--brands{opacity:0;animation:cardReveal 0.7s ease both;animation-delay:0.9s}
+.market-card--brands .market-card-icon{animation-delay:0.95s}
+.market-card--brands .market-card-text{opacity:0;animation:cardFadeIn 0.4s ease both;animation-delay:1.08s}
+.market-brand-bubble{flex:1;max-width:140px;aspect-ratio:1;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:0;animation:bubbleArrive 0.4s ease both,bubbleFloat 6s ease-in-out 1s infinite}
+.market-brand-bubble:nth-child(1){animation-delay:1.2s,1.6s}
+.market-brand-bubble:nth-child(2){animation-delay:1.35s,1.75s}
+.market-brand-bubble:nth-child(3){animation-delay:1.5s,1.9s}
+@keyframes bubbleArrive{from{opacity:0;transform:translateY(12px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes bubbleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media (prefers-reduced-motion:reduce){.market-pill-card .market-card,.market-card--brands,.market-pill-card .market-card .market-card-icon,.market-pill-card .market-card .market-card-text,.market-pill-card .market-card .market-card-info,.market-card--brands .market-card-icon,.market-card--brands .market-card-text,.market-brand-bubble,.market-dd{animation:none!important;opacity:1!important;transform:none!important}}
+.market-brand-bubble img{width:70%;height:70%;object-fit:contain}
+.market-brand-bubble span{font-size:11px;font-weight:600;color:var(--text-muted)}
 </style>
 </head>
 <body>
 
 <section class="market-section">
 <div class="market-inner">
-<div class="market-grid">
-
-<div class="market-left">
 <p class="eyebrow">Market Context</p>
 <h2 class="market-heading">Rooftop tent travel is booming</h2>
-<p class="market-supporting">Outdoor travel and road-trip culture have accelerated in recent years.<br />Rooftop tents are emerging as a flexible alternative to camper vans and traditional camping.</p>
+<p class="market-supporting">Outdoor travel is accelerating. Rooftop tents are emerging as a flexible alternative to camper vans.</p>
 <div class="market-pills">
-<span class="pill">Search interest for "rooftop tent" increased 2–2.5× in the last three years</span>
-<span class="pill">Major outdoor brands have entered the category, like Decathlon</span>
+<div class="market-pill-card">
+<div class="market-card market-card--clickable" data-market-panel="search-trend" role="button" tabindex="0" aria-label="Search interest — click for Google Trends">
+<svg class="market-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+<span class="market-card-text">Search interest for "rooftop tent" increased 2–2.5× in recent years</span>
+<span class="market-card-info" aria-hidden="true">ⓘ</span>
+</div>
+<div class="market-detail" id="market-detail" aria-live="polite">
+<div class="market-detail-inner">
+<button type="button" class="market-detail-close" aria-label="Close">×</button>
+<h3 class="market-detail-title">Google Search interest — rooftop tent</h3>
+<p class="market-dd-intro">Monthly search interest (0–100) for "rooftop tent" / "Dachzelt" (DE) / "tente de toit" (FR). Clear upward trend with strong seasonality: summer peaks (camping season), winter lows. COVID spike in Europe; growth since, picking up in 2026 as brands boost marketing.</p>
+<div class="market-chart-wrap">
+<svg class="market-chart market-chart--trends" viewBox="0 0 920 220" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="market-chart-legend">
+<span class="market-chart-legend-de">— Germany (Dachzelt)</span>
+<span class="market-chart-legend-fr">— France (tente de toit)</span>
+<span class="market-chart-legend-us">— United States (rooftop tent)</span>
 </div>
 </div>
-
-<div class="market-right">
-<div class="brands-card">
-<div class="brands-row">
-<div class="brand-item"><div class="brand-placeholder">Decathlon</div></div>
-<div class="brand-item"><div class="brand-placeholder">Thule</div></div>
-<div class="brand-item"><div class="brand-placeholder">Dometic</div></div>
-</div>
-<p class="brands-caption">Major outdoor brands have entered the rooftop tent category.</p>
+<p class="market-dd-note">Source: Google Trends. Data from 2016 to March 2026. Values show relative search interest (0–100).</p>
 </div>
 </div>
-
+</div>
+<div class="market-card market-card--brands">
+<svg class="market-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 7v2a1 1 0 001 1h18a1 1 0 001-1V7M2 7a2 2 0 012-2h16a2 2 0 012 2M2 7v11a2 2 0 002 2h16a2 2 0 002-2V7"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+<span class="market-card-text">Major outdoor brands have entered the category in the past 5 years</span>
+</div>
+</div>
+<div class="market-brands">
+<div class="market-brand-bubble"><img src="decathlon.svg" alt="Decathlon" /></div>
+<div class="market-brand-bubble"><img src="thule.svg" alt="Thule" /></div>
+<div class="market-brand-bubble"><img src="dometic.svg" alt="Dometic" /></div>
 </div>
 </div>
 </section>
@@ -104,7 +158,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
             <div class="market-dd-comparison">
               <div class="market-dd-card">
                 <div class="market-dd-card-img">
-                  <span class="market-dd-img-placeholder">Soft shell image</span>
+                  <img src="soft-shell.webp" alt="Soft shell rooftop tent" />
                 </div>
                 <div class="market-dd-card-title">Soft shell</div>
                 <ul class="market-dd-card-list">
@@ -116,7 +170,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   
               <div class="market-dd-card">
                 <div class="market-dd-card-img">
-                  <span class="market-dd-img-placeholder">Hard shell image</span>
+                  <img src="hard-shell.webp" alt="Hard shell rooftop tent" />
                 </div>
                 <div class="market-dd-card-title">Hard shell</div>
                 <ul class="market-dd-card-list">
@@ -133,31 +187,16 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <!-- DROPDOWN 2 -->
       <div class="market-dd" data-dd="whynow">
         <button class="market-dd-header" type="button" aria-expanded="false">
-          <span class="market-dd-title">Why now for marketplaces?</span>
+          <span class="market-dd-title">Why it's the right moment for Roofwander now?</span>
           <span class="market-dd-icon">▾</span>
         </button>
         <div class="market-dd-body" aria-hidden="true">
           <div class="market-dd-content">
             <p>
-              Marketplaces are a strong investment opportunity: once the leader is in place, network effects and liquidity make it very hard for others to displace them.
+              AI makes it cheaper than ever to build marketplaces, but not to build liquidity.
             </p>
             <p>
-              You need to move fast. The first player to build trusted supply, engaged users, and real liquidity gains a structural advantage—no one is coming to take you down once you own the category.
-            </p>
-            <p>
-              AI reduces the cost of building software, but communities, trust, and real marketplace liquidity remain difficult to replicate.
-            </p>
-            <p>
-              In rooftop tent travel, what matters is building:
-            </p>
-            <ul>
-              <li>trusted supply</li>
-              <li>engaged travelers</li>
-              <li>real usage data</li>
-              <li>product discovery based on real experience</li>
-            </ul>
-            <p>
-              Early marketplaces that create strong communities and supply density gain long-term defensibility.
+              The real opportunity is to move early, build supply and community, and create network effects before the category consolidates.
             </p>
           </div>
         </div>
@@ -170,8 +209,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   
   .market-dropdowns {
     padding: 40px 24px 80px;
-    max-width: 1280px;
+    max-width: 960px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
   }
   
   .market-dropdowns-inner {
@@ -189,6 +230,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     box-shadow: var(--shadow);
     overflow: hidden;
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    opacity: 0;
+    animation: cardReveal 0.5s ease both;
+    animation-delay: 1.9s;
   }
   
   .market-dd:hover {
@@ -221,13 +265,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     color: var(--text);
   }
   
-  .market-dd-icon {
+.market-dd-icon {
     font-size: 16px;
     color: var(--text-muted);
     transition: transform 0.25s ease;
   }
   
-  .market-dd.open .market-dd-icon {
+.market-dd.open .market-dd-icon {
     transform: rotate(180deg);
   }
   
@@ -298,14 +342,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     aspect-ratio: 4/3;
     border-radius: 8px;
     background: var(--bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
   }
   
-  .market-dd-img-placeholder {
-    font-size: 12px;
-    color: var(--text-muted);
+  .market-dd-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
   }
   
   .market-dd-card-title {
@@ -324,6 +368,70 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   </style>
   
   <script>
+  /* Build Google-Trends-style chart from monthly data */
+  (function(){
+    var de=[8,7,8,9,12,13,14,16,11,8,7,7,10,12,10,12,16,16,17,25,14,11,9,9,14,16,16,18,24,29,39,33,21,17,12,12,18,29,24,27,34,38,44,46,37,21,18,18,26,27,19,21,40,56,64,69,43,24,26,20,27,30,39,41,50,58,63,68,44,26,18,18,33,36,34,53,55,75,87,83,49,45,26,24,38,39,48,48,64,79,100,85,59,33,24,24,35,39,45,57,75,70,86,85,53,31,25,22];
+    var fr=[4,5,5,11,8,7,11,12,9,5,4,5,7,6,7,7,9,10,15,15,8,7,5,5,6,7,8,10,12,11,13,19,11,7,7,5,8,9,10,12,14,18,19,24,14,11,7,6,11,10,9,15,19,25,36,37,19,9,15,11,12,15,21,22,29,30,49,77,31,23,14,12,20,37,28,34,50,61,87,100,38,26,19,17,20,30,30,46,64,56,80,99,42,22,18,18,23,25,29,33,44,43,57,83,40,20,18,15];
+    var us=[11,11,13,15,17,16,19,16,14,12,12,14,22,21,26,25,25,26,35,35,21,18,18,17,20,22,24,25,30,36,37,29,27,23,21,19,24,23,28,33,33,39,39,39,31,27,24,23,26,32,28,31,50,58,72,59,53,46,42,41,52,48,59,58,65,63,65,61,58,44,46,38,48,57,54,63,65,74,76,72,65,56,48,39,49,60,58,66,76,83,88,75,65,56,55,52,59,59,79,80,84,95,86,81,72,60,51,49];
+    var svg=document.querySelector('.market-chart--trends');
+    if(!svg)return;
+    var w=920,h=220,mLeft=50,mRight=20,mTop=20,mBottom=30;
+    var plotW=w-mLeft-mRight,plotH=h-mTop-mBottom;
+    var vals=[de,fr,us],colors=['var(--accent)','#2563eb','#ea580c'],cls=['de','fr','us'];
+    var pts=de.length;
+    var html='';
+    for(var g=20;g<=80;g+=20){
+      var y=mTop+plotH*(1-g/100);
+      html+='<line class="market-chart-grid" x1="'+mLeft+'" y1="'+y+'" x2="'+(w-mRight)+'" y2="'+y+'"/>';
+    }
+    html+='<line x1="'+mLeft+'" y1="'+mTop+'" x2="'+mLeft+'" y2="'+(h-mBottom)+'" stroke="var(--border)" stroke-width="1"/>';
+    html+='<line x1="'+mLeft+'" y1="'+(h-mBottom)+'" x2="'+(w-mRight)+'" y2="'+(h-mBottom)+'" stroke="var(--border)" stroke-width="1"/>';
+    html+='<text x="'+(mLeft-8)+'" y="'+(mTop+4)+'" class="market-chart-axis" text-anchor="end">100</text>';
+    html+='<text x="'+(mLeft-8)+'" y="'+(mTop+plotH/2+4)+'" class="market-chart-axis" text-anchor="end">50</text>';
+    html+='<text x="'+(mLeft-8)+'" y="'+(h-mBottom)+'" class="market-chart-axis" text-anchor="end">0</text>';
+    for(var r=0;r<3;r++){
+      var d='M ';
+      for(var i=0;i<pts;i++){
+        var x=mLeft+(i/(pts-1))*plotW;
+        var y=mTop+plotH*(1-vals[r][i]/100);
+        d+=(i?' L ':'')+Math.round(x)+' '+Math.round(y);
+      }
+      html+='<path class="market-chart-line market-chart-line--'+cls[r]+'" d="'+d+'" style="stroke:'+colors[r]+'"/>';
+    }
+    for(var y=2016;y<=2024;y+=2){
+      var i=(y-2016)*12;
+      var x=mLeft+(i/(pts-1))*plotW;
+      html+='<text x="'+Math.round(x)+'" y="'+(h-8)+'" class="market-chart-axis" text-anchor="middle">'+y+'</text>';
+    }
+    svg.innerHTML=html;
+  })();
+  /* Clickable pill + detail panel for search trend — opens only on click */
+  (function(){
+    var pill = document.querySelector('.market-card[data-market-panel="search-trend"]');
+    var detail = document.getElementById('market-detail');
+    var closeBtn = detail && detail.querySelector('.market-detail-close');
+    if (!pill || !detail) return;
+    function openDetail(){
+      detail.classList.add('is-open');
+      pill.classList.add('market-pill--active');
+      setTimeout(function () {
+        detail.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+      }, 100);
+    }
+    function closeDetail(){
+      detail.classList.remove('is-open');
+      pill.classList.remove('market-pill--active');
+    }
+    pill.addEventListener('click', function(e){
+      e.preventDefault();
+      if (detail.classList.contains('is-open')) closeDetail();
+      else openDetail();
+    });
+    pill.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pill.click(); }
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closeDetail);
+  })();
   /* Dropdown behaviour for market context slide */
   (function () {
     var dropdowns = document.querySelectorAll('.market-dd');
@@ -350,6 +458,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         body.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
         if (isOpen) {
           closeAll(dd);
+          setTimeout(function () {
+            body.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+          }, 100);
         }
       });
     });

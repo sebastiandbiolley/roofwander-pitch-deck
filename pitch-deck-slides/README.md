@@ -1,71 +1,145 @@
-# Pitch Deck Slides
+# Pitch deck slides
 
-HTML slides and diagrams for investor presentations and pitch decks.
+Static HTML for Roofwander: a small site entry (`index.html`), a full-screen slide deck (`deck.html`), standalone slide pages for reuse or deep links, and shared assets.
 
-Each topic has its own folder containing HTML files you can open in a browser or export as PDF.
+---
+
+## What lives here
+
+| File / area | Role |
+|-------------|------|
+| `index.html` | Home: links into the deck and other entry points |
+| `deck.html` | Investor deck: horizontal slide navigation, hash URLs (`#slide-0` …) |
+| `how-it-works.html` | Long-form “How it works” page (generated; see below) |
+| `how-it-works-content/` | Markdown sources for that page |
+| `build-how-it-works.py` | Builds `how-it-works.html` from `how-it-works-content/how-roofwander-works-full.md` |
+| `requirements.txt` | Optional: `markdown` package for `build-how-it-works.py` |
+| `assets/deck.css` | Shared design tokens and component styles |
+| `assets/deck.js` | Slide navigation, hash sync, shared interaction helpers |
+| `build-deck.py` | Optional: regenerates `deck.html` body from standalone HTML files |
+| `data/` | Source exports for charts (e.g. traction); update files and refresh slide copy as needed |
+
+Standalone folders (`investor-*`, `roofwander-system/`) each contain one slide as a full HTML page. Edit those for content; the deck inlines them (or you maintain `deck.html` manually if it diverges).
+
+---
+
+## Deck order (current `deck.html`)
+
+Thirteen slides, indices `0`–`12`:
+
+| # | Section | Standalone path |
+|---|---------|-----------------|
+| 0 | Hero | `investor-hero/investor-hero.html` |
+| 1 | Market context | `investor-market-context/investor-market-context.html` |
+| 2 | Problem | `investor-problem/investor-problem.html` |
+| 3 | Solution | `investor-solution/investor-solution.html` |
+| 4 | System | `roofwander-system/system-diagram.html` |
+| 5 | Market | `investor-market/investor-market.html` |
+| 6 | Positioning | `investor-market-positioning/investor-market-positioning.html` |
+| 7 | Roadmap | `investor-roadmap/investor-roadmap.html` |
+| 8 | Traction | `investor-traction/investor-traction.html` |
+| 9 | Unit economics | `investor-unit-economics/investor-unit-economics.html` |
+| 10 | Finance | `investor-finance/investor-finance.html` |
+| 11 | Team | `investor-team/investor-team.html` |
+| 12 | Ask | `investor-ask/investor-ask.html` |
+
+`assets/deck.js` uses `SLIDE_COUNT = 13` to match this.
+
+---
+
+## Folder layout (abbreviated)
 
 ```
 pitch-deck-slides/
-│
+├── index.html
+├── deck.html
+├── how-it-works.html
+├── build-deck.py
+├── build-how-it-works.py
+├── requirements.txt
+├── how-it-works-content/     # Markdown: canonical = how-roofwander-works-full.md; other files = topic splits / reference
+├── assets/
+│   ├── deck.css
+│   └── deck.js
+├── data/
 ├── investor-hero/
-│   └── investor-hero.html
-│
 ├── investor-market-context/
-│   └── investor-market-context.html
-│
 ├── investor-problem/
-│   └── investor-problem.html
-│
 ├── investor-solution/
-│   └── investor-solution.html
-│
 ├── investor-market/
-│   └── investor-market.html
-│
+├── investor-market-positioning/
 ├── investor-roadmap/
-│   └── investor-roadmap.html
-│
-├── investor-growth-flywheel/
-│   └── investor-growth-flywheel.html
-│
 ├── investor-traction/
-│   └── investor-traction.html
-│
 ├── investor-unit-economics/
-│   └── investor-unit-economics.html
-│
+├── investor-finance/
+├── investor-team/
+├── investor-ask/
 ├── roofwander-system/
-│   └── system-diagram.html
-│
-└── README.md
+└── logo/                    # shared brand assets (as used by slides)
 ```
 
-## investor-hero
+Finance CSVs and team media live beside their slide HTML (e.g. `investor-finance/*.csv`, `investor-team/*.webp`).
 
-**Investor page hero section** — Premium full-width hero with headline, pills, CTA, and phone mockup with looping product video. Stripe/Linear style. Paste into /investor page.
+---
 
-Add `hero-video.mp4` to this folder (9:16 portrait works best).
+## View locally
 
-## investor-problem
+Slides rely on relative URLs. Use a local HTTP server so assets and imports resolve reliably.
 
-**Investor page slide 3 — The Problem** — Idle assets, limited rental access, difficult purchase decisions. Three problem cards + closing line. Paste below Slide 2.
+From this directory:
 
-## investor-market-context
+```bash
+python -m http.server 8080
+```
 
-**Investor page slide 2 — Market context** — Rooftop tent category momentum, brand signals (Decathlon, Thule, Dometic), two dropdowns (What is a rooftop tent? / Why now for marketplaces?). Matches hero design system. Paste below slide 1.
+Then open:
 
-Add logos to `logos/` subfolder (decathlon.svg, thule.svg, dometic.svg) or text fallbacks show.
+| Page | URL |
+|------|-----|
+| Home | http://localhost:8080/ |
+| Deck | http://localhost:8080/deck.html |
+| How it works | http://localhost:8080/how-it-works.html |
 
-## roofwander-system
+Standalone example: http://localhost:8080/investor-traction/investor-traction.html
 
-**How Roofwander Works as a System** — Full ecosystem map: supply, marketplace, discovery, affiliate, growth and infrastructure layers.
+Stop the server with `Ctrl+C` in the terminal.
 
-Place on /investor page right after the hero section. Click any box to reveal details.
+**Without Python:** `npx serve . -p 8080` (Node.js) from the same folder.
 
-## investor-growth-flywheel
+---
 
-**How does it grow?** — Roofwander Growth Flywheel: More tents listed → More renters & buyers → More rentals → More reviews & trip data → Better comparisons & authority → More discovery (SEO/trust) → loop. Place after Product Roadmap, before Traction.
+## Regenerating `deck.html`
 
-## investor-unit-economics
+```bash
+python build-deck.py
+```
 
-**Unit economics** — Marketplace CAC constrained by per-booking contribution margin. Three clickable cards (contribution margin ~€40, repeat behavior, feasible CAC split), acquisition channels by side, CAC target, and four dropdowns (CAC constraint math, acquisition strategy, analytics, margin expansion). Place after Traction.
+The script reads each standalone file in `SLIDES`, strips embedded `<style>` (styles come from `assets/deck.css`), adjusts a few asset paths, and writes `deck.html`. If the checked-in deck includes slides or edits not in the script, reconcile manually or extend `SLIDES` in `build-deck.py` before relying on a full regen.
+
+---
+
+## Regenerating `how-it-works.html`
+
+Content lives in Markdown under `how-it-works-content/`. The single-page build uses **`how-roofwander-works-full.md`** (end-to-end narrative). Other files in that folder are smaller topic splits for reference or reuse; they are not merged automatically.
+
+Install the optional dependency once:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then:
+
+```bash
+python build-how-it-works.py
+```
+
+This writes `how-it-works.html` (hero, table of contents, article body). Embedded HTML in the Markdown (e.g. `doc-flow` diagrams) is preserved. Commit the generated HTML when you change the source so the site works without running Python.
+
+---
+
+## Docs in this folder
+
+- `DESIGN-SYSTEM.md` — CSS layers, tokens, shared classes
+
+**Team / scope (repo root):** [../docs/TEAM.md](../docs/TEAM.md) — what belongs in this public repo vs LinkedIn work in a private repo.

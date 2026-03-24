@@ -32,8 +32,8 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .card.highlight:hover{box-shadow:0 4px 18px rgba(22,101,52,0.16)}
 .card-title{font-weight:600;font-size:15px;margin:0}
 .card-desc{font-size:12px;color:#6b7280;margin-top:6px;line-height:1.4}
-.card-detail{font-size:13px;color:#4b5563;margin-top:12px;padding-top:12px;border-top:1px solid #f3f4f6;display:none}
-.card.open .card-detail{display:block}
+.card-detail{font-size:13px;color:#4b5563;max-height:0;overflow:hidden;margin-top:0;padding-top:0;border-top:0 solid #f3f4f6;transition:max-height 0.3s ease,margin-top 0.3s ease,padding-top 0.3s ease}
+.card:hover .card-detail,.card.pinned .card-detail{max-height:200px;margin-top:12px;padding-top:12px;border-top:1px solid #f3f4f6}
 /* Growth layer */
 .growth{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
 .growth .card{text-align:center}
@@ -167,23 +167,20 @@ body{background:#fff;padding:16px}
 </section>
 
 <script>
-document.querySelectorAll('.card').forEach(card=>{
-  const desc=card.querySelector('.card-desc')
-  const detail=card.querySelector('.card-detail')
-  const dataDetail=card.dataset.detail
-  if(!detail) return
-  detail.textContent=''
-  card.addEventListener('click',()=>{
-    const open=card.classList.contains('open')
-    document.querySelectorAll('.card.open').forEach(c=>c.classList.remove('open'))
-    if(!open){
-      card.classList.add('open')
-      if(dataDetail) detail.textContent=dataDetail
-    } else {
-      detail.textContent=''
-    }
-  })
-})
+(function(){
+  var cards = document.querySelectorAll('.card[data-detail]');
+  cards.forEach(function(card){
+    var detail = card.querySelector('.card-detail');
+    if(!detail) return;
+    detail.textContent = card.dataset.detail;
+    card.addEventListener('click', function(e){
+      e.preventDefault();
+      var wasPinned = card.classList.contains('pinned');
+      cards.forEach(function(c){ c.classList.remove('pinned'); });
+      if(!wasPinned) card.classList.add('pinned');
+    });
+  });
+})();
 </script>
 </body>
 </html>

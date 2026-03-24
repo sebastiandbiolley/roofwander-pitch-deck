@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Slide 7 — Market Size</title>
+<title>Slide 7 - Market Size</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -15,8 +15,8 @@
   --accent:#166534;
   --accent-light:#dcfce7;
   --border:#e7e5e4;
-  --shadow:0 1px 3px rgba(0,0,0,0.04);
-  --shadow-hover:0 4px 12px rgba(0,0,0,0.06);
+  --shadow:0 2px 6px rgba(22,101,52,0.12);
+  --shadow-hover:0 6px 20px rgba(22,101,52,0.15);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
@@ -24,14 +24,28 @@ body{
   background:var(--bg);
   color:var(--text);
   line-height:1.5;
+  position:relative;
+}
+body::before{
+  content:'';
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  pointer-events:none;
+  background:radial-gradient(ellipse 120% 100% at 0% 0%,rgba(187,247,208,0.35),transparent 60%);
+  z-index:0;
 }
 
-/* Slide 7 — Market Size */
+/* Slide 7 - Market Size */
 
 .market-size-section{
-  padding:80px 24px;
-  max-width:1280px;
+  padding:80px 24px 80px;
+  max-width:960px;
   margin:0 auto;
+  position:relative;
+  z-index:1;
   opacity:0;
   transform:translateY(8px);
   animation:marketSizeFadeIn 0.7s ease forwards;
@@ -43,8 +57,7 @@ body{
   }
 }
 .market-size-inner{
-  max-width:860px;
-  margin:0 auto;
+  width:100%;
 }
 .market-size-intro{
   text-align:left;
@@ -70,12 +83,12 @@ body{
   font-size:16px;
   color:var(--text-muted);
   line-height:1.6;
-  max-width:640px;
   margin:0;
 }
 
-/* Stat cards */
+/* Stat cards - like solution: title (green) + description visible, body expandable */
 
+@keyframes cardReveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .market-size-grid{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -85,30 +98,32 @@ body{
 .market-size-card{
   background:#fff;
   border:1px solid var(--border);
-  border-radius:16px;
+  border-radius:12px;
   box-shadow:var(--shadow);
-  padding:24px 22px 26px;
+  padding:24px 20px;
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
-  transition:
-    box-shadow 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.18s ease,
-    background 0.18s ease;
+  gap:12px;
+  transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;
+  cursor:pointer;
+  opacity:0;
+  animation:cardReveal 0.9s ease both;
 }
+.market-size-card:nth-child(1){animation-delay:0.3s}
+.market-size-card:nth-child(2){animation-delay:0.6s}
+.market-size-card:nth-child(3){animation-delay:0.9s}
+@media (prefers-reduced-motion:reduce){.market-size-card{animation:none!important;opacity:1!important;transform:none!important}}
 .market-size-card:hover{
+  transform:translateY(-2px);
   box-shadow:var(--shadow-hover);
   border-color:#d6d3d1;
-  transform:translateY(-3px);
-  background:#fefefe;
 }
 .market-size-number{
   font-size:28px;
   font-weight:700;
   letter-spacing:-0.03em;
   color:var(--accent);
-  margin-bottom:10px;
+  margin-bottom:4px;
 }
 .market-size-number-text{
   font-size:22px;
@@ -118,7 +133,18 @@ body{
   font-size:14px;
   font-weight:600;
   color:var(--text);
-  margin-bottom:8px;
+  margin:0;
+}
+.market-size-detail{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.3s ease;
+}
+.market-size-card:hover .market-size-detail,.market-size-card.pinned .market-size-detail{max-height:150px}
+.market-size-card.pinned{
+  border-color:var(--accent);
+  background:var(--accent-light);
+  box-shadow:0 0 0 2px rgba(22,101,52,0.15);
 }
 .market-size-body{
   font-size:14px;
@@ -134,7 +160,11 @@ body{
   text-align:center;
   font-size:15px;
   color:var(--text-muted);
+  opacity:0;
+  animation:cardReveal 0.6s ease both;
+  animation-delay:1.4s;
 }
+@media (prefers-reduced-motion:reduce){.market-size-closing{animation:none!important;opacity:1!important}}
 
 /* Responsive */
 
@@ -169,31 +199,28 @@ body{
     </div>
 
     <div class="market-size-grid">
-      <!-- Card 1 -->
-      <article class="market-size-card">
+      <article class="market-size-card" data-market-size-card>
         <div class="market-size-number">1.5M+</div>
         <div class="market-size-label">rooftop tents in circulation globally</div>
-        <p class="market-size-body">
-          Installed base of rooftop tents creates a large potential rental supply.
-        </p>
+        <div class="market-size-detail">
+          <p class="market-size-body">Installed base of rooftop tents creates a large potential rental supply.</p>
+        </div>
       </article>
 
-      <!-- Card 2 -->
-      <article class="market-size-card">
+      <article class="market-size-card" data-market-size-card>
         <div class="market-size-number">7.5% – 9%</div>
         <div class="market-size-label">annual market growth</div>
-        <p class="market-size-body">
-          Driven by outdoor travel, road trips, and overlanding culture.
-        </p>
+        <div class="market-size-detail">
+          <p class="market-size-body">Driven by outdoor travel, road trips, and overlanding culture.</p>
+        </div>
       </article>
 
-      <!-- Card 3 -->
-      <article class="market-size-card">
+      <article class="market-size-card" data-market-size-card>
         <div class="market-size-number market-size-number-text">Anyone with a car</div>
         <div class="market-size-label">potential rooftop tent traveler</div>
-        <p class="market-size-body">
-          Weekend explorers, road-trippers, families, and first-time campers.
-        </p>
+        <div class="market-size-detail">
+          <p class="market-size-body">Weekend explorers, road-trippers, families, and first-time campers.</p>
+        </div>
       </article>
     </div>
 
@@ -228,10 +255,7 @@ body{
                   <div class="market-size-dd-card-label">Purchase market</div>
                   <div class="market-size-dd-card-number">€64M</div>
                   <div class="market-size-dd-card-sub">rooftop tent revenue</div>
-                  <div class="market-size-dd-card-row">
-                    <span class="market-size-dd-chip">29K tents sold</span>
-                    <span class="market-size-dd-chip">€2,200 avg. selling price</span>
-                  </div>
+                  <p class="market-size-dd-card-text">29K tents sold · €2,200 avg. selling price</p>
                 </div>
               </div>
             </div>
@@ -365,13 +389,14 @@ body{
   
   .market-size-dropdowns{
     padding:40px 24px 80px;
-    max-width:1280px;
+    max-width:960px;
     margin:0 auto;
+    position:relative;
+    z-index:1;
   }
   
   .market-size-dropdowns-inner{
-    max-width:860px;
-    margin:0 auto;
+    width:100%;
     display:flex;
     flex-direction:column;
     gap:12px;
@@ -386,6 +411,9 @@ body{
     box-shadow:var(--shadow);
     overflow:hidden;
     transition:box-shadow 0.2s ease,border-color 0.2s ease,transform 0.18s ease;
+    opacity:0;
+    animation:cardReveal 0.5s ease both;
+    animation-delay:1.9s;
   }
   
   .market-size-dd:hover{
@@ -676,6 +704,10 @@ body{
     line-height:1.6;
   }
   
+  @media (prefers-reduced-motion:reduce){
+    .market-size-dd{animation:none!important;opacity:1!important}
+  }
+  
   /* Responsive */
   
   @media (max-width:900px){
@@ -705,6 +737,19 @@ body{
   }
   </style>
   
+  <script>
+  (function(){
+    var cards = document.querySelectorAll('.market-size-card[data-market-size-card]');
+    cards.forEach(function(card){
+      card.addEventListener('click', function(e){
+        e.preventDefault();
+        var wasPinned = card.classList.contains('pinned');
+        cards.forEach(function(c){ c.classList.remove('pinned'); });
+        if(!wasPinned) card.classList.add('pinned');
+      });
+    });
+  })();
+  </script>
   <script>
   (function () {
     var dropdowns = document.querySelectorAll('.market-size-dd');

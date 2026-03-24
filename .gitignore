@@ -12,3 +12,6 @@ Thumbs.db
 .env
 .env.local
 *.log
+
+# Team-only: LinkedIn drafts & calendars (use a private repo or local clone; not for public GitHub)
+linkedin-posts/

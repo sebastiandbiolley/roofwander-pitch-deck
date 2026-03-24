@@ -15,25 +15,24 @@
   --accent:#166534;
   --accent-light:#dcfce7;
   --border:#e7e5e4;
-  --shadow:0 1px 3px rgba(0,0,0,0.04);
-  --shadow-hover:0 4px 12px rgba(0,0,0,0.06);
+  --shadow:0 2px 6px rgba(22,101,52,0.12);
+  --shadow-hover:0 6px 20px rgba(22,101,52,0.15);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:'Inter',system-ui,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.5;
-}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;position:relative}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;background:radial-gradient(ellipse 120% 100% at 0% 0%,rgba(187,247,208,0.35),transparent 60%);z-index:0}
 
 .team-section{
-  padding:80px 24px;
+  padding:80px 24px 80px;
   max-width:960px;
   margin:0 auto;
+  position:relative;
+  z-index:1;
   opacity:0;
-  animation:teamFadeIn 0.6s ease forwards;
+  animation:teamFadeIn 0.7s ease forwards;
 }
 @keyframes teamFadeIn{to{opacity:1}}
+@keyframes teamCardReveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 .team-inner{max-width:100%;}
 .team-eyebrow{
@@ -56,7 +55,6 @@ body{
   font-size:16px;
   color:var(--text-muted);
   line-height:1.6;
-  max-width:560px;
   margin:0 0 48px;
 }
 
@@ -72,15 +70,20 @@ body{
 .team-card{
   background:#fff;
   border:1px solid var(--border);
-  border-radius:16px;
+  border-radius:12px;
   box-shadow:var(--shadow);
   overflow:hidden;
   transition:box-shadow 0.2s ease,border-color 0.2s ease,transform 0.18s ease;
+  opacity:0;
+  animation:teamCardReveal 0.9s ease both;
 }
+.team-card:nth-child(1){animation-delay:0.3s}
+.team-card:nth-child(2){animation-delay:0.6s}
+.team-card:nth-child(3){animation-delay:0.9s}
 .team-card:hover{
   box-shadow:var(--shadow-hover);
   border-color:rgba(22,101,52,0.35);
-  transform:translateY(-4px);
+  transform:translateY(-2px);
 }
 
 .team-card-img-wrap{
@@ -137,7 +140,11 @@ body{
   box-shadow:var(--shadow);
   overflow:hidden;
   transition:box-shadow 0.2s ease,border-color 0.2s ease,transform 0.18s ease;
+  opacity:0;
+  animation:teamCardReveal 0.5s ease both;
 }
+.team-dd:nth-of-type(1){animation-delay:1.2s}
+.team-dd:nth-of-type(2){animation-delay:1.5s}
 .team-dd:hover{
   box-shadow:var(--shadow-hover);
   border-color:#d6d3d1;
@@ -167,7 +174,7 @@ body{
   opacity:0;
   transition:max-height 0.35s ease,opacity 0.25s ease;
 }
-.team-dd.open .team-dd-body{max-height:900px;opacity:1;}
+.team-dd.open .team-dd-body{max-height:min(1400px,80vh);opacity:1;overflow-y:auto;}
 .team-dd-content{
   padding:10px 18px 18px;
   font-size:14px;
@@ -176,10 +183,10 @@ body{
 }
 .team-dd-content p{margin:0 0 10px;}
 .team-dd-section{
-  font-size:14px;
   font-weight:600;
-  color:var(--accent);
-  margin:16px 0 8px;
+  color:var(--text);
+  margin-top:12px;
+  margin-bottom:6px;
 }
 .team-dd-section:first-of-type{margin-top:0;}
 .team-dd-note{margin:12px 0 0;font-size:13px;color:var(--text-muted);}
@@ -198,9 +205,13 @@ body{
   object-fit:cover;
 }
 
+@media (prefers-reduced-motion:reduce){
+  .team-section,.team-card,.team-dd{animation:none!important;opacity:1!important;transform:none!important}
+}
 @media (max-width:900px){
   .team-section{padding:64px 20px 72px;}
   .team-grid{gap:20px;}
+  .team-dd-content{padding:8px 16px 16px;}
 }
 </style>
 </head>
@@ -294,14 +305,28 @@ body{
 <script>
 (function(){
   var dropdowns = document.querySelectorAll('.team-dd');
+  function closeAll(except){
+    dropdowns.forEach(function(dd){
+      if(dd===except) return;
+      dd.classList.remove('open');
+      var h=dd.querySelector('.team-dd-header');
+      var b=dd.querySelector('.team-dd-body');
+      if(h) h.setAttribute('aria-expanded','false');
+      if(b) b.setAttribute('aria-hidden','true');
+    });
+  }
   dropdowns.forEach(function(dd){
-    var header = dd.querySelector('.team-dd-header');
-    var body = dd.querySelector('.team-dd-body');
+    var header=dd.querySelector('.team-dd-header');
+    var body=dd.querySelector('.team-dd-body');
     if(!header||!body) return;
     header.addEventListener('click',function(){
-      var isOpen = dd.classList.toggle('open');
-      header.setAttribute('aria-expanded', isOpen);
-      body.setAttribute('aria-hidden', !isOpen);
+      var isOpen=dd.classList.toggle('open');
+      header.setAttribute('aria-expanded',isOpen?'true':'false');
+      body.setAttribute('aria-hidden',isOpen?'false':'true');
+      if(isOpen){
+        closeAll(dd);
+        setTimeout(function(){ body.scrollIntoView({ behavior:'smooth', block:'start', inline:'nearest' }); },100);
+      }
     });
   });
 })();

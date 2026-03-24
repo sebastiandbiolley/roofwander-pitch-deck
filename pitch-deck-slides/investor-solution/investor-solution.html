@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Slide 4 — The Solution</title>
+<title>Slide 4 - The Solution</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -15,43 +15,50 @@
   --accent:#166534;
   --accent-light:#dcfce7;
   --border:#e7e5e4;
-  --shadow:0 1px 3px rgba(0,0,0,0.04);
-  --shadow-hover:0 4px 12px rgba(0,0,0,0.06);
+  --shadow:0 2px 6px rgba(22,101,52,0.12);
+  --shadow-hover:0 6px 20px rgba(22,101,52,0.15);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
-/* Slide 4 — The Solution */
-.solution-section{padding:80px 24px;max-width:1280px;margin:0 auto;opacity:0;animation:solutionFadeIn 0.7s ease forwards}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;position:relative}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;background:radial-gradient(ellipse 120% 100% at 0% 0%,rgba(187,247,208,0.35),transparent 60%);z-index:0}
+/* Slide 4 - The Solution */
+.solution-section{padding:80px 24px 80px;max-width:960px;margin:0 auto;position:relative;z-index:1;opacity:0;animation:solutionFadeIn 0.7s ease forwards}
 @keyframes solutionFadeIn{to{opacity:1}}
-.solution-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.solution-inner{display:flex;flex-direction:column;gap:48px}
+.solution-intro{width:100%}
+.solution-main{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
+.solution-visual{justify-self:end;margin-top:48px}
 @media (max-width:900px){
-.solution-inner{grid-template-columns:1fr;gap:48px}
-.solution-visual{order:2}
+.solution-main{grid-template-columns:1fr;gap:32px}
+.solution-cards-wrap{order:1}
+.solution-visual{order:2;justify-self:center;margin-top:0}
 }
-.solution-left{min-width:0}
+.solution-cards-wrap{min-width:0}
 .solution-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
 .solution-heading{font-size:clamp(28px,3.2vw,36px);font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin-bottom:12px;color:var(--text)}
 .solution-supporting{font-size:16px;color:var(--text-muted);line-height:1.6;margin-bottom:28px}
-/* Accordion cards */
-.solution-cards{display:flex;flex-direction:column;gap:8px}
-.solution-flow-arrow{display:flex;justify-content:center;align-items:center;font-size:14px;color:var(--accent);opacity:0.9}
+/* Accordion cards - hover to expand, click to pin (like problem slide) */
+@keyframes cardReveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes arrowFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.solution-cards{display:flex;flex-direction:column;gap:12px}
+.solution-flow-arrow{display:flex;justify-content:center;align-items:center;font-size:14px;color:var(--accent);opacity:0;animation:cardReveal 0.9s ease both,arrowFloat 6s ease-in-out infinite}
+.solution-flow-arrow:nth-of-type(2){animation-delay:0.45s,1.35s}
+.solution-flow-arrow:nth-of-type(4){animation-delay:0.75s,1.6s}
 .solution-flow-arrow span{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:999px;background:var(--accent-light);box-shadow:var(--shadow)}
-.solution-card{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;transition:box-shadow 0.2s ease,border-color 0.2s ease}
-.solution-card:hover{border-color:#d6d3d1;box-shadow:var(--shadow-hover)}
-.solution-card.open{border-color:#a8a29e;box-shadow:var(--shadow-hover)}
-.solution-card-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;background:none;border:none;cursor:pointer;text-align:left;font-family:inherit;transition:background 0.15s ease}
-.solution-card-trigger:hover{background:#fafaf9}
-.solution-card-title{font-size:15px;font-weight:600;color:var(--text)}
-.solution-card-icon{font-size:14px;color:var(--text-muted);transition:transform 0.3s ease;flex-shrink:0}
-.solution-card.open .solution-card-icon{transform:rotate(180deg)}
-.solution-card-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease}
-.solution-card.open .solution-card-body{max-height:220px}
-.solution-card-inner{padding:0 18px 18px}
-.solution-card-inner ul{margin:0;padding-left:18px;font-size:14px;color:var(--text-muted);line-height:1.6}
-.solution-card-inner li{margin-bottom:6px}
+.solution-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;cursor:pointer;opacity:0;animation:cardReveal 0.9s ease both}
+.solution-card:nth-of-type(1){animation-delay:0.3s}
+.solution-card:nth-of-type(3){animation-delay:0.6s}
+.solution-card:nth-of-type(5){animation-delay:0.9s}
+@media (prefers-reduced-motion:reduce){.solution-card,.solution-flow-arrow{animation:none!important;opacity:1!important;transform:none!important}}
+.solution-card:hover{transform:translateY(-2px);border-color:#d6d3d1;box-shadow:var(--shadow-hover)}
+.solution-card-title{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-0.01em}
+.solution-card-detail{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+.solution-card-detail .solution-card-list{margin:0;padding-left:18px;font-size:14px;color:var(--text-muted);line-height:1.6}
+.solution-card:hover .solution-card-detail,.solution-card.pinned .solution-card-detail{max-height:300px}
+.solution-card.pinned{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 2px rgba(22,101,52,0.15)}
 /* Right: Laptop mockup */
 .solution-visual{display:flex;justify-content:center;align-items:center;position:relative}
-.laptop-wrap{position:relative;width:100%;max-width:520px}
+.laptop-wrap{position:relative;width:100%;max-width:520px;min-width:320px}
 .laptop-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:320px;height:320px;border-radius:50%;background:linear-gradient(135deg,var(--accent-light) 0%,#bbf7d0 100%);opacity:0.7;z-index:0}
 .laptop{position:relative;z-index:1;background:#1a1a1a;border-radius:12px 12px 0 0;padding:10px 10px 0;box-shadow:0 20px 50px rgba(0,0,0,0.15)}
 .laptop-screen{aspect-ratio:16/10;background:#0a0a0a;border-radius:6px 6px 0 0;overflow:hidden;position:relative}
@@ -65,24 +72,22 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
 <section class="solution-section">
   <div class="solution-inner">
-    <div class="solution-left">
+    <div class="solution-intro">
       <p class="solution-eyebrow">THE SOLUTION</p>
       <h2 class="solution-heading">A trusted rental marketplace powering smarter buying</h2>
       <p class="solution-supporting">Roofwander combines rentals, real-world reviews, and product discovery in one system.</p>
+    </div>
 
+    <div class="solution-main">
+      <div class="solution-cards-wrap">
       <div class="solution-cards">
-        <div class="solution-card open" data-card="1">
-          <button class="solution-card-trigger" type="button" aria-expanded="true">
-            <span class="solution-card-title">Rental-first marketplace</span>
-            <span class="solution-card-icon">▾</span>
-          </button>
-          <div class="solution-card-body">
-            <div class="solution-card-inner">
-              <ul>
-                <li>Owners and professional partners rent safely</li>
-                <li>Roofwander handles bookings, payments, deposits, and insurance</li>
-              </ul>
-            </div>
+        <div class="solution-card" data-solution-card>
+          <div class="solution-card-title">Rental-first marketplace</div>
+          <div class="solution-card-detail">
+            <ul class="solution-card-list">
+              <li>Owners and professional partners rent safely</li>
+              <li>Roofwander handles bookings, payments, deposits, and insurance</li>
+            </ul>
           </div>
         </div>
 
@@ -90,18 +95,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
           <span>↓</span>
         </div>
 
-        <div class="solution-card" data-card="2">
-          <button class="solution-card-trigger" type="button" aria-expanded="false">
-            <span class="solution-card-title">Real-world reviews</span>
-            <span class="solution-card-icon">▾</span>
-          </button>
-          <div class="solution-card-body">
-            <div class="solution-card-inner">
-              <ul>
-                <li>Every rental generates feedback on the tent and the trip</li>
-                <li>Reviews improve trust and product understanding</li>
-              </ul>
-            </div>
+        <div class="solution-card" data-solution-card>
+          <div class="solution-card-title">Real-world reviews</div>
+          <div class="solution-card-detail">
+            <ul class="solution-card-list">
+              <li>Every rental generates feedback on the tent and the trip</li>
+              <li>Reviews improve trust and product understanding</li>
+            </ul>
           </div>
         </div>
 
@@ -109,34 +109,29 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
           <span>↓</span>
         </div>
 
-        <div class="solution-card" data-card="3">
-          <button class="solution-card-trigger" type="button" aria-expanded="false">
-            <span class="solution-card-title">Comparison-first buy side</span>
-            <span class="solution-card-icon">▾</span>
-          </button>
-          <div class="solution-card-body">
-            <div class="solution-card-inner">
-              <ul>
-                <li>Users compare rooftop tents based on real-world experience</li>
-                <li>Roofwander connects discovery to purchases through affiliate links</li>
-              </ul>
-            </div>
+        <div class="solution-card" data-solution-card>
+          <div class="solution-card-title">Comparison-first buy side</div>
+          <div class="solution-card-detail">
+            <ul class="solution-card-list">
+              <li>Users compare rooftop tents based on real-world experience</li>
+              <li>Roofwander connects discovery to purchases through affiliate links</li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
+      </div>
 
-    <div class="solution-visual">
-      <div class="laptop-wrap">
-        <div class="laptop-circle"></div>
-        <div class="laptop">
-          <div class="laptop-screen">
-            <!-- Using the same video as the investor hero section -->
-            <video autoplay muted loop playsinline>
-              <source src="../investor-hero/hero-video.mp4" type="video/mp4" />
-            </video>
+      <div class="solution-visual">
+        <div class="laptop-wrap">
+          <div class="laptop-circle"></div>
+          <div class="laptop">
+            <div class="laptop-screen">
+              <video autoplay muted loop playsinline>
+                <source src="../investor-hero/hero-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="laptop-base"></div>
           </div>
-          <div class="laptop-base"></div>
         </div>
       </div>
     </div>
@@ -145,23 +140,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
 <script>
 (function(){
-  var cards = document.querySelectorAll('.solution-card');
+  var cards = document.querySelectorAll('.solution-card[data-solution-card]');
   cards.forEach(function(card){
-    var btn = card.querySelector('.solution-card-trigger');
-    var body = card.querySelector('.solution-card-body');
-    if(!btn || !body) return;
-    btn.addEventListener('click', function(){
-      var isOpen = card.classList.contains('open');
-      cards.forEach(function(c){
-        c.classList.remove('open');
-        var b = c.querySelector('.solution-card-trigger');
-        var d = c.querySelector('.solution-card-body');
-        if(b) b.setAttribute('aria-expanded', 'false');
-      });
-      if(!isOpen){
-        card.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
+    card.addEventListener('click', function(e){
+      e.preventDefault();
+      var wasPinned = card.classList.contains('pinned');
+      cards.forEach(function(c){ c.classList.remove('pinned'); });
+      if(!wasPinned) card.classList.add('pinned');
     });
   });
 })();
