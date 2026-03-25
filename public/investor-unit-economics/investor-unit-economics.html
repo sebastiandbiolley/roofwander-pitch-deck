@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="../" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unit Economics — Roofwander</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/deck.css" />
+</head>
+<body>
+
+<section class="deck-section ue-slide">
+  <div class="deck-section-inner">
+    <div class="deck-intro">
+      <p class="deck-eyebrow">UNIT ECONOMICS</p>
+      <h2 class="deck-title">Marketplace CAC is constrained by per-booking contribution margin</h2>
+      <p class="deck-desc">Both sides of the marketplace matter. We lay out our assumptions so you can stress-test them.</p>
+    </div>
+    <div class="ue-cards-wrap">
+      <article class="ue-card" data-ue-card>
+        <div class="ue-value">~€40</div>
+        <div class="ue-label">Contribution margin per booking</div>
+        <div class="ue-card-detail">
+          <p>Built from average booking value, take rate, and ops costs. Expected to expand through insurance, affiliate revenue, and add-ons.</p>
+        </div>
+      </article>
+      <article class="ue-card" data-ue-card>
+        <div class="ue-value">Renter: 2x · Owner: 20x</div>
+        <div class="ue-label">Repeat behavior (lifetime)</div>
+        <div class="ue-card-detail">
+          <p>Owner CAC amortized across 20 bookings; renter across 2. ≈1 owner supports ~10 renters. Figures are assumptions to validate.</p>
+        </div>
+      </article>
+      <article class="ue-card" data-ue-card>
+        <div class="ue-value">Renter: €72 · Owner: €80</div>
+        <div class="ue-label">CAC ceiling</div>
+        <div class="ue-card-detail">
+          <p>Maximum CAC for €40 margin. Renter: 72÷2 = €36/booking, Owner: 80÷20 = €4/booking. Total: €40 ✓</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="ue-dropdowns deck-dropdowns-inner">
+      <div class="ue-dd" data-uedd="acquisition">
+        <button class="ue-dd-header" type="button" aria-expanded="false">
+          <span class="ue-dd-title">Acquisition strategy by side</span>
+          <span class="ue-dd-icon rw-icon" aria-hidden="true"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 9 6 6 6-6" />
+</svg></span>
+        </button>
+        <div class="ue-dd-body" aria-hidden="true">
+          <div class="ue-dd-content">
+            <p class="deck-dd-section">Renter acquisition</p>
+            <ul>
+              <li>SEO on high-intent rental and comparison queries</li>
+              <li>Google Search for demand capture</li>
+              <li>Influencer / creator content</li>
+              <li>Referrals</li>
+            </ul>
+            <p class="deck-dd-section">Owner acquisition</p>
+            <ul>
+              <li>Community outreach</li>
+              <li>Referrals</li>
+              <li>Direct outreach to owners</li>
+              <li>Organic discovery / SEO</li>
+            </ul>
+            <p class="deck-dd-note"><strong>Key note:</strong> CAC allocation shifts depending on the marketplace bottleneck: supply or demand.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ue-dd" data-uedd="cac-decreases">
+        <button class="ue-dd-header" type="button" aria-expanded="false">
+          <span class="ue-dd-title">Why CAC decreases over time</span>
+          <span class="ue-dd-icon rw-icon" aria-hidden="true"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 9 6 6 6-6" />
+</svg></span>
+        </button>
+        <div class="ue-dd-body" aria-hidden="true">
+          <div class="ue-dd-content">
+            <p class="deck-dd-section">Why CAC declines as the marketplace scales</p>
+            <ul>
+              <li>More listings improve selection and conversion</li>
+              <li>More reviews increase trust</li>
+              <li>More completed rentals generate better social proof</li>
+              <li>More SEO pages and content increase organic traffic</li>
+              <li>More brand awareness drives direct traffic</li>
+              <li>Referrals become more important over time</li>
+              <li>Ad campaigns become more efficient with better data and targeting</li>
+            </ul>
+            <p class="deck-dd-note"><strong>Implication:</strong> As liquidity and organic discovery improve, acquisition becomes cheaper and more predictable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="assets/deck-behaviors.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+lucide-static@0.469.0

@@ -1,0 +1,2 @@
+Icons in lucide/ are from Lucide (https://lucide.dev), fetched via lucide-static
+on npm. License: ISC. See sync-lucide-icons.py for version pin.

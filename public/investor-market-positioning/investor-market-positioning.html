@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="../" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Market Positioning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/deck.css" />
+</head>
+<body>
+
+<section class="deck-section positioning-slide">
+  <div class="deck-section-inner">
+    <div class="deck-intro">
+    <p class="deck-eyebrow">MARKET POSITIONING</p>
+    <h2 class="deck-title">Rooftop tent travel sits at the intersection of flexibility and affordability</h2>
+    <p class="deck-desc">It combines the advantages of vans and traditional rentals, without their main constraints.</p>
+    </div>
+
+    <div class="pos-graph-wrap">
+      <div class="pos-graph">
+        <div class="pos-graph-axes">
+          <div class="pos-graph-x"></div>
+          <div class="pos-graph-y"></div>
+          <div class="pos-graph-x-label">
+            <span class="x-left">Comfort / Convenience</span>
+            <span class="x-right">Flexibility / Freedom</span>
+          </div>
+          <div class="pos-graph-y-label">
+            <span class="y-top">Affordable</span>
+            <span class="y-bottom">Expensive</span>
+          </div>
+        </div>
+        <button type="button" class="pos-point" data-id="hotels" data-title="Hotels" data-desc="High comfort and convenience, but expensive and fixed to one destination.">Hotels</button>
+        <button type="button" class="pos-point" data-id="airbnb" data-title="Airbnb" data-desc="More affordable than hotels, but still location-bound and less flexible.">Airbnb</button>
+        <button type="button" class="pos-point" data-id="vans" data-title="Vans" data-desc="Mobile and flexible, but more expensive with added constraints like driving and parking.">Vans</button>
+        <button type="button" class="pos-point" data-id="rooftop-travel" data-title="Rooftop Tent Travel" data-desc="Mobile and flexible, with a lighter, lower-cost setup and fewer constraints than vans.">Rooftop Tent Travel</button>
+      </div>
+    </div>
+
+    <div class="pos-panel" id="pos-panel" role="region" aria-live="polite">
+      <div class="pos-panel-inner">
+        <div class="pos-panel-title" id="pos-panel-title"></div>
+        <p class="pos-panel-desc" id="pos-panel-desc"></p>
+      </div>
+    </div>
+    <p class="deck-desc positioning-outro">Rooftop tent travel overlaps with multiple existing travel options and can capture part of their demand depending on the use case.</p>
+  </div>
+</section>
+
+<script src="assets/deck-behaviors.js" defer></script>
+</body>
+</html>

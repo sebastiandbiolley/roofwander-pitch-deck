@@ -1,0 +1,2 @@
+# Optional: python scripts/build-how-it-works.py (from repo root)
+markdown>=3.5
