@@ -223,6 +223,16 @@ body::before {
   z-index: 0;
 }
 
+/* Standalone — system diagram (neutral card chrome; plain page bg, no green wash) */
+html.standalone-system-diagram {
+  --border: #e5e7eb;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+html.standalone-system-diagram body::before {
+  content: none;
+}
+
 /* --------------------------------------------------------------------------
    3. COMPONENTS
    -------------------------------------------------------------------------- */
