@@ -721,5 +721,28 @@
     initTractionSlide();
     initSharetribeUserCount();
     initCardDetails();
+    initHowTocSpy();
   });
+
+  function initHowTocSpy() {
+    var tocLinks = document.querySelectorAll('.how-toc .toc a');
+    if (!tocLinks.length) return;
+    var ids = [];
+    tocLinks.forEach(function (a) {
+      ids.push(a.getAttribute('href').slice(1));
+    });
+    if (tocLinks[0]) tocLinks[0].classList.add('is-active');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        tocLinks.forEach(function (a) { a.classList.remove('is-active'); });
+        var match = document.querySelector('.how-toc .toc a[href="#' + e.target.id + '"]');
+        if (match) match.classList.add('is-active');
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }
 })();

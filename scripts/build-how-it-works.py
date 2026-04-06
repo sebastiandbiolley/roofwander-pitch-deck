@@ -114,21 +114,23 @@ def main() -> None:
   <main class="home-main how-main">
     <header class="how-hero">
       <a href="index.html" class="how-back">← Back to home</a>
-      <h1 class="how-title">How it works</h1>
+      <h1 class="how-title">How Roofwander works</h1>
       <p class="how-subtitle">
-        End-to-end overview: the marketplace, revenue, discovery, booking, trust, tracking, and lifecycle communication.
+        The marketplace, product discovery, and growth systems, explained end to end.
       </p>
     </header>
+    <div class="how-layout">
 {toc_block}
-    <article class="doc-content">
+      <article class="doc-content">
 {article_html}
-    </article>
+      </article>
+    </div>
   </main>
 """
 
     page = render_full_page(
         SRC,
-        title="How it works — Roofwander",
+        title="How it works | Roofwander",
         body_inner=body_inner,
         body_class="home-page how-page",
     )
