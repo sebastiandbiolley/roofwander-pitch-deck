@@ -59,21 +59,23 @@
 
       // Sync deck slide active states into mobile menu
       var deckProgress = menu.querySelector('.mobile-menu-progress');
-      if (deckProgress) {
-        var observer = new MutationObserver(function () {
-          var dp = document.querySelector('.deck-nav .deck-progress');
-          if (dp) deckProgress.textContent = dp.textContent;
+      function syncMobileMenu() {
+        var dp = document.querySelector('.deck-nav .deck-progress');
+        if (dp && deckProgress) deckProgress.textContent = dp.textContent;
 
-          document.querySelectorAll('.deck-nav-center a[data-slide]').forEach(function (dl) {
-            var idx = dl.getAttribute('data-slide');
-            var ml = menu.querySelector('a[data-slide="' + idx + '"]');
-            if (ml) ml.classList.toggle('active', dl.classList.contains('active'));
-          });
+        document.querySelectorAll('.deck-nav-center a[data-slide]').forEach(function (dl) {
+          var idx = dl.getAttribute('data-slide');
+          var ml = menu.querySelector('a[data-slide="' + idx + '"]');
+          if (ml) ml.classList.toggle('active', dl.classList.contains('active'));
         });
-        var navEl = document.querySelector('.deck-nav');
-        if (navEl) {
-          observer.observe(navEl, { subtree: true, attributes: true, attributeFilter: ['class'], characterData: true, childList: true });
-        }
+      }
+
+      var navEl = document.querySelector('.deck-nav');
+      if (navEl) {
+        var observer = new MutationObserver(syncMobileMenu);
+        observer.observe(navEl, { subtree: true, attributes: true, attributeFilter: ['class'], characterData: true, childList: true });
+        // Initial sync
+        syncMobileMenu();
       }
     }
 

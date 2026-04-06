@@ -159,33 +159,147 @@
   }
 
   function initMarketSearchTrendPanel() {
-    var pill = document.querySelector('.market-card[data-market-panel="search-trend"]');
-    var detail = document.getElementById('market-detail');
-    var closeBtn = detail && detail.querySelector('.market-detail-close');
-    if (!pill || !detail) return;
+    var card = document.getElementById('mc-main-card');
+    if (!card) return;
+    var panel = document.getElementById('mc-chart-panel');
+    var actionText = card.querySelector('.mc-card-action-text');
+    var legends = card.querySelectorAll('.mc-legend[data-series]');
+    var chartLines = card.querySelectorAll('.market-chart-line');
 
-    function openDetail() {
-      detail.classList.add('is-open');
-      pill.classList.add('market-pill--active');
-      setTimeout(function () {
-        detail.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-      }, 100);
+    function setActionLabel(open) {
+      if (!actionText) return;
+      var openLabel = actionText.getAttribute('data-open-label') || 'Hide chart';
+      var closedLabel = actionText.getAttribute('data-closed-label') || 'Show chart';
+      actionText.textContent = open ? openLabel : closedLabel;
     }
 
-    function closeDetail() {
-      detail.classList.remove('is-open');
-      pill.classList.remove('market-pill--active');
+    function setOpenState(open) {
+      card.classList.toggle('is-open', open);
+      card.setAttribute('aria-expanded', String(open));
+      if (panel) panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+      setActionLabel(open);
     }
 
-    pill.addEventListener('click', function (e) {
-      e.preventDefault();
-      if (detail.classList.contains('is-open')) closeDetail();
-      else openDetail();
+    function clearSeriesFocus() {
+      card.classList.remove('has-series-focus');
+      chartLines.forEach(function (line) {
+        line.classList.remove('is-emphasis');
+      });
+      legends.forEach(function (legend) {
+        legend.classList.remove('is-emphasis');
+        legend.setAttribute('aria-pressed', 'false');
+      });
+    }
+
+    function applySeriesFocus(series) {
+      if (!series) return;
+      var targetLine = card.querySelector('.market-chart-line--' + series);
+      if (!targetLine) return;
+
+      card.classList.add('has-series-focus');
+      chartLines.forEach(function (line) {
+        line.classList.toggle('is-emphasis', line === targetLine);
+      });
+      legends.forEach(function (legend) {
+        var isTarget = legend.getAttribute('data-series') === series;
+        legend.classList.toggle('is-emphasis', isTarget);
+        legend.setAttribute('aria-pressed', isTarget ? 'true' : 'false');
+      });
+    }
+
+    function toggle() {
+      setOpenState(!card.classList.contains('is-open'));
+    }
+
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('.mc-chart-panel')) return;
+      toggle();
     });
-    pill.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pill.click(); }
+    card.addEventListener('keydown', function (e) {
+      if (e.target !== card) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
     });
-    if (closeBtn) closeBtn.addEventListener('click', closeDetail);
+
+    legends.forEach(function (legend) {
+      var series = legend.getAttribute('data-series');
+      legend.setAttribute('aria-pressed', 'false');
+
+      legend.addEventListener('mouseenter', function () {
+        applySeriesFocus(series);
+      });
+      legend.addEventListener('focus', function () {
+        applySeriesFocus(series);
+      });
+      legend.addEventListener('mouseleave', clearSeriesFocus);
+      legend.addEventListener('blur', clearSeriesFocus);
+      legend.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (legend.classList.contains('is-emphasis')) {
+          clearSeriesFocus();
+          return;
+        }
+        applySeriesFocus(series);
+      });
+    });
+
+    setOpenState(false);
+  }
+
+  function initStatCountUp() {
+    var els = document.querySelectorAll('[data-count-to]');
+    if (!els.length) return;
+    els.forEach(function (el) {
+      var target = parseFloat(el.getAttribute('data-count-to'));
+      var suffix = el.getAttribute('data-count-suffix') || '';
+      var decimals = (String(target).split('.')[1] || '').length;
+      var duration = 1200;
+      var startTime = null;
+      var started = false;
+
+      function animate(ts) {
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = (eased * target).toFixed(decimals);
+        el.textContent = current + suffix;
+        if (progress < 1) requestAnimationFrame(animate);
+      }
+
+      // Start when the slide becomes active (anim-active class on ancestor)
+      function tryStart() {
+        if (started) return;
+        var slide = el.closest('.deck-slide');
+        if (slide && slide.classList.contains('anim-active')) {
+          started = true;
+          requestAnimationFrame(animate);
+        }
+      }
+
+      // Observe the slide for anim-active — restart on re-entry
+      var slide = el.closest('.deck-slide');
+      if (slide) {
+        var obs = new MutationObserver(function () {
+          if (slide.classList.contains('anim-active')) {
+            started = false;
+            startTime = null;
+            tryStart();
+          } else {
+            el.textContent = '0' + suffix;
+            started = false;
+            startTime = null;
+          }
+        });
+        obs.observe(slide, { attributes: true, attributeFilter: ['class'] });
+        tryStart();
+      } else {
+        // Standalone page — start after delay
+        setTimeout(function () { requestAnimationFrame(animate); }, 400);
+      }
+    });
   }
 
   function initPositioningSlide() {
@@ -413,7 +527,7 @@
     var el = document.getElementById('sharetribe-user-count');
     if (!el) return;
 
-    fetch('/api/user-count')
+    fetch('data/user-stats.json')
     .then(function (res) { return res.json(); })
     .then(function (data) {
       if (!data.totalUsers) return;
@@ -583,7 +697,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     initDisclosureDelegation();
 
-    initAccordionGroup('.market-dd', '.market-dd-header', '.market-dd-body', { mode: 'toggle', scrollOnOpen: true });
+    initAccordionGroup('.market-dd', '.market-dd-header', '.market-dd-body', { mode: 'toggle', scrollOnOpen: false });
     initAccordionGroup('.roadmap-dd', '.roadmap-dd-header', '.roadmap-dd-body', { mode: 'toggle', scrollOnOpen: true });
     initAccordionGroup('.ask-dd', '.ask-dd-header', '.ask-dd-body', { mode: 'toggle', scrollOnOpen: true });
     initAccordionGroup('.team-dd', '.team-dd-header', '.team-dd-body', { mode: 'toggle', scrollOnOpen: true });
@@ -600,6 +714,7 @@
     initSystemDiagramPins();
     initMarketTrendsChart();
     initMarketSearchTrendPanel();
+    initStatCountUp();
     initPositioningSlide();
     initAskSlide();
     initFinanceSlide();
