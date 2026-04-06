@@ -124,11 +124,47 @@ def remove_inline_scripts(html: str) -> str:
 
 
 def build_nav_links(n: int) -> str:
-    lines = ['  <a href="index.html" class="deck-nav-home">Home</a>']
+    lines = ['  <div class="deck-nav-left">',
+             '    <a href="index.html" class="deck-nav-logo">Roofwander</a>',
+             '  </div>',
+             '  <div class="deck-nav-center">']
     for i in range(n):
         label = SLIDES[i][3]
-        lines.append(f'  <a href="#slide-{i}" data-slide="{i}">{label}</a>')
-    lines.append(f'  <span class="deck-progress" aria-live="polite">1 / {n}</span>')
+        lines.append(f'    <a href="#slide-{i}" data-slide="{i}">{label}</a>')
+    lines.append('  </div>')
+    lines.append('  <div class="deck-nav-right">')
+    lines.append(f'    <span class="deck-progress" aria-live="polite">1 / {n}</span>')
+    lines.append('    <a href="index.html" class="deck-nav-home">Home</a>')
+    lines.append('  </div>')
+    lines.append('  <button class="mobile-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">')
+    lines.append('    <span></span><span></span><span></span>')
+    lines.append('  </button>')
+    lines.append('  <div class="deck-nav-progress-bar"><div class="deck-nav-progress-fill"></div></div>')
+    return "\n".join(lines)
+
+
+def build_mobile_menu(n: int) -> str:
+    lines = ['<div class="mobile-menu" id="mobile-menu" aria-hidden="true">',
+             '  <div class="mobile-menu-header">',
+             '    <a href="index.html" class="mobile-menu-logo">Roofwander</a>',
+             '    <button class="mobile-menu-close" type="button" aria-label="Close menu">',
+             '      <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+             '    </button>',
+             '  </div>',
+             '  <div class="mobile-menu-body">',
+             '    <p class="mobile-menu-label">Slides</p>',
+             '    <ul class="mobile-menu-nav">']
+    for i in range(n):
+        label = SLIDES[i][3]
+        lines.append(f'      <li><a href="#slide-{i}" data-slide="{i}">{label}</a></li>')
+    lines.append('    </ul>')
+    lines.append('    <div class="mobile-menu-sep"></div>')
+    lines.append(f'    <span class="mobile-menu-progress">1 / {n}</span>')
+    lines.append('    <ul class="mobile-menu-nav">')
+    lines.append('      <li><a href="index.html">Home</a></li>')
+    lines.append('    </ul>')
+    lines.append('  </div>')
+    lines.append('</div>')
     return "\n".join(lines)
 
 
@@ -191,6 +227,7 @@ def main() -> None:
         raise SystemExit("Internal error: slide_contents length mismatch")
 
     nav_block = build_nav_links(n)
+    mobile_menu_block = build_mobile_menu(n)
 
     slide_wrappers: list[str] = []
     for i in range(n):
@@ -219,6 +256,8 @@ def main() -> None:
 {nav_block}
 </nav>
 
+{mobile_menu_block}
+
 <div class="deck-shell">
   <div class="deck-track">
 """
@@ -227,7 +266,22 @@ def main() -> None:
   </div>
 </div>
 
+<div class="deck-bottom-bar" aria-label="Slide navigation">
+  <button class="deck-bottom-bar-btn deck-bottom-bar-prev" type="button" aria-label="Previous slide">
+    <span class="rw-icon" data-rw-icon="chevron-left" aria-hidden="true"></span> Prev
+  </button>
+  <div class="deck-bottom-bar-progress">
+    <span class="deck-bottom-bar-counter">1 / """ + str(n) + """</span>
+    <div class="deck-bottom-bar-track"><div class="deck-bottom-bar-fill"></div></div>
+  </div>
+  <button class="deck-bottom-bar-btn deck-bottom-bar-next" type="button" aria-label="Next slide">
+    Next <span class="rw-icon" data-rw-icon="chevron-right" aria-hidden="true"></span>
+  </button>
+</div>
+<div class="deck-swipe-hint" aria-hidden="true">Swipe to navigate</div>
+
 <script src="assets/deck-behaviors.js" defer></script>
+<script src="assets/mobile-nav.js" defer></script>
 <script src="assets/deck.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,72 @@
+{
+  "totalUsers": 378,
+  "owners": 258,
+  "renters": 120,
+  "timeline": [
+    {
+      "month": "2025-04",
+      "owner": 12,
+      "renter": 2
+    },
+    {
+      "month": "2025-05",
+      "owner": 20,
+      "renter": 2
+    },
+    {
+      "month": "2025-06",
+      "owner": 31,
+      "renter": 8
+    },
+    {
+      "month": "2025-07",
+      "owner": 10,
+      "renter": 14
+    },
+    {
+      "month": "2025-08",
+      "owner": 17,
+      "renter": 7
+    },
+    {
+      "month": "2025-09",
+      "owner": 23,
+      "renter": 8
+    },
+    {
+      "month": "2025-10",
+      "owner": 4,
+      "renter": 1
+    },
+    {
+      "month": "2025-11",
+      "owner": 11,
+      "renter": 1
+    },
+    {
+      "month": "2025-12",
+      "owner": 12,
+      "renter": 2
+    },
+    {
+      "month": "2026-01",
+      "owner": 11,
+      "renter": 6
+    },
+    {
+      "month": "2026-02",
+      "owner": 33,
+      "renter": 10
+    },
+    {
+      "month": "2026-03",
+      "owner": 39,
+      "renter": 54
+    },
+    {
+      "month": "2026-04",
+      "owner": 34,
+      "renter": 5
+    }
+  ]
+}

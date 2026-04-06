@@ -1,0 +1,37 @@
+name: Update Sharetribe user stats
+
+on:
+  schedule:
+    # Every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install certifi
+
+      - name: Fetch Sharetribe stats
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          SHARETRIBE_CLIENT_SECRET: ${{ secrets.SHARETRIBE_CLIENT_SECRET }}
+        run: python scripts/fetch-sharetribe-stats.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/user-stats.json
+          git diff --cached --quiet || git commit -m "chore: update Sharetribe user stats [skip ci]"
+          git push
