@@ -409,6 +409,119 @@
     });
   }
 
+  function initSharetribeUserCount() {
+    var el = document.getElementById('sharetribe-user-count');
+    if (!el) return;
+
+    fetch('/api/user-count')
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      if (!data.totalUsers) return;
+
+      // Update main KPI card
+      el.textContent = data.totalUsers;
+      var card = el.closest('.traction-card');
+      if (card) card.setAttribute('aria-label', data.totalUsers + ' users');
+
+      // Update owner/renter modules
+      var ownerEl = document.getElementById('sharetribe-owner-count');
+      var renterEl = document.getElementById('sharetribe-renter-count');
+      var noteEl = document.getElementById('sharetribe-total-note');
+      if (ownerEl) ownerEl.textContent = data.owners;
+      if (renterEl) renterEl.textContent = data.renters;
+      if (noteEl) noteEl.innerHTML = 'Total: <strong>' + data.totalUsers + ' users</strong> — live from Sharetribe API.';
+
+      // Draw monthly line chart
+      var svg = document.getElementById('sharetribe-chart');
+      if (!svg || !data.timeline || !data.timeline.length) return;
+
+      var tl = data.timeline;
+      var maxVal = 0;
+      for (var i = 0; i < tl.length; i++) {
+        if (tl[i].owner > maxVal) maxVal = tl[i].owner;
+        if (tl[i].renter > maxVal) maxVal = tl[i].renter;
+      }
+      maxVal = Math.ceil(maxVal / 10) * 10 || 10;
+
+      var w = 520, h = 220;
+      var mL = 50, mR = 20, mT = 30, mB = 40;
+      var plotW = w - mL - mR;
+      var plotH = h - mT - mB;
+      var html = '';
+      var pts = tl.length;
+
+      // Horizontal grid lines
+      for (var g = 0; g <= 4; g++) {
+        var gy = mT + (plotH / 4) * g;
+        var gv = Math.round(maxVal - (maxVal / 4) * g);
+        html += '<line x1="' + mL + '" y1="' + gy + '" x2="' + (w - mR) + '" y2="' + gy + '" stroke="var(--border)" stroke-width="0.5" opacity="0.5"/>';
+        html += '<text x="' + (mL - 8) + '" y="' + (gy + 4) + '" class="traction-chart-axis-y" text-anchor="end">' + gv + '</text>';
+      }
+
+      // Axes
+      html += '<line x1="' + mL + '" y1="' + mT + '" x2="' + mL + '" y2="' + (h - mB) + '" stroke="var(--border)" stroke-width="1"/>';
+      html += '<line x1="' + mL + '" y1="' + (h - mB) + '" x2="' + (w - mR) + '" y2="' + (h - mB) + '" stroke="var(--border)" stroke-width="1"/>';
+
+      // Legend
+      html += '<line x1="' + (mL + 10) + '" y1="14" x2="' + (mL + 26) + '" y2="14" stroke="var(--accent)" stroke-width="2"/>';
+      html += '<text x="' + (mL + 30) + '" y="17" class="traction-chart-axis-y" style="font-size:10px">Owners</text>';
+      html += '<line x1="' + (mL + 90) + '" y1="14" x2="' + (mL + 106) + '" y2="14" stroke="#2563eb" stroke-width="2"/>';
+      html += '<text x="' + (mL + 110) + '" y="17" class="traction-chart-axis-y" style="font-size:10px">Renters</text>';
+
+      // Build line paths and area fills
+      var ownerPath = '';
+      var renterPath = '';
+      var ownerArea = '';
+      var renterArea = '';
+      for (var j = 0; j < pts; j++) {
+        var x = Math.round(mL + (j / (pts - 1)) * plotW);
+        var yO = Math.round(mT + plotH * (1 - tl[j].owner / maxVal));
+        var yR = Math.round(mT + plotH * (1 - tl[j].renter / maxVal));
+        ownerPath += (j ? ' L ' : 'M ') + x + ' ' + yO;
+        renterPath += (j ? ' L ' : 'M ') + x + ' ' + yR;
+        if (j === 0) {
+          ownerArea = 'M ' + x + ' ' + (h - mB) + ' L ' + x + ' ' + yO;
+          renterArea = 'M ' + x + ' ' + (h - mB) + ' L ' + x + ' ' + yR;
+        } else {
+          ownerArea += ' L ' + x + ' ' + yO;
+          renterArea += ' L ' + x + ' ' + yR;
+        }
+        if (j === pts - 1) {
+          ownerArea += ' L ' + x + ' ' + (h - mB) + ' Z';
+          renterArea += ' L ' + x + ' ' + (h - mB) + ' Z';
+        }
+
+        // Month labels (skip some if too many)
+        if (pts <= 7 || j % 2 === 0 || j === pts - 1) {
+          var parts = tl[j].month.split('-');
+          var label = parts[1] + '/' + parts[0].slice(2);
+          html += '<text x="' + x + '" y="' + (h - mB + 16) + '" class="traction-chart-axis-x" text-anchor="middle">' + label + '</text>';
+        }
+      }
+
+      // Area fills
+      html += '<path d="' + ownerArea + '" fill="var(--accent)" opacity="0.1"/>';
+      html += '<path d="' + renterArea + '" fill="#2563eb" opacity="0.1"/>';
+      // Lines
+      html += '<path d="' + ownerPath + '" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+      html += '<path d="' + renterPath + '" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+
+      // Dots
+      for (var k = 0; k < pts; k++) {
+        var dx = Math.round(mL + (k / (pts - 1)) * plotW);
+        var dyO = Math.round(mT + plotH * (1 - tl[k].owner / maxVal));
+        var dyR = Math.round(mT + plotH * (1 - tl[k].renter / maxVal));
+        html += '<circle cx="' + dx + '" cy="' + dyO + '" r="3" fill="var(--accent)"/>';
+        html += '<circle cx="' + dx + '" cy="' + dyR + '" r="3" fill="#2563eb"/>';
+      }
+
+      svg.innerHTML = html;
+    })
+    .catch(function () {
+      // Keep static fallback
+    });
+  }
+
   function initCardDetails() {
     var cards = document.querySelectorAll('.deck-card[data-detail], [data-detail].deck-card');
     cards = Array.prototype.filter.call(cards, function (c) {
@@ -491,6 +604,7 @@
     initAskSlide();
     initFinanceSlide();
     initTractionSlide();
+    initSharetribeUserCount();
     initCardDetails();
   });
 })();
