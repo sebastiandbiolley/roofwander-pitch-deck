@@ -47,6 +47,14 @@ SLIDES = [
     ("problem", "investor-problem", "investor-problem.html", "Problem", "Slide 3 - The Problem", None),
     ("solution", "investor-solution", "investor-solution.html", "Solution", "Slide 4 - The Solution", None),
     (
+        "market-positioning",
+        "investor-market-positioning",
+        "investor-market-positioning.html",
+        "Positioning",
+        "Market Positioning",
+        None,
+    ),
+    (
         "roofwander-system",
         "roofwander-system",
         "system-diagram.html",
@@ -55,14 +63,6 @@ SLIDES = [
         "standalone-system-diagram",
     ),
     ("market", "investor-market", "investor-market.html", "Market", "Slide 7 - Market Size", None),
-    (
-        "market-positioning",
-        "investor-market-positioning",
-        "investor-market-positioning.html",
-        "Positioning",
-        "Market Positioning",
-        None,
-    ),
     ("roadmap", "investor-roadmap", "investor-roadmap.html", "Roadmap", "Product Roadmap — Roofwander", None),
     ("traction", "investor-traction", "investor-traction.html", "Traction", "Traction — Roofwander", None),
     (

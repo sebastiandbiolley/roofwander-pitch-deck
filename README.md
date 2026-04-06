@@ -4,6 +4,21 @@ Public repository: **static HTML** for the Roofwander home page, **How it works*
 
 LinkedIn drafts and marketing calendars are **not** stored here — they live in a **separate private** place for the team (see **[TEAM.md](TEAM.md)**).
 
+### Local server (preview the built site)
+
+From the **repo root** (after `public/` exists — run `python scripts/build-deck.py` if needed):
+
+```bash
+cd public
+python -m http.server 8080
+```
+
+Then open **http://localhost:8080/** (deck: **http://localhost:8080/deck.html**).
+
+**Without Python:** `npx serve public -p 8080` from the repo root.
+
+More URLs and notes: **[View locally](#view-locally)** below.
+
 ---
 
 ## Repository layout

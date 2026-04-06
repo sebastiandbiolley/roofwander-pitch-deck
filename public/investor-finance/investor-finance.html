@@ -156,45 +156,26 @@
   <path d="m6 6 12 12" />
 </svg></span></button>
       <div class="finance-detail-panel" id="panel-chart" aria-hidden="true">
-        <h3 class="finance-detail-title">Rental activity (core marketplace)</h3>
+        <h3 class="finance-detail-title">Rental activity</h3>
         <div class="finance-dd-content">
-          <p class="finance-dd-section">1. Demand (top-down)</p>
-          <p class="finance-dd-intro">We start from high-intent Google search volume for queries like "rooftop tent rental". This represents people actively looking to rent, not general interest.</p>
-          <p class="finance-dd-section">2. Geographic rollout</p>
-          <p class="finance-dd-intro">We scale demand based on where we operate:</p>
+          <p class="finance-dd-intro">Bookings = search demand × capture rate, scaled by geographic rollout.</p>
           <ul class="finance-dd-list">
-            <li><strong>Y1:</strong> limited markets (BE, FR partial)</li>
-            <li><strong>Y2:</strong> expansion (DE, NL, IT)</li>
-            <li><strong>Y3:</strong> broader European coverage</li>
+            <li><strong>Y1:</strong> BE, FR partial</li>
+            <li><strong>Y2:</strong> DE, NL, IT</li>
+            <li><strong>Y3:</strong> broader Europe</li>
           </ul>
-          <p class="finance-dd-intro">→ Demand grows as new countries go live</p>
-          <p class="finance-dd-section">3. Formula</p>
-          <div class="finance-cost-card">
-            <div class="finance-cost-card-title">Bookings = Demand × Capture rate</div>
-            <p style="margin:8px 0 0;font-size:13px;color:var(--text-muted);">We apply a conservative conversion rate (search → booking) that improves with liquidity, trust, and acquisition efficiency.</p>
-          </div>
           <p class="finance-dd-note">Capture rate: Y1 2.4% · Y2 7.3% · Y3 12.1%</p>
-          <p class="finance-dd-note">We convert real search demand into bookings, scaling with rollout and improving execution.</p>
         </div>
       </div>
       <div class="finance-detail-panel" id="panel-table" aria-hidden="true">
         <h3 class="finance-detail-title">Monetization</h3>
         <div class="finance-dd-content">
-          <p class="finance-dd-section">How we estimate affiliate sales</p>
-          <p class="finance-dd-section">1. Two demand sources</p>
-          <p class="finance-dd-intro">Affiliate sales come from:</p>
+          <p class="finance-dd-intro">Affiliate sales come from two sources:</p>
           <ul class="finance-dd-list">
-            <li><strong>Rental conversions (~10%)</strong> — renters who decide to buy after trying</li>
-            <li><strong>Buy-side demand (market capture)</strong> — people directly searching to purchase</li>
+            <li><strong>~10% of renters</strong> buy after trying</li>
+            <li><strong>Buy-side capture</strong> from search and comparison traffic</li>
           </ul>
-          <p class="finance-dd-section">2. Market-based capture</p>
-          <p class="finance-dd-intro">We estimate total tents sold using public market data and apply a conservative capture rate that grows as SEO, comparison pages, and brand awareness improve. Buy-side becomes increasingly independent from rentals.</p>
-          <p class="finance-dd-note">Capture rate: Y1 0.0% · Y2 0.56% · Y3 1.56%</p>
-          <p class="finance-dd-section">3. Final logic</p>
-          <div class="finance-cost-card">
-            <div class="finance-cost-card-title">Affiliate sales = (10% × rental users) + (capture rate × total tents sold)</div>
-            <p style="margin:8px 0 0;font-size:13px;color:var(--text-muted);">Affiliate combines rental conversion with independent market capture.</p>
-          </div>
+          <p class="finance-dd-note">Buy-side capture rate: Y1 0% · Y2 0.56% · Y3 1.56%</p>
         </div>
       </div>
     </div>
@@ -219,62 +200,14 @@
       </button>
       <div class="finance-dd-body" aria-hidden="true">
         <div class="finance-dd-content">
-          <p class="finance-cost-takeaway">Marketing is the biggest cost. Development is time and salaries (in-house), not cash burn.</p>
-
-          <div class="finance-cost-card">
-            <div class="finance-cost-card-title">Marketing (biggest lever)</div>
-            <ul>
-              <li>Paid acquisition; scales with demand</li>
-              <li>Primary growth driver</li>
-            </ul>
-          </div>
-          <div class="finance-cost-card">
-            <div class="finance-cost-card-title">Development (salaries, not cash)</div>
-            <ul>
-              <li>In-house: time + salaries</li>
-              <li>Maintenance + incremental work; no heavy tech burn</li>
-            </ul>
-          </div>
-          <div class="finance-cost-card">
-            <div class="finance-cost-card-title">COGS · Salaries · G&A</div>
-            <ul>
-              <li>COGS: payment processing, support (~4–9% of revenue)</li>
-              <li>Salaries: marketing, supply, ops; team scales with volume</li>
-              <li>G&A + support: admin, legal, tools; remains controlled</li>
-            </ul>
-          </div>
-
-          <p class="finance-dd-section">Long-term cost mix (Y5)</p>
-          <div class="finance-pie-wrap">
-            <div class="finance-pie-chart" aria-hidden="true"></div>
-            <div class="finance-pie-legend">
-              <div class="finance-pie-legend-item">
-                <span class="finance-pie-dot" style="background:#7c3aed"></span>
-                <span class="finance-pie-label">Salaries</span>
-                <span class="finance-pie-pct">36%</span>
-              </div>
-              <div class="finance-pie-legend-item">
-                <span class="finance-pie-dot" style="background:#2563eb"></span>
-                <span class="finance-pie-label">Marketing</span>
-                <span class="finance-pie-pct">28%</span>
-              </div>
-              <div class="finance-pie-legend-item">
-                <span class="finance-pie-dot" style="background:#64748b"></span>
-                <span class="finance-pie-label">G&A + Support</span>
-                <span class="finance-pie-pct">21%</span>
-              </div>
-              <div class="finance-pie-legend-item">
-                <span class="finance-pie-dot" style="background:#166534"></span>
-                <span class="finance-pie-label">COGS</span>
-                <span class="finance-pie-pct">9%</span>
-              </div>
-              <div class="finance-pie-legend-item">
-                <span class="finance-pie-dot" style="background:#ea580c"></span>
-                <span class="finance-pie-label">Development</span>
-                <span class="finance-pie-pct">6%</span>
-              </div>
-            </div>
-          </div>
+          <p class="finance-cost-takeaway">Marketing is the biggest cost. Development is in-house (time + salaries), not cash burn.</p>
+          <ul class="finance-dd-list">
+            <li><strong>Marketing:</strong> paid acquisition, scales with demand</li>
+            <li><strong>Salaries:</strong> marketing, supply, ops</li>
+            <li><strong>COGS:</strong> payment processing, support (~4-9% of revenue)</li>
+            <li><strong>Development:</strong> in-house, maintenance + incremental</li>
+            <li><strong>G&A:</strong> admin, legal, tools</li>
+          </ul>
           <p class="finance-dd-note">Variable-heavy: marketing and salaries drive growth; COGS and development stay lean.</p>
         </div>
       </div>

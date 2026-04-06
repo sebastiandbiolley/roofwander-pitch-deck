@@ -1,94 +1,35 @@
 ---
-title: How Roofwander Works — Full
-description: End-to-end overview of the marketplace: problem, insight, model, revenue, discovery, booking, tracking, and communication.
+title: How Roofwander Works
+description: End-to-end overview of the three systems that power Roofwander: the rental marketplace, the product discovery layer, and the growth infrastructure.
 order: 8
 ---
 
-# How Roofwander Works — Full
+# How Roofwander Works
 
-## TL;DR
+## Overview
 
-Roofwander is a marketplace for rooftop tent travel. It connects people who own rooftop tents with travelers who want to experience rooftop camping without buying the equipment.
+Roofwander is a marketplace for rooftop tent travel. It connects tent owners with travelers who want to experience rooftop camping without buying the equipment first.
 
-Supply on the platform comes from two sources:
+A rooftop tent costs €1,200–4,000+ and typically sits unused 90% of the year. Meanwhile, travelers curious about rooftop camping have almost no way to try it. Buying without experience is risky, and rental options barely exist. Roofwander solves both sides: owners earn from their idle gear, and travelers get access to an experience that was previously out of reach.
 
-- Private owners renting out tents they already own (typically one or a few listings)
-- Professional partners such as outdoor shops, resellers, and rental companies (can list multiple units)
+The platform is built around three interconnected systems:
 
-Travelers can search, compare, and book rooftop tents locally for road trips, festivals, and outdoor travel.
+- **The Marketplace.** The core rental engine: listings, bookings, payments, messaging, and trust. This is where supply meets demand. Revenue comes from a commission on every completed booking.
+- **Product Discovery.** Structured listing data (brand, model, type) combined with rental reviews creates a product research layer. Travelers explore tents through real-world experience, then buy via affiliate partners. Revenue comes from affiliate commissions.
+- **Growth Infrastructure.** SEO, tracking, lifecycle emails, retargeting, and multilanguage support. These systems acquire users, convert visits into bookings, and keep both sides engaged over time.
 
-Roofwander generates revenue through rental commissions on bookings and affiliate commissions when travelers later purchase equipment through partner brands.
+### The marketplace loop
 
-Roofwander operates at the intersection of three systems:
-
-- **A rental marketplace** — Connects owners and travelers; bookings generate commission.
-- **A product discovery layer** — Connects rental activity, structured listing data, and reviews with equipment discovery. Users explore tents by brand, model, and real-world experience instead of only manufacturer descriptions; affiliate partnerships extend to brands and gear.
-- **A growth infrastructure** — SEO, tracking, lifecycle communication, and product systems.
-
-<div class="doc-flow">
-  <span class="doc-flow-item">Owners & partners</span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">Listings</span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">Travelers</span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">Bookings</span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item highlight">Platform commission</span>
-</div>
-
-<div class="doc-flow">
-  <span class="doc-flow-item">Product discovery<br><small>tent reviews, comparisons</small></span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item highlight">Affiliate purchases</span>
-</div>
-
----
-
-## The Problem
-
-Rooftop tents are becoming popular for road trips and outdoor travel. However, the market remains fragmented: many tents sit unused while travelers struggle to access them.
-
-Most rooftop tents are used only 10–30 nights per year. Three core issues:
-
-- **Idle equipment** — Rooftop tents cost €1,200–4,000+ and sit unused most of the year. Renting privately is hard; owners worry about damage, trust, and logistics.
-- **Limited rental options** — For travelers, renting is difficult and options are scarce. Professional operators can be expensive, availability is tied to specific depots and dates, and fleets carry only a few models.
-- **Difficult purchase decisions** — Buying is confusing without hands-on experience. Most decisions rely on specs and marketing, with limited independent reviews and large price differences between models.
-
-This creates a simple gap: unused rooftop tents on one side, travelers wanting to try rooftop camping on the other. A marketplace can connect these two sides.
-
----
-
-## The Insight
-
-Rooftop tents are experiential: travelers rarely know if a tent fits from specs alone. Renting functions as a try-before-buy step. The two diagrams below are the same story at user level, then at platform level.
-
-### Rent → research → buy (user journey)
-
-<div class="doc-flow">
-  <span class="doc-flow-item">Discover rooftop tents</span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">Rent a tent</span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">Experience rooftop camping</span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">Research models and brands<br><small>(reviews from real rentals)</small></span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item highlight">Buy a rooftop tent</span>
-</div>
-
-### The Marketplace Loop (economic engine)
-
-Supply → demand → data → commerce → more supply.
+These three systems create a self-reinforcing cycle. More supply generates more bookings, which produce more data, which improves discovery, which attracts more supply and partners.
 
 <div class="doc-flow">
   <span class="doc-flow-item">More rooftop tents listed</span>
   <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">More locations available</span>
+  <span class="doc-flow-item">More locations covered</span>
   <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">More travelers find rentals</span>
+  <span class="doc-flow-item">More travelers find what they need</span>
   <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">More bookings</span>
+  <span class="doc-flow-item">More bookings completed</span>
   <span class="doc-flow-arrow">↓</span>
   <span class="doc-flow-item">More reviews and usage data</span>
   <span class="doc-flow-arrow">↓</span>
@@ -101,23 +42,32 @@ Supply → demand → data → commerce → more supply.
 
 ---
 
-## Marketplace Model
+## The Marketplace
 
-Supply on Roofwander comes from two provider types: private owners, who usually manage one or a few listings, and professional partners, who can list multiple units.
+The marketplace is the core of Roofwander. It handles everything from listing a tent to completing a rental: search, bookings, payments, communication, and trust.
+
+### Supply
+
+Supply comes from two provider types:
+
+- **Private owners** renting out tents they already own, typically one or a few listings.
+- **Professional partners** such as outdoor shops, resellers, and rental companies, listing multiple units and often serving as local pickup points.
+
+Providers are acquired through direct outreach, partnerships with outdoor retailers, community engagement in rooftop tent and overlanding groups, owner-to-owner referrals, and presence at outdoor and travel events.
 
 ### Listings
 
-Each rooftop tent is represented by a listing. The creation process collects:
+Each rooftop tent is represented by a listing. The creation flow collects:
 
-- photos, location, description, price per night, availability
-- rooftop tent–specific fields (vehicle fit, mounting type) for compatibility
-- price variants — same listing, different prices (e.g. tent-only vs. tent + gear)
+- **Essentials.** Photos, location, description, price per night, and availability.
+- **Tent-specific fields.** Vehicle compatibility, mounting type, and capacity. These enable filters and search matching.
+- **Price variants.** A single listing can have multiple prices (e.g. tent-only vs. tent + camping gear).
 
-Listings are discovered via search, location, or curated sections. A payouts account is required before a listing becomes bookable.
+Listings are discovered through search, location browsing, or curated sections. A Stripe payouts account must be connected before a listing goes live.
 
-### Structured listing data
+### Structured data
 
-Providers submit structured fields — brand, model, tent type, capacity, vehicle compatibility. This powers filters, search, and product comparison; it also supports the rent→buy loop (The Insight) and SEO. Structured listing data connects rentals with specific tent models and brands, enabling comparisons and product discovery.
+When creating a listing, providers fill structured fields: brand, model, tent type, capacity, and vehicle compatibility. This data powers the search and filter system and links every rental to a specific tent product. It is the foundation of Product Discovery.
 
 <div class="doc-flow">
   <span class="doc-flow-item">Listing creation</span>
@@ -126,92 +76,12 @@ Providers submit structured fields — brand, model, tent type, capacity, vehicl
   <span class="doc-flow-arrow">↓</span>
   <span class="doc-flow-item">Search & filters</span>
   <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item highlight">Brand pages, affiliate discovery</span>
+  <span class="doc-flow-item highlight">Brand pages, product discovery</span>
 </div>
 
----
+### Booking flow
 
-## Revenue Model
-
-Two complementary revenue streams:
-
-<div class="doc-flow">
-  <div class="doc-flow-supply">
-    <span class="doc-flow-item">Rental<br><small>marketplace</small></span>
-    <span class="doc-flow-item">Discovery<br><small>brands, guides</small></span>
-  </div>
-  <span class="doc-flow-arrow">↓</span>
-  <div class="doc-flow-supply">
-    <span class="doc-flow-item highlight">Commission</span>
-    <span class="doc-flow-item highlight">Affiliate</span>
-  </div>
-</div>
-
-### Rental
-
-Commission on completed bookings. Traveler pays full price; commission deducted from provider payout.
-
-<div class="doc-stats">
-  <div class="doc-stat">
-    <span class="doc-stat-value">€200</span>
-    <span class="doc-stat-label">Rental value</span>
-  </div>
-  <div class="doc-stat">
-    <span class="doc-stat-value">€30</span>
-    <span class="doc-stat-label">Platform commission (15%)</span>
-  </div>
-  <div class="doc-stat">
-    <span class="doc-stat-value">€170</span>
-    <span class="doc-stat-label">Provider payout</span>
-  </div>
-</div>
-
-### Affiliate
-
-Revenue from affiliate purchases follows the same user journey described in The Insight (rent → research → buy). Rentals create high-intent buyers; brands get exposure and qualified traffic.
-
----
-
-## Discovery & Growth
-
-Most growth channels ultimately feed the same journey: visit → listing → booking. Growth flywheel = The Marketplace Loop (The Insight).
-
-### Discovery infrastructure (SEO)
-
-<div class="doc-flow">
-  <span class="doc-flow-item">Search engines</span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">SEO pages<br><small>(blog, guides, locations)</small></span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">Platform visits</span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item">Listings explored</span>
-  <span class="doc-flow-arrow">↓</span>
-  <span class="doc-flow-item highlight">Bookings</span>
-</div>
-
-### Discovery channels
-
-- **Search** — Location, dates, intent. Filters: geography, availability, brand, tent type, capacity. Curated carousels.
-- **Content** — Guides, comparisons, destinations. Early-funnel; links to listings.
-- **Location & brand** — Brand and location discovery are supported through structured filters, city configurations (Paris, Lyon, Brussels, Berlin, etc.), and internal linking.
-- **Paid** — Search ads, retargeting, campaigns.
-
-Listing pages and content rank in search; internal links connect to listings.
-
-### Supply acquisition
-
-Rooftop tents join the marketplace through several channels: direct outreach to owners, partnerships with outdoor shops and resellers, community engagement in rooftop tent and overlanding groups, owner-to-owner referrals, and presence at outdoor and travel events. As supply grows geographically, the platform becomes more useful for travelers, reinforcing the Marketplace Loop (The Insight).
-
-### Multilanguage & geography
-
-Seven languages (en, de, fr, es, nl, it, pt), URLs `/:locale/`. Pre-configured city searches; platform focus: France, Belgium, Germany, Portugal.
-
----
-
-## Booking Flow
-
-The booking process connects travelers with owners or professional partners through a structured request and confirmation flow. The platform handles communication, availability, and payment.
+The booking process connects travelers with providers through a request-and-confirmation model. The platform handles messaging, availability, and payment at each step.
 
 <div class="doc-flow">
   <span class="doc-flow-item">Traveler searches listings</span>
@@ -229,16 +99,16 @@ The booking process connects travelers with owners or professional partners thro
   <span class="doc-flow-item highlight">Rental takes place</span>
 </div>
 
-### Steps
+**Step by step:**
 
-1. **Search** — Traveler searches by location, dates, or tent characteristics. Results can be filtered by geography, availability, and brand.
-2. **Listing page** — Photos, description, brand/model, price per night, availability calendar, pickup location. Traveler reviews before requesting.
-3. **Request** — Traveler submits dates, quantity, optional message. Request is sent to the owner or partner. Checkout creates a transaction; PaymentIntent is created; traveler has 15 minutes to complete payment.
-4. **Owner confirmation** — Owner accepts or declines from the inbox. They can message the traveler first. On accept, payment is captured; on decline, full refund.
-5. **Payment** — When accepted, payment is held by the platform. Payout is released 2 days after the booking end. Technical details are handled in the payments system.
-6. **Rental** — Traveler and owner coordinate pickup and return. Once complete, the transaction is recorded; both can leave reviews within 7 days.
+1. **Search.** Traveler searches by location, dates, or tent characteristics. Results can be filtered by geography, availability, brand, and capacity.
+2. **Listing page.** Shows photos, description, brand/model info, price per night, availability calendar, and pickup location.
+3. **Request.** Traveler selects dates and quantity, adds an optional message, and submits. A Stripe PaymentIntent is created; the traveler has 15 minutes to complete payment.
+4. **Owner confirmation.** The owner reviews the request from their inbox. They can message the traveler before deciding. On accept, payment is captured. On decline, the traveler gets a full refund.
+5. **Payment.** On acceptance, Stripe holds the payment. The provider payout is released 2 days after the booking ends.
+6. **Rental.** Traveler and owner coordinate pickup and return. After completion, both can leave reviews within 7 days.
 
-Internally, transactions move through a series of platform states:
+Internally, each transaction moves through a series of platform states:
 
 <div class="doc-flow">
   <span class="doc-flow-item">Inquiry<br><small>optional message</small></span>
@@ -254,28 +124,97 @@ Internally, transactions move through a series of platform states:
   <span class="doc-flow-item highlight">Delivered</span>
 </div>
 
-Deposits, cancellations, and trust mechanisms: Trust & Safety below.
+### Trust & safety
+
+Trust is critical in peer-to-peer rentals. Both sides need to feel protected before committing. The platform includes:
+
+- **Identity verification.** Account verification for both owners and travelers before any transaction.
+- **Reviews.** Both parties can leave reviews within 7 days after a rental. Reviews appear on the listing and on user profiles, building reputation over time.
+- **Security deposit.** A €400 hold is placed on the traveler's card at booking. It's released when the rental ends, or used in case of damage or dispute.
+- **Secure payments.** All payments flow through Stripe Connect: payment intent created, confirmed client-side, captured on accept, payout on complete.
+- **Cancellation policies.** Before acceptance: full refund. After acceptance: a policy applies depending on timing (partial refund or credit).
+- **Disputes.** Handled through the transaction engine and support. Messages, dates, and payment records are available to review, so outcomes reflect what actually happened.
+
+### Revenue: commission
+
+The platform earns a commission on every completed booking. The traveler pays the full price; the commission is deducted from the provider's payout.
+
+<div class="doc-stats">
+  <div class="doc-stat">
+    <span class="doc-stat-value">€200</span>
+    <span class="doc-stat-label">Rental value</span>
+  </div>
+  <div class="doc-stat">
+    <span class="doc-stat-value">€30</span>
+    <span class="doc-stat-label">Platform commission (15%)</span>
+  </div>
+  <div class="doc-stat">
+    <span class="doc-stat-value">€170</span>
+    <span class="doc-stat-label">Provider payout</span>
+  </div>
+</div>
 
 ---
 
-## Trust & Safety
+## Product Discovery
 
-Trust is critical in peer-to-peer rentals. The platform includes several mechanisms to protect both travelers and owners:
+Rooftop tents are experiential products. Specs alone don't tell you if a tent is right for you. Renting is the natural try-before-you-buy step. Roofwander captures that journey and turns rental activity into structured product research.
 
-- **Identity verification** — Account verification for owners and travelers.
-- **Reviews** — Both parties can leave reviews within 7 days after a rental; reviews appear on the listing and on both parties' profiles.
-- **Security deposit** — €400 charged to the traveler's card at booking and held until the rental ends; then released in full or used in case of damage or dispute.
-- **Secure payments** — Payments use a payouts platform (e.g. Stripe Connect). Flow: payment intent created → confirmed client-side → captured on accept → payout on complete.
-- **Cancellation policies** — Before acceptance: full refund to traveler. After acceptance: policy applies (e.g. partial refund or credit depending on timing).
-- **Disputes** — Handled through the transaction engine and support; evidence from messages, dates, and payouts can be reviewed so outcomes reflect what happened on the platform.
+### Rent, research, buy
+
+<div class="doc-flow">
+  <span class="doc-flow-item">Discover rooftop tents</span>
+  <span class="doc-flow-arrow">↓</span>
+  <span class="doc-flow-item">Rent a tent</span>
+  <span class="doc-flow-arrow">↓</span>
+  <span class="doc-flow-item">Experience rooftop camping</span>
+  <span class="doc-flow-arrow">↓</span>
+  <span class="doc-flow-item">Research models and brands<br><small>(reviews from real rentals)</small></span>
+  <span class="doc-flow-arrow">↓</span>
+  <span class="doc-flow-item highlight">Buy a rooftop tent</span>
+</div>
+
+### How structured data powers discovery
+
+Every listing carries structured fields: brand, model, tent type, and capacity. This data is indexed across the platform to generate brand pages, model comparisons, and filterable search results. Users explore tents through real-world rental experience, not just manufacturer descriptions.
+
+Reviews from completed rentals attach to specific tent models, building a growing layer of independent, usage-based product information with every booking.
+
+### Revenue: affiliate
+
+Rentals create high-intent buyers. A traveler who rents, experiences, and researches a specific model is far more likely to purchase. Affiliate partnerships with tent brands and outdoor retailers capture this conversion. Brands get qualified traffic and exposure; the platform earns a commission on each purchase.
 
 ---
 
-## Tracking
+## Growth Infrastructure
 
-The data layer powers growth: **behavior → data → marketing → bookings**. Tracking shows where users drop and which channels or listings lead to bookings, so we can optimise supply and demand acquisition. Events are emitted from the product and routed through Google Tag Manager, which acts as a central dispatch layer to analytics tools and advertising platforms. This keeps product instrumentation stable while analytics and marketing integrations can change over time.
+The systems that drive traffic to the platform, convert visitors into users, and keep both sides engaged.
 
-### Product infrastructure flow
+### SEO & content
+
+<div class="doc-flow">
+  <span class="doc-flow-item">Search engines</span>
+  <span class="doc-flow-arrow">↓</span>
+  <span class="doc-flow-item">SEO pages<br><small>(blog, guides, locations)</small></span>
+  <span class="doc-flow-arrow">↓</span>
+  <span class="doc-flow-item">Platform visits</span>
+  <span class="doc-flow-arrow">↓</span>
+  <span class="doc-flow-item">Listings explored</span>
+  <span class="doc-flow-arrow">↓</span>
+  <span class="doc-flow-item highlight">Bookings</span>
+</div>
+
+Listing pages, guides, and location content rank in search. Internal links connect top-of-funnel content to listings. Brand and location discovery are supported through structured filters, pre-configured city searches (Paris, Lyon, Brussels, Berlin, etc.), and internal linking.
+
+### Channels
+
+- **Search.** Users find listings by location, dates, and intent. Filters include geography, availability, brand, tent type, and capacity. Curated carousels surface featured listings.
+- **Content.** Guides, comparisons, and destination articles. Early-funnel content that links to relevant listings.
+- **Paid.** Search ads, retargeting, and campaigns targeting high-intent users.
+
+### Tracking & analytics
+
+The data layer connects user behavior to marketing to bookings. Events are emitted from the product and routed through Google Tag Manager, which acts as a central dispatch to analytics tools and ad platforms. This decouples product instrumentation from marketing integrations. The product stays stable while marketing channels evolve.
 
 <div class="doc-flow">
   <span class="doc-flow-item">User actions<br><small>search, listing views, clicks</small></span>
@@ -289,43 +228,18 @@ The data layer powers growth: **behavior → data → marketing → bookings**. 
   <span class="doc-flow-item highlight">Lifecycle communication<br><small>emails, reminders</small></span>
 </div>
 
-### Event levels
+**Event levels:** Traffic (landing, source) → Discovery (search, filters, listing views) → Interest (saves, contact, checkout) → Conversion (booking completed).
 
-Traffic (landing, source) → Discovery (search, filters, listing views) → Interest (saves, contact, checkout) → Conversion (booking completed).
+Tracking only runs after users give consent. A cookie banner lets visitors choose which categories to allow. Until consent is granted, events are limited and retargeting audiences are not built.
 
-### Consent
+### Lifecycle communication
 
-Tracking for analytics and retargeting only runs after users give consent. A banner lets visitors choose which categories to allow (for example basic analytics vs. ads). Until consent is granted, events are limited or not sent, and ad audiences are not built. Users can change their choices at any time, and tracking follows those settings.
+All emails and messages are triggered by user events, not by a fixed calendar. Because the platform tracks what each user does, communication stays relevant to their current stage.
 
----
-
-## Lifecycle Communication
-
-Lifecycle communication covers all emails and messages sent during the user journey. Messages are triggered by user events, not by a fixed calendar. Because the platform tracks user actions, communication can be triggered by behavior rather than by scheduled campaigns, so messages stay relevant to the user's current stage in the booking journey.
-
-### Types of communication
-
-- **Transactional** — Required system emails (booking, payments, account).
-- **Event-based** — Follow-up messages based on behavior.
-- **Retargeting** — Ads and messages before signup, based on tracking events.
-
-### Transactional emails
-
-Transactional emails are tied to product actions and are required for the marketplace to function. They include booking confirmations, payment and payout updates, and account notifications (signup, password reset, email verification). For bookings, they roughly follow this sequence: request received, request confirmed or declined, reminder before pickup, and a completion email with a review request.
-
-### Event-based emails
-
-Event-based emails respond to behavior and keep users moving forward: onboarding after signup, reminders after saving listings, follow-ups after viewing listings without contacting anyone.
-
-### Supply-side lifecycle
-
-Owners also receive lifecycle communication: onboarding guidance after listing creation, reminders to update availability, suggestions to improve listings, and booking notifications and follow-ups. This supports supply quality and responsiveness.
-
-### Retargeting and full lifecycle
-
-Part of the journey happens before signup. Many visitors browse locations and listings without creating an account.
-
-When consent allows it, events from the tracking system are used to build audiences in ad platforms. Retargeting then shows ads to people who viewed listings earlier or started but did not complete a booking. Email tools, tracking, and ads work together.
+- **Transactional.** Booking confirmations, payment updates, payout notifications. Sequence: request received → confirmed/declined → reminder before pickup → completion email with review prompt.
+- **Event-based.** Onboarding after signup, reminders after saving or viewing listings, follow-ups for incomplete bookings.
+- **Supply-side.** Onboarding after listing creation, availability reminders, suggestions to improve listing quality.
+- **Retargeting.** Many visitors browse without creating an account. When consent is given, tracking events build audiences in ad platforms. Retargeting re-engages people who viewed listings or started but did not complete a booking.
 
 <div class="doc-flow">
   <span class="doc-flow-item">Browse listings<br><small>with or without account</small></span>
@@ -339,3 +253,6 @@ When consent allows it, events from the tracking system are used to build audien
   <span class="doc-flow-item">Booking & reviews</span>
 </div>
 
+### Multilanguage & geography
+
+The platform supports seven languages (en, de, fr, es, nl, it, pt) with locale-prefixed URLs (`/:locale/`). City-level search configurations are pre-built for key markets: France, Belgium, Germany, and Portugal.
