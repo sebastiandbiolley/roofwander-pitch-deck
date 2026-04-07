@@ -1,6 +1,6 @@
 {
-  "totalUsers": 380,
-  "owners": 259,
+  "totalUsers": 381,
+  "owners": 260,
   "renters": 121,
   "timeline": [
     {
@@ -65,7 +65,7 @@
     },
     {
       "month": "2026-04",
-      "owner": 35,
+      "owner": 36,
       "renter": 6
     }
   ],
@@ -110,7 +110,7 @@
       "date": "2025-09-23"
     }
   ],
-  "uniqueVisitors": 6455,
+  "uniqueVisitors": 6451,
   "weeklyTraffic": [
     {
       "week": "2025-12-29",
@@ -176,28 +176,28 @@
   "channels": [
     {
       "channel": "Paid Search",
-      "visitors": 3091,
-      "views": 14452
+      "visitors": 3100,
+      "views": 14478
     },
     {
       "channel": "Organic Search",
-      "visitors": 1732,
-      "views": 7036
+      "visitors": 1738,
+      "views": 7074
     },
     {
       "channel": "Direct",
-      "visitors": 913,
-      "views": 10336
+      "visitors": 915,
+      "views": 10386
     },
     {
       "channel": "Organic Social",
-      "visitors": 588,
-      "views": 1662
+      "visitors": 589,
+      "views": 1665
     },
     {
       "channel": "Referral",
       "visitors": 301,
-      "views": 1251
+      "views": 1258
     },
     {
       "channel": "Paid Unknown",
