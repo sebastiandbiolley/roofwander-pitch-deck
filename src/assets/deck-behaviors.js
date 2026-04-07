@@ -571,16 +571,12 @@
       var stDate = fmtSourceDate(stStartMonth);
       var phDate = fmtSourceDate(phStartWeek);
 
-      var listingSrc = document.getElementById('sharetribe-listing-source');
-      if (listingSrc) listingSrc.textContent = 'Sharetribe · live';
-      var txSrc = document.getElementById('sharetribe-transaction-source');
-      if (txSrc) txSrc.textContent = 'Sharetribe · live';
-      var userSrc = document.getElementById('sharetribe-user-source');
-      if (userSrc) userSrc.textContent = 'Since ' + stDate + ' · Sharetribe';
-      var reviewSrc = document.getElementById('sharetribe-review-source');
-      if (reviewSrc) reviewSrc.textContent = 'Sharetribe · live';
-      var pvSrc = document.getElementById('posthog-visitor-source');
-      if (pvSrc) pvSrc.textContent = 'Since ' + phDate + ' · PostHog';
+      var stFootnote = document.getElementById('traction-source-sharetribe');
+      if (stFootnote) stFootnote.textContent = 'Since ' + stDate + ' · Sharetribe';
+      var stReviewsFootnote = document.getElementById('traction-source-sharetribe-reviews');
+      if (stReviewsFootnote) stReviewsFootnote.textContent = 'Since ' + stDate + ' · Sharetribe';
+      var phFootnote = document.getElementById('traction-source-posthog');
+      if (phFootnote) phFootnote.textContent = 'Since ' + phDate + ' · PostHog';
 
       // Update owner/renter modules
       var ownerEl = document.getElementById('sharetribe-owner-count');
@@ -588,7 +584,7 @@
       var noteEl = document.getElementById('sharetribe-total-note');
       if (ownerEl) ownerEl.textContent = data.owners;
       if (renterEl) renterEl.textContent = data.renters;
-      if (noteEl) noteEl.innerHTML = 'Total: <strong>' + data.totalUsers + ' users</strong> — live from Sharetribe.';
+      if (noteEl) noteEl.innerHTML = 'Total: <strong>' + data.totalUsers + ' users</strong>, live from Sharetribe.';
 
       // Update review count + panel
       var reviewEl = document.getElementById('sharetribe-review-count');
@@ -633,7 +629,7 @@
       }
 
       if (reviewNote) {
-        reviewNote.innerHTML = 'Showing top reviews — live from Sharetribe.';
+        reviewNote.innerHTML = 'Showing top reviews, live from Sharetribe.';
       }
 
       // Update PostHog unique visitors count + chart
@@ -649,7 +645,7 @@
       var wt = data.weeklyTraffic;
 
       if (pvIntro && wt && wt.length) {
-        pvIntro.innerHTML = '<strong>' + data.uniqueVisitors.toLocaleString() + '</strong> unique visitors — weekly breakdown:';
+        pvIntro.innerHTML = '<strong>' + data.uniqueVisitors.toLocaleString() + '</strong> unique visitors, weekly breakdown:';
       }
 
       if (pvSvg && wt && wt.length) {
@@ -742,7 +738,7 @@
             if (crosshair) { crosshair.setAttribute('x1', d.x); crosshair.setAttribute('x2', d.x); crosshair.classList.add('is-visible'); }
             if (tooltip && wrap) {
               var dp = d.week.split('-');
-              tooltip.textContent = d.val.toLocaleString() + ' visitors — ' + dp[2] + '/' + dp[1];
+              tooltip.textContent = d.val.toLocaleString() + ' visitors, ' + dp[2] + '/' + dp[1];
               tooltip.classList.add('is-visible');
               var svgRect = pvSvg.getBoundingClientRect();
               var wrapRect = wrap.getBoundingClientRect();
@@ -768,7 +764,7 @@
 
       if (chIntro && chData && chData.length) {
         var chStartLabel = phDate ? 'since <strong>' + phDate + '</strong>' : '';
-        chIntro.innerHTML = 'Traffic by channel ' + chStartLabel + ' — <strong>live from PostHog</strong>:';
+        chIntro.innerHTML = 'Traffic by channel ' + chStartLabel + ', <strong>live from PostHog</strong>:';
       }
 
       if (chTbody && chData && chData.length) {
@@ -972,7 +968,7 @@
           if (stTip && stWrap) {
             var val = series === 'owner' ? sd.owner : sd.renter;
             var lbl = series === 'owner' ? 'owners' : 'renters';
-            stTip.textContent = val + ' ' + lbl + ' — ' + sd.month;
+            stTip.textContent = val + ' ' + lbl + ', ' + sd.month;
             stTip.classList.add('is-visible');
             var sr = svg.getBoundingClientRect();
             var wr = stWrap.getBoundingClientRect();

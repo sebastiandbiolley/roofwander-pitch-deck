@@ -4,7 +4,7 @@
     <p class="deck-eyebrow">TRACTION</p>
     <h2 class="deck-title">Early traction across supply, usage, and discovery</h2>
     <p class="deck-desc">
-      Roofwander is already live, with early marketplace activity and growing visibility. Early opportunity—get in before the flywheel scales.
+      Roofwander is already live, with early marketplace activity and growing visibility. Early opportunity: get in before the flywheel scales.
     </p>
     </div>
 
@@ -13,12 +13,10 @@
       <article class="traction-card">
         <div class="traction-value" id="sharetribe-listing-count">164</div>
         <div class="traction-label">active tents</div>
-        <div class="traction-source" id="sharetribe-listing-source">Sharetribe API</div>
       </article>
       <article class="traction-card">
         <div class="traction-value" id="sharetribe-transaction-count">23</div>
         <div class="traction-label">transactions</div>
-        <div class="traction-source" id="sharetribe-transaction-source">Sharetribe API</div>
       </article>
       <article class="traction-card" data-traction-panel="growth-signups" role="button" tabindex="0" aria-label="310 users">
         <span class="traction-card-info rw-icon" aria-hidden="true"><svg
@@ -36,13 +34,11 @@
 </svg></span>
         <div class="traction-value" id="sharetribe-user-count">310</div>
         <div class="traction-label">users</div>
-        <div class="traction-source" id="sharetribe-user-source">Sharetribe API</div>
       </article>
       <article class="traction-card" data-traction-panel="growth-reviews" role="button" tabindex="0" aria-label="11 reviews">
         <span class="traction-card-info rw-icon" aria-hidden="true" data-rw-icon="info"></span>
         <div class="traction-value" id="sharetribe-review-count">11</div>
         <div class="traction-label">reviews</div>
-        <div class="traction-source" id="sharetribe-review-source">Sharetribe API</div>
       </article>
       <article class="traction-card">
         <div class="traction-value">5</div>
@@ -52,7 +48,6 @@
         <span class="traction-card-info rw-icon" aria-hidden="true" data-rw-icon="info"></span>
         <div class="traction-value" id="posthog-visitor-count">6,451</div>
         <div class="traction-label">unique visitors</div>
-        <div class="traction-source" id="posthog-visitor-source">PostHog API</div>
       </article>
 <!-- DATA:kpis:END -->
     </div>
@@ -72,19 +67,20 @@
 </svg></span></button>
         <div class="traction-detail-panel" id="panel-growth-visitors" aria-hidden="true">
 <!-- DATA:visitors-panel:START -->
-          <h3 class="traction-detail-title">Unique visitors — Live from PostHog</h3>
+          <h3 class="traction-detail-title">Unique visitors <small>Live from PostHog</small></h3>
           <div class="traction-dd-content">
             <p class="traction-dd-intro" id="posthog-visitors-intro">Loading live data…</p>
             <div class="traction-chart-wrap">
               <svg class="traction-chart" id="posthog-chart" viewBox="0 0 520 220" preserveAspectRatio="xMidYMid meet">
               </svg>
             </div>
+            <p class="traction-panel-source" id="traction-source-posthog"></p>
           </div>
 <!-- DATA:visitors-panel:END -->
         </div>
         <div class="traction-detail-panel" id="panel-growth-signups" aria-hidden="true">
 <!-- DATA:signups-panel:START -->
-          <h3 class="traction-detail-title">Users — Live from Sharetribe</h3>
+          <h3 class="traction-detail-title">Users <small>Live from Sharetribe</small></h3>
           <div class="traction-dd-content">
             <p class="traction-dd-intro">Real-time user breakdown by type:</p>
             <div class="traction-dd-grid traction-dd-grid--signups" id="sharetribe-user-modules">
@@ -102,16 +98,18 @@
               </svg>
             </div>
             <p class="traction-dd-note" id="sharetribe-total-note">Loading live data…</p>
+            <p class="traction-panel-source" id="traction-source-sharetribe"></p>
           </div>
 <!-- DATA:signups-panel:END -->
         </div>
         <div class="traction-detail-panel" id="panel-growth-reviews" aria-hidden="true">
 <!-- DATA:reviews-panel:START -->
-          <h3 class="traction-detail-title">Reviews — Live from Sharetribe</h3>
+          <h3 class="traction-detail-title">Reviews <small>Live from Sharetribe</small></h3>
           <div class="traction-dd-content">
             <p class="traction-dd-intro" id="sharetribe-reviews-intro">Loading live data…</p>
             <div class="traction-reviews-list" id="sharetribe-reviews-list"></div>
             <p class="traction-dd-note" id="sharetribe-reviews-note"></p>
+            <p class="traction-panel-source" id="traction-source-sharetribe-reviews"></p>
           </div>
 <!-- DATA:reviews-panel:END -->
         </div>
