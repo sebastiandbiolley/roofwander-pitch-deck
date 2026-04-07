@@ -68,5 +68,166 @@
       "owner": 35,
       "renter": 6
     }
+  ],
+  "activeListings": 163,
+  "acceptedTransactions": 23,
+  "totalReviews": 11,
+  "averageRating": 4.9,
+  "bestReviews": [
+    {
+      "rating": 4,
+      "content": "Client de confiance,\nBonne communication, respect des rdv,... \nAu plaisir de lui fournir \u00e0 nouveau ma tente :) ",
+      "author": "Arthur.F",
+      "listing": "Tente de Toit \u00e0 louer Haute gamme \u2b50 AUTOHOME Airtop \u26fa",
+      "date": "2025-08-31"
+    },
+    {
+      "rating": 5,
+      "content": "Je recommande Valentin (et Paloma) qui sont des loueurs vraiment gentils et respectueux ",
+      "author": "Flavie",
+      "listing": "Location tente de toit Na\u00eft Up Family",
+      "date": "2026-04-01"
+    },
+    {
+      "rating": 5,
+      "content": "Super premi\u00e8re exp\u00e9rience ! Martin est sociable, flexible, de confiance. Bonne communication. La tente \u00e9tait parfaite pour une kia stonic et pour un adulte et un enfant! Encore une fois, merci d'avoir contribu\u00e9 \u00e0 ce beau voyage !",
+      "author": "Coralie V",
+      "listing": "Location tente de Toit MH500 Fresh & Black",
+      "date": "2025-09-29"
+    },
+    {
+      "rating": 5,
+      "content": "Perfect customer! Very reactive and kind\ud83d\ude42",
+      "author": "Martaben",
+      "listing": "Location tente de Toit MH500 Fresh & Black",
+      "date": "2025-09-27"
+    },
+    {
+      "rating": 5,
+      "content": "Tr\u00e8s bien je recommande !",
+      "author": "SBmo",
+      "listing": "Tente de toit 2 places",
+      "date": "2025-09-23"
+    }
+  ],
+  "uniqueVisitors": 6455,
+  "weeklyTraffic": [
+    {
+      "week": "2025-12-29",
+      "uniqueVisitors": 18
+    },
+    {
+      "week": "2026-01-05",
+      "uniqueVisitors": 91
+    },
+    {
+      "week": "2026-01-12",
+      "uniqueVisitors": 113
+    },
+    {
+      "week": "2026-01-19",
+      "uniqueVisitors": 256
+    },
+    {
+      "week": "2026-01-26",
+      "uniqueVisitors": 292
+    },
+    {
+      "week": "2026-02-02",
+      "uniqueVisitors": 329
+    },
+    {
+      "week": "2026-02-09",
+      "uniqueVisitors": 540
+    },
+    {
+      "week": "2026-02-16",
+      "uniqueVisitors": 467
+    },
+    {
+      "week": "2026-02-23",
+      "uniqueVisitors": 773
+    },
+    {
+      "week": "2026-03-02",
+      "uniqueVisitors": 842
+    },
+    {
+      "week": "2026-03-09",
+      "uniqueVisitors": 821
+    },
+    {
+      "week": "2026-03-16",
+      "uniqueVisitors": 694
+    },
+    {
+      "week": "2026-03-23",
+      "uniqueVisitors": 900
+    },
+    {
+      "week": "2026-03-30",
+      "uniqueVisitors": 749
+    },
+    {
+      "week": "2026-04-06",
+      "uniqueVisitors": 193
+    }
+  ],
+  "channels": [
+    {
+      "channel": "Paid Search",
+      "visitors": 3091,
+      "views": 14452
+    },
+    {
+      "channel": "Organic Search",
+      "visitors": 1732,
+      "views": 7036
+    },
+    {
+      "channel": "Direct",
+      "visitors": 913,
+      "views": 10336
+    },
+    {
+      "channel": "Organic Social",
+      "visitors": 588,
+      "views": 1662
+    },
+    {
+      "channel": "Referral",
+      "visitors": 301,
+      "views": 1251
+    },
+    {
+      "channel": "Paid Unknown",
+      "visitors": 200,
+      "views": 558
+    },
+    {
+      "channel": "Email",
+      "visitors": 53,
+      "views": 390
+    },
+    {
+      "channel": "Organic Shopping",
+      "visitors": 33,
+      "views": 155
+    },
+    {
+      "channel": "Paid Video",
+      "visitors": 21,
+      "views": 45
+    },
+    {
+      "channel": "Organic Video",
+      "visitors": 8,
+      "views": 40
+    },
+    {
+      "channel": "Paid Social",
+      "visitors": 1,
+      "views": 1
+    }
   ]
 }

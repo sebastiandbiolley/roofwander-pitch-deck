@@ -523,6 +523,20 @@
     });
   }
 
+  function animateCount(el, target) {
+    var duration = 900;
+    var start = null;
+    var from = 0;
+    function step(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / duration, 1);
+      var ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(ease * target).toLocaleString();
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   function initSharetribeUserCount() {
     var el = document.getElementById('sharetribe-user-count');
     if (!el) return;
@@ -532,10 +546,41 @@
     .then(function (data) {
       if (!data.totalUsers) return;
 
-      // Update main KPI card
-      el.textContent = data.totalUsers;
+      // Update listings + transactions cards with count-up
+      var listingEl = document.getElementById('sharetribe-listing-count');
+      if (listingEl && data.activeListings != null) animateCount(listingEl, data.activeListings);
+      var txEl = document.getElementById('sharetribe-transaction-count');
+      if (txEl && data.acceptedTransactions != null) animateCount(txEl, data.acceptedTransactions);
+
+      // Update main KPI card with count-up
+      animateCount(el, data.totalUsers);
       var card = el.closest('.traction-card');
       if (card) card.setAttribute('aria-label', data.totalUsers + ' users');
+
+      // Populate source labels with dates
+      var stStartMonth = data.timeline && data.timeline.length ? data.timeline[0].month : '';
+      var phStartWeek = data.weeklyTraffic && data.weeklyTraffic.length ? data.weeklyTraffic[0].week : '';
+
+      function fmtSourceDate(dateStr) {
+        if (!dateStr) return '';
+        var p = dateStr.split('-');
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return months[parseInt(p[1], 10) - 1] + ' ' + parseInt(p[0], 10);
+      }
+
+      var stDate = fmtSourceDate(stStartMonth);
+      var phDate = fmtSourceDate(phStartWeek);
+
+      var listingSrc = document.getElementById('sharetribe-listing-source');
+      if (listingSrc) listingSrc.textContent = 'Sharetribe · live';
+      var txSrc = document.getElementById('sharetribe-transaction-source');
+      if (txSrc) txSrc.textContent = 'Sharetribe · live';
+      var userSrc = document.getElementById('sharetribe-user-source');
+      if (userSrc) userSrc.textContent = 'Since ' + stDate + ' · Sharetribe';
+      var reviewSrc = document.getElementById('sharetribe-review-source');
+      if (reviewSrc) reviewSrc.textContent = 'Sharetribe · live';
+      var pvSrc = document.getElementById('posthog-visitor-source');
+      if (pvSrc) pvSrc.textContent = 'Since ' + phDate + ' · PostHog';
 
       // Update owner/renter modules
       var ownerEl = document.getElementById('sharetribe-owner-count');
@@ -543,9 +588,290 @@
       var noteEl = document.getElementById('sharetribe-total-note');
       if (ownerEl) ownerEl.textContent = data.owners;
       if (renterEl) renterEl.textContent = data.renters;
-      if (noteEl) noteEl.innerHTML = 'Total: <strong>' + data.totalUsers + ' users</strong> — live from Sharetribe API.';
+      if (noteEl) noteEl.innerHTML = 'Total: <strong>' + data.totalUsers + ' users</strong> — live from Sharetribe.';
 
-      // Draw monthly line chart
+      // Update review count + panel
+      var reviewEl = document.getElementById('sharetribe-review-count');
+      if (reviewEl && data.totalReviews != null) {
+        animateCount(reviewEl, data.totalReviews);
+        var reviewCard = reviewEl.closest('.traction-card');
+        if (reviewCard) reviewCard.setAttribute('aria-label', data.totalReviews + ' reviews');
+      }
+
+      var reviewIntro = document.getElementById('sharetribe-reviews-intro');
+      var reviewList = document.getElementById('sharetribe-reviews-list');
+      var reviewNote = document.getElementById('sharetribe-reviews-note');
+
+      if (reviewIntro && data.averageRating) {
+        reviewIntro.innerHTML = 'Average rating: <strong>' + data.averageRating + ' / 5</strong> across ' + data.totalReviews + ' reviews.';
+      }
+
+      if (reviewList && data.bestReviews && data.bestReviews.length) {
+        var html = '';
+        for (var ri = 0; ri < data.bestReviews.length; ri++) {
+          var rv = data.bestReviews[ri];
+          var stars = '';
+          for (var s = 0; s < 5; s++) {
+            stars += s < rv.rating ? '\u2605' : '\u2606';
+          }
+          var dateStr = rv.date || '';
+          if (dateStr.length === 10) {
+            var parts = dateStr.split('-');
+            dateStr = parts[2] + '/' + parts[1] + '/' + parts[0];
+          }
+          html += '<div class="traction-review-card">'
+            + '<div class="traction-review-stars">' + stars + '</div>'
+            + '<p class="traction-review-content">' + (rv.content || '').replace(/\n/g, '<br>') + '</p>'
+            + '<div class="traction-review-meta">'
+            + '<span class="traction-review-author">' + (rv.author || 'Anonymous') + '</span>'
+            + (rv.listing ? ' &middot; <span class="traction-review-listing">' + rv.listing + '</span>' : '')
+            + (dateStr ? ' &middot; <span class="traction-review-date">' + dateStr + '</span>' : '')
+            + '</div>'
+            + '</div>';
+        }
+        reviewList.innerHTML = html;
+      }
+
+      if (reviewNote) {
+        reviewNote.innerHTML = 'Showing top reviews — live from Sharetribe.';
+      }
+
+      // Update PostHog unique visitors count + chart
+      var pvEl = document.getElementById('posthog-visitor-count');
+      if (pvEl && data.uniqueVisitors != null) {
+        animateCount(pvEl, data.uniqueVisitors);
+        var pvCard = pvEl.closest('.traction-card');
+        if (pvCard) pvCard.setAttribute('aria-label', data.uniqueVisitors.toLocaleString() + ' unique visitors');
+      }
+
+      var pvIntro = document.getElementById('posthog-visitors-intro');
+      var pvSvg = document.getElementById('posthog-chart');
+      var wt = data.weeklyTraffic;
+
+      if (pvIntro && wt && wt.length) {
+        pvIntro.innerHTML = '<strong>' + data.uniqueVisitors.toLocaleString() + '</strong> unique visitors — weekly breakdown:';
+      }
+
+      if (pvSvg && wt && wt.length) {
+        var cw = 520, ch = 220;
+        var cml = 50, cmr = 20, cmt = 30, cmb = 40;
+        var cpw = cw - cml - cmr, cph = ch - cmt - cmb;
+        var maxUv = 0;
+        for (var ci = 0; ci < wt.length; ci++) {
+          if (wt[ci].uniqueVisitors > maxUv) maxUv = wt[ci].uniqueVisitors;
+        }
+        maxUv = Math.ceil(maxUv / 100) * 100 || 100;
+
+        // Gradient definition
+        var csvg = '<defs><linearGradient id="phGrad" x1="0" y1="0" x2="0" y2="1">'
+          + '<stop offset="0%" stop-color="var(--accent)" stop-opacity="0.35"/>'
+          + '<stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02"/>'
+          + '</linearGradient></defs>';
+
+        // Grid lines
+        for (var cg = 0; cg <= 4; cg++) {
+          var cgy = cmt + (cph / 4) * cg;
+          var cgv = Math.round(maxUv - (maxUv / 4) * cg);
+          csvg += '<line x1="' + cml + '" y1="' + cgy + '" x2="' + (cw - cmr) + '" y2="' + cgy + '" stroke="var(--border)" stroke-width="0.5" opacity="0.4"/>';
+          csvg += '<text x="' + (cml - 8) + '" y="' + (cgy + 4) + '" class="traction-chart-axis-y" text-anchor="end">' + cgv + '</text>';
+        }
+
+        // Build paths + collect dot coords
+        var uvPath = '';
+        var uvArea = '';
+        var dots = [];
+        for (var cj = 0; cj < wt.length; cj++) {
+          var cx = Math.round(cml + (cj / (wt.length - 1)) * cpw);
+          var cy = Math.round(cmt + cph * (1 - wt[cj].uniqueVisitors / maxUv));
+          uvPath += (cj ? ' L ' : 'M ') + cx + ' ' + cy;
+          if (cj === 0) uvArea = 'M ' + cx + ' ' + (ch - cmb) + ' L ' + cx + ' ' + cy;
+          else uvArea += ' L ' + cx + ' ' + cy;
+          if (cj === wt.length - 1) uvArea += ' L ' + cx + ' ' + (ch - cmb) + ' Z';
+          dots.push({ x: cx, y: cy, val: wt[cj].uniqueVisitors, week: wt[cj].week });
+
+          if (wt.length <= 8 || cj % 2 === 0 || cj === wt.length - 1) {
+            var clp = wt[cj].week.split('-');
+            var clbl = clp[2] + '/' + clp[1];
+            csvg += '<text x="' + cx + '" y="' + (ch - cmb + 16) + '" class="traction-chart-axis-x" text-anchor="middle">' + clbl + '</text>';
+          }
+        }
+
+        // Area with gradient
+        csvg += '<path class="ph-chart-area" d="' + uvArea + '" fill="url(#phGrad)"/>';
+
+        // Animated line
+        csvg += '<path class="ph-chart-line" d="' + uvPath + '" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+
+        // Crosshair line (hidden by default)
+        csvg += '<line class="ph-chart-crosshair" id="ph-crosshair" x1="0" y1="' + cmt + '" x2="0" y2="' + (ch - cmb) + '"/>';
+
+        // Interactive dots with staggered pop-in
+        for (var ck = 0; ck < dots.length; ck++) {
+          var delay = 0.8 + ck * 0.05;
+          csvg += '<circle class="ph-chart-dot" cx="' + dots[ck].x + '" cy="' + dots[ck].y
+            + '" r="3.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"'
+            + ' data-ph-idx="' + ck + '" style="animation-delay:' + delay.toFixed(2) + 's"/>';
+        }
+
+        pvSvg.innerHTML = csvg;
+
+        // Measure line length for draw-in animation
+        var lineEl = pvSvg.querySelector('.ph-chart-line');
+        if (lineEl) {
+          var lineLen = lineEl.getTotalLength();
+          pvSvg.style.setProperty('--ph-line-len', lineLen);
+        }
+
+        // Tooltip element
+        var wrap = pvSvg.closest('.traction-chart-wrap');
+        var tooltip = wrap && wrap.querySelector('.ph-chart-tooltip');
+        if (!tooltip && wrap) {
+          tooltip = document.createElement('div');
+          tooltip.className = 'ph-chart-tooltip';
+          wrap.appendChild(tooltip);
+        }
+        var crosshair = pvSvg.querySelector('#ph-crosshair');
+
+        // Hover interactions
+        var svgDots = pvSvg.querySelectorAll('.ph-chart-dot');
+        svgDots.forEach(function (dot) {
+          var idx = parseInt(dot.getAttribute('data-ph-idx'), 10);
+          var d = dots[idx];
+
+          dot.addEventListener('mouseenter', function () {
+            if (crosshair) { crosshair.setAttribute('x1', d.x); crosshair.setAttribute('x2', d.x); crosshair.classList.add('is-visible'); }
+            if (tooltip && wrap) {
+              var dp = d.week.split('-');
+              tooltip.textContent = d.val.toLocaleString() + ' visitors — ' + dp[2] + '/' + dp[1];
+              tooltip.classList.add('is-visible');
+              var svgRect = pvSvg.getBoundingClientRect();
+              var wrapRect = wrap.getBoundingClientRect();
+              var tx = (d.x / cw) * svgRect.width + svgRect.left - wrapRect.left;
+              var ty = (d.y / ch) * svgRect.height + svgRect.top - wrapRect.top;
+              tooltip.style.left = tx + 'px';
+              tooltip.style.top = ty + 'px';
+            }
+          });
+
+          dot.addEventListener('mouseleave', function () {
+            if (crosshair) crosshair.classList.remove('is-visible');
+            if (tooltip) tooltip.classList.remove('is-visible');
+          });
+        });
+      }
+
+      // Render channel bar chart + table from PostHog
+      var chIntro = document.getElementById('posthog-channels-intro');
+      var chSvg = document.getElementById('posthog-channels-chart');
+      var chTbody = document.getElementById('posthog-channels-tbody');
+      var chData = data.channels;
+
+      if (chIntro && chData && chData.length) {
+        var chStartLabel = phDate ? 'since <strong>' + phDate + '</strong>' : '';
+        chIntro.innerHTML = 'Traffic by channel ' + chStartLabel + ' — <strong>live from PostHog</strong>:';
+      }
+
+      if (chTbody && chData && chData.length) {
+        var thtml = '';
+        for (var ti = 0; ti < chData.length; ti++) {
+          thtml += '<tr><td>' + chData[ti].channel + '</td>'
+            + '<td>' + chData[ti].visitors.toLocaleString() + '</td>'
+            + '<td>' + chData[ti].views.toLocaleString() + '</td></tr>';
+        }
+        chTbody.innerHTML = thtml;
+      }
+
+      if (chSvg && chData && chData.length) {
+        var bw = 480, bh = 250;
+        var bml = 55, bmr = 20, bmt = 20, bmb = 70;
+        chSvg.setAttribute('viewBox', '0 0 ' + bw + ' ' + bh);
+        var bpw = bw - bml - bmr, bph = bh - bmt - bmb;
+        var maxCh = 0;
+        for (var bi = 0; bi < chData.length; bi++) {
+          if (chData[bi].visitors > maxCh) maxCh = chData[bi].visitors;
+        }
+        maxCh = Math.ceil(maxCh / 100) * 100 || 100;
+
+        var barCount = chData.length;
+        var barGap = 12;
+        var barW = Math.min(40, Math.floor((bpw - barGap * (barCount + 1)) / barCount));
+        var totalBarsW = barCount * barW + (barCount - 1) * barGap;
+        var barStartX = bml + (bpw - totalBarsW) / 2;
+
+        // Gradient
+        var bsvg = '<defs><linearGradient id="chBarGrad" x1="0" y1="0" x2="0" y2="1">'
+          + '<stop offset="0%" stop-color="var(--accent)" stop-opacity="1"/>'
+          + '<stop offset="100%" stop-color="var(--accent)" stop-opacity="0.5"/>'
+          + '</linearGradient></defs>';
+
+        // Grid lines
+        for (var bg = 0; bg <= 4; bg++) {
+          var bgy = bmt + (bph / 4) * bg;
+          var bgv = Math.round(maxCh - (maxCh / 4) * bg);
+          var bgLabel = bgv >= 1000 ? (bgv / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(bgv);
+          bsvg += '<line x1="' + bml + '" y1="' + bgy + '" x2="' + (bw - bmr) + '" y2="' + bgy + '" stroke="var(--border)" stroke-width="0.5" opacity="0.4"/>';
+          bsvg += '<text x="' + (bml - 8) + '" y="' + (bgy + 4) + '" class="traction-chart-axis-y" text-anchor="end">' + bgLabel + '</text>';
+        }
+
+        // Bars with grow animation
+        for (var bj = 0; bj < barCount; bj++) {
+          var bx = barStartX + bj * (barW + barGap);
+          var barH = Math.max(1, (chData[bj].visitors / maxCh) * bph);
+          var by = bmt + bph - barH;
+          var bDelay = (bj * 0.1).toFixed(2);
+
+          bsvg += '<rect class="ch-chart-bar" x="' + bx + '" y="' + by + '" width="' + barW + '" height="' + barH
+            + '" rx="3" fill="url(#chBarGrad)" style="animation-delay:' + bDelay + 's"'
+            + ' data-ch-idx="' + bj + '"/>';
+
+          // Value label on top of bar
+          var valLabel = chData[bj].visitors >= 1000
+            ? (chData[bj].visitors / 1000).toFixed(1).replace(/\.0$/, '') + 'k'
+            : String(chData[bj].visitors);
+          bsvg += '<text class="ch-chart-val" x="' + (bx + barW / 2) + '" y="' + (by - 6)
+            + '" text-anchor="middle" style="animation-delay:' + bDelay + 's">' + valLabel + '</text>';
+
+          // X-axis label (rotated to avoid overlap)
+          var chLabelMap = {
+            'Paid Search': 'Paid Search', 'Organic Search': 'Organic', 'Direct': 'Direct',
+            'Organic Social': 'Social', 'Referral': 'Referral', 'Paid Unknown': 'Paid Unk.',
+            'Email': 'Email', 'Organic Shopping': 'Shopping', 'Paid Video': 'Paid Video',
+            'Organic Video': 'Org. Video', 'Paid Social': 'Paid Social'
+          };
+          var chLabel = chLabelMap[chData[bj].channel] || chData[bj].channel;
+          bsvg += '<text x="' + (bx + barW / 2) + '" y="' + (bh - bmb + 14) + '" class="traction-chart-axis-x ch-chart-xlabel" text-anchor="end"'
+            + ' transform="rotate(-40,' + (bx + barW / 2) + ',' + (bh - bmb + 14) + ')">' + chLabel + '</text>';
+        }
+
+        chSvg.innerHTML = bsvg;
+
+        // Tooltip for bars
+        var chWrap = chSvg.closest('.traction-chart-wrap');
+        var chTip = chWrap && chWrap.querySelector('.ph-chart-tooltip');
+        if (!chTip && chWrap) { chTip = document.createElement('div'); chTip.className = 'ph-chart-tooltip'; chWrap.appendChild(chTip); }
+
+        chSvg.querySelectorAll('.ch-chart-bar').forEach(function (bar) {
+          var idx = parseInt(bar.getAttribute('data-ch-idx'), 10);
+          var cd = chData[idx];
+          bar.addEventListener('mouseenter', function () {
+            if (chTip && chWrap) {
+              chTip.textContent = cd.channel + ': ' + cd.visitors.toLocaleString() + ' visitors, ' + cd.views.toLocaleString() + ' views';
+              chTip.classList.add('is-visible');
+              var sr = chSvg.getBoundingClientRect();
+              var wr = chWrap.getBoundingClientRect();
+              var bxc = parseFloat(bar.getAttribute('x')) + parseFloat(bar.getAttribute('width')) / 2;
+              var byc = parseFloat(bar.getAttribute('y'));
+              chTip.style.left = ((bxc / bw) * sr.width + sr.left - wr.left) + 'px';
+              chTip.style.top = ((byc / bh) * sr.height + sr.top - wr.top) + 'px';
+            }
+          });
+          bar.addEventListener('mouseleave', function () {
+            if (chTip) chTip.classList.remove('is-visible');
+          });
+        });
+      }
+
+      // Draw monthly line chart (owners vs renters)
       var svg = document.getElementById('sharetribe-chart');
       if (!svg || !data.timeline || !data.timeline.length) return;
 
@@ -561,75 +887,105 @@
       var mL = 50, mR = 20, mT = 30, mB = 40;
       var plotW = w - mL - mR;
       var plotH = h - mT - mB;
-      var html = '';
       var pts = tl.length;
 
-      // Horizontal grid lines
+      // Gradients
+      var html = '<defs>'
+        + '<linearGradient id="stOwnerGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)" stop-opacity="0.3"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02"/></linearGradient>'
+        + '<linearGradient id="stRenterGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.3"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0.02"/></linearGradient>'
+        + '</defs>';
+
+      // Grid
       for (var g = 0; g <= 4; g++) {
         var gy = mT + (plotH / 4) * g;
         var gv = Math.round(maxVal - (maxVal / 4) * g);
-        html += '<line x1="' + mL + '" y1="' + gy + '" x2="' + (w - mR) + '" y2="' + gy + '" stroke="var(--border)" stroke-width="0.5" opacity="0.5"/>';
+        html += '<line x1="' + mL + '" y1="' + gy + '" x2="' + (w - mR) + '" y2="' + gy + '" stroke="var(--border)" stroke-width="0.5" opacity="0.4"/>';
         html += '<text x="' + (mL - 8) + '" y="' + (gy + 4) + '" class="traction-chart-axis-y" text-anchor="end">' + gv + '</text>';
       }
 
-      // Axes
-      html += '<line x1="' + mL + '" y1="' + mT + '" x2="' + mL + '" y2="' + (h - mB) + '" stroke="var(--border)" stroke-width="1"/>';
-      html += '<line x1="' + mL + '" y1="' + (h - mB) + '" x2="' + (w - mR) + '" y2="' + (h - mB) + '" stroke="var(--border)" stroke-width="1"/>';
-
       // Legend
-      html += '<line x1="' + (mL + 10) + '" y1="14" x2="' + (mL + 26) + '" y2="14" stroke="var(--accent)" stroke-width="2"/>';
+      html += '<line x1="' + (mL + 10) + '" y1="14" x2="' + (mL + 26) + '" y2="14" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>';
       html += '<text x="' + (mL + 30) + '" y="17" class="traction-chart-axis-y" style="font-size:10px">Owners</text>';
-      html += '<line x1="' + (mL + 90) + '" y1="14" x2="' + (mL + 106) + '" y2="14" stroke="#2563eb" stroke-width="2"/>';
+      html += '<line x1="' + (mL + 90) + '" y1="14" x2="' + (mL + 106) + '" y2="14" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>';
       html += '<text x="' + (mL + 110) + '" y="17" class="traction-chart-axis-y" style="font-size:10px">Renters</text>';
 
-      // Build line paths and area fills
-      var ownerPath = '';
-      var renterPath = '';
-      var ownerArea = '';
-      var renterArea = '';
+      // Build paths + collect dots
+      var ownerPath = '', renterPath = '', ownerArea = '', renterArea = '';
+      var stDots = [];
       for (var j = 0; j < pts; j++) {
         var x = Math.round(mL + (j / (pts - 1)) * plotW);
         var yO = Math.round(mT + plotH * (1 - tl[j].owner / maxVal));
         var yR = Math.round(mT + plotH * (1 - tl[j].renter / maxVal));
         ownerPath += (j ? ' L ' : 'M ') + x + ' ' + yO;
         renterPath += (j ? ' L ' : 'M ') + x + ' ' + yR;
-        if (j === 0) {
-          ownerArea = 'M ' + x + ' ' + (h - mB) + ' L ' + x + ' ' + yO;
-          renterArea = 'M ' + x + ' ' + (h - mB) + ' L ' + x + ' ' + yR;
-        } else {
-          ownerArea += ' L ' + x + ' ' + yO;
-          renterArea += ' L ' + x + ' ' + yR;
-        }
-        if (j === pts - 1) {
-          ownerArea += ' L ' + x + ' ' + (h - mB) + ' Z';
-          renterArea += ' L ' + x + ' ' + (h - mB) + ' Z';
-        }
+        if (j === 0) { ownerArea = 'M ' + x + ' ' + (h - mB) + ' L ' + x + ' ' + yO; renterArea = 'M ' + x + ' ' + (h - mB) + ' L ' + x + ' ' + yR; }
+        else { ownerArea += ' L ' + x + ' ' + yO; renterArea += ' L ' + x + ' ' + yR; }
+        if (j === pts - 1) { ownerArea += ' L ' + x + ' ' + (h - mB) + ' Z'; renterArea += ' L ' + x + ' ' + (h - mB) + ' Z'; }
+        stDots.push({ x: x, yO: yO, yR: yR, owner: tl[j].owner, renter: tl[j].renter, month: tl[j].month });
 
-        // Month labels (skip some if too many)
         if (pts <= 7 || j % 2 === 0 || j === pts - 1) {
           var parts = tl[j].month.split('-');
-          var label = parts[1] + '/' + parts[0].slice(2);
-          html += '<text x="' + x + '" y="' + (h - mB + 16) + '" class="traction-chart-axis-x" text-anchor="middle">' + label + '</text>';
+          html += '<text x="' + x + '" y="' + (h - mB + 16) + '" class="traction-chart-axis-x" text-anchor="middle">' + parts[1] + '/' + parts[0].slice(2) + '</text>';
         }
       }
 
-      // Area fills
-      html += '<path d="' + ownerArea + '" fill="var(--accent)" opacity="0.1"/>';
-      html += '<path d="' + renterArea + '" fill="#2563eb" opacity="0.1"/>';
-      // Lines
-      html += '<path d="' + ownerPath + '" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
-      html += '<path d="' + renterPath + '" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+      // Areas with gradient
+      html += '<path class="ph-chart-area" d="' + ownerArea + '" fill="url(#stOwnerGrad)"/>';
+      html += '<path class="ph-chart-area" d="' + renterArea + '" fill="url(#stRenterGrad)" style="animation-delay:0.15s"/>';
 
-      // Dots
-      for (var k = 0; k < pts; k++) {
-        var dx = Math.round(mL + (k / (pts - 1)) * plotW);
-        var dyO = Math.round(mT + plotH * (1 - tl[k].owner / maxVal));
-        var dyR = Math.round(mT + plotH * (1 - tl[k].renter / maxVal));
-        html += '<circle cx="' + dx + '" cy="' + dyO + '" r="3" fill="var(--accent)"/>';
-        html += '<circle cx="' + dx + '" cy="' + dyR + '" r="3" fill="#2563eb"/>';
+      // Animated lines
+      html += '<path class="ph-chart-line" d="' + ownerPath + '" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+      html += '<path class="ph-chart-line" d="' + renterPath + '" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation-delay:0.15s"/>';
+
+      // Crosshair
+      html += '<line class="ph-chart-crosshair" id="st-crosshair" x1="0" y1="' + mT + '" x2="0" y2="' + (h - mB) + '"/>';
+
+      // Interactive dots
+      for (var k = 0; k < stDots.length; k++) {
+        var sd = 0.8 + k * 0.04;
+        html += '<circle class="ph-chart-dot" cx="' + stDots[k].x + '" cy="' + stDots[k].yO + '" r="3.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" data-st-idx="' + k + '" data-st-series="owner" style="animation-delay:' + sd.toFixed(2) + 's"/>';
+        html += '<circle class="ph-chart-dot" cx="' + stDots[k].x + '" cy="' + stDots[k].yR + '" r="3.5" fill="#2563eb" stroke="var(--surface)" stroke-width="2" data-st-idx="' + k + '" data-st-series="renter" style="animation-delay:' + (sd + 0.03).toFixed(2) + 's"/>';
       }
 
       svg.innerHTML = html;
+
+      // Measure line lengths for draw-in
+      var stLines = svg.querySelectorAll('.ph-chart-line');
+      stLines.forEach(function (ln) {
+        var len = ln.getTotalLength();
+        ln.style.setProperty('--ph-line-len', len);
+      });
+
+      // Tooltip for Sharetribe chart
+      var stWrap = svg.closest('.traction-chart-wrap');
+      var stTip = stWrap && stWrap.querySelector('.ph-chart-tooltip');
+      if (!stTip && stWrap) { stTip = document.createElement('div'); stTip.className = 'ph-chart-tooltip'; stWrap.appendChild(stTip); }
+      var stCross = svg.querySelector('#st-crosshair');
+
+      svg.querySelectorAll('.ph-chart-dot').forEach(function (dot) {
+        var idx = parseInt(dot.getAttribute('data-st-idx'), 10);
+        var series = dot.getAttribute('data-st-series');
+        var sd = stDots[idx];
+
+        dot.addEventListener('mouseenter', function () {
+          if (stCross) { stCross.setAttribute('x1', sd.x); stCross.setAttribute('x2', sd.x); stCross.classList.add('is-visible'); }
+          if (stTip && stWrap) {
+            var val = series === 'owner' ? sd.owner : sd.renter;
+            var lbl = series === 'owner' ? 'owners' : 'renters';
+            stTip.textContent = val + ' ' + lbl + ' — ' + sd.month;
+            stTip.classList.add('is-visible');
+            var sr = svg.getBoundingClientRect();
+            var wr = stWrap.getBoundingClientRect();
+            var dy = series === 'owner' ? sd.yO : sd.yR;
+            stTip.style.left = ((sd.x / w) * sr.width + sr.left - wr.left) + 'px';
+            stTip.style.top = ((dy / h) * sr.height + sr.top - wr.top) + 'px';
+          }
+        });
+        dot.addEventListener('mouseleave', function () {
+          if (stCross) stCross.classList.remove('is-visible');
+          if (stTip) stTip.classList.remove('is-visible');
+        });
+      });
     })
     .catch(function () {
       // Keep static fallback

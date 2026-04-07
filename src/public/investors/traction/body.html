@@ -11,12 +11,14 @@
     <div class="traction-grid">
 <!-- DATA:kpis:START -->
       <article class="traction-card">
-        <div class="traction-value">150+</div>
+        <div class="traction-value" id="sharetribe-listing-count">164</div>
         <div class="traction-label">active tents</div>
+        <div class="traction-source" id="sharetribe-listing-source">Sharetribe API</div>
       </article>
       <article class="traction-card">
-        <div class="traction-value">13</div>
+        <div class="traction-value" id="sharetribe-transaction-count">23</div>
         <div class="traction-label">transactions</div>
+        <div class="traction-source" id="sharetribe-transaction-source">Sharetribe API</div>
       </article>
       <article class="traction-card" data-traction-panel="growth-signups" role="button" tabindex="0" aria-label="310 users">
         <span class="traction-card-info rw-icon" aria-hidden="true"><svg
@@ -34,31 +36,23 @@
 </svg></span>
         <div class="traction-value" id="sharetribe-user-count">310</div>
         <div class="traction-label">users</div>
+        <div class="traction-source" id="sharetribe-user-source">Sharetribe API</div>
       </article>
-      <article class="traction-card">
-        <div class="traction-value">9</div>
+      <article class="traction-card" data-traction-panel="growth-reviews" role="button" tabindex="0" aria-label="11 reviews">
+        <span class="traction-card-info rw-icon" aria-hidden="true" data-rw-icon="info"></span>
+        <div class="traction-value" id="sharetribe-review-count">11</div>
         <div class="traction-label">reviews</div>
+        <div class="traction-source" id="sharetribe-review-source">Sharetribe API</div>
       </article>
       <article class="traction-card">
         <div class="traction-value">5</div>
         <div class="traction-label">brand partners</div>
       </article>
-      <article class="traction-card" data-traction-panel="growth-visitors" role="button" tabindex="0" aria-label="18.5k+ clicks">
-        <span class="traction-card-info rw-icon" aria-hidden="true"><svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <circle cx="12" cy="12" r="10" />
-  <path d="M12 16v-4" />
-  <path d="M12 8h.01" />
-</svg></span>
-        <div class="traction-value">18.5k+</div>
-        <div class="traction-label">clicks</div>
+      <article class="traction-card" data-traction-panel="growth-visitors" role="button" tabindex="0" aria-label="6,451 unique visitors">
+        <span class="traction-card-info rw-icon" aria-hidden="true" data-rw-icon="info"></span>
+        <div class="traction-value" id="posthog-visitor-count">6,451</div>
+        <div class="traction-label">unique visitors</div>
+        <div class="traction-source" id="posthog-visitor-source">PostHog API</div>
       </article>
 <!-- DATA:kpis:END -->
     </div>
@@ -78,51 +72,13 @@
 </svg></span></button>
         <div class="traction-detail-panel" id="panel-growth-visitors" aria-hidden="true">
 <!-- DATA:visitors-panel:START -->
-          <h3 class="traction-detail-title">Growth visitors</h3>
+          <h3 class="traction-detail-title">Unique visitors — Live from PostHog</h3>
           <div class="traction-dd-content">
-            <p class="traction-dd-intro">Weekly website traffic, from <strong>29 December 2025</strong> to <strong>24 March 2026</strong>:</p>
+            <p class="traction-dd-intro" id="posthog-visitors-intro">Loading live data…</p>
             <div class="traction-chart-wrap">
-              <svg class="traction-chart" viewBox="0 0 520 220" preserveAspectRatio="xMidYMid meet">
-                  <defs><linearGradient id="chartGradientVisitor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
-                  <line x1="55" y1="25" x2="55" y2="175" stroke="var(--border)" stroke-width="1"/>
-                  <line x1="55" y1="175" x2="480" y2="175" stroke="var(--border)" stroke-width="1"/>
-                  <text x="47" y="30" class="traction-chart-axis-y" text-anchor="end">1k</text>
-                  <text x="47" y="103" class="traction-chart-axis-y" text-anchor="end">500</text>
-                  <text x="47" y="175" class="traction-chart-axis-y" text-anchor="end">0</text>
-                  <path class="traction-chart-area" d="M 55 173 L 90 163 L 126 159 L 161 137 L 197 132 L 232 127 L 268 94 L 303 105 L 338 59 L 374 49 L 409 52 L 445 71 L 480 132 L 480 175 L 55 175 Z"/>
-                  <path class="traction-chart-line" d="M 55 173 L 90 163 L 126 159 L 161 137 L 197 132 L 232 127 L 268 94 L 303 105 L 338 59 L 374 49 L 409 52 L 445 71 L 480 132"/>
-                  <text x="55" y="192" class="traction-chart-axis-x" text-anchor="middle">29 Dec</text>
-                  <text x="126" y="192" class="traction-chart-axis-x" text-anchor="middle">12 Jan</text>
-                  <text x="197" y="192" class="traction-chart-axis-x" text-anchor="middle">26 Jan</text>
-                  <text x="268" y="192" class="traction-chart-axis-x" text-anchor="middle">9 Feb</text>
-                  <text x="338" y="192" class="traction-chart-axis-x" text-anchor="middle">23 Feb</text>
-                  <text x="409" y="192" class="traction-chart-axis-x" text-anchor="middle">9 Mar</text>
-                  <text x="480" y="192" class="traction-chart-axis-x" text-anchor="middle">23 Mar</text>
-                </svg>
+              <svg class="traction-chart" id="posthog-chart" viewBox="0 0 520 220" preserveAspectRatio="xMidYMid meet">
+              </svg>
             </div>
-            <div class="traction-dd-table-wrap">
-              <table class="traction-dd-table traction-dd-table--compact">
-                <thead><tr><th>Period</th><th>Pageviews</th><th>Unique visitors</th></tr></thead>
-                <tbody>
-                  <tr><td>29 Dec – 4 Jan</td><td>117</td><td>15</td></tr>
-                  <tr><td>5–11 Jan</td><td>419</td><td>82</td></tr>
-                  <tr><td>12–18 Jan</td><td>588</td><td>110</td></tr>
-                  <tr><td>19–25 Jan</td><td>956</td><td>253</td></tr>
-                  <tr><td>26 Jan – 1 Feb</td><td>1,395</td><td>287</td></tr>
-                  <tr><td>2–8 Feb</td><td>1,610</td><td>323</td></tr>
-                  <tr><td>9–15 Feb</td><td>2,159</td><td>538</td></tr>
-                  <tr><td>16–22 Feb</td><td>1,818</td><td>464</td></tr>
-                  <tr><td>23 Feb – 1 Mar</td><td>2,864</td><td>770</td></tr>
-                  <tr><td>2–8 Mar</td><td>3,680</td><td>839</td></tr>
-                  <tr><td>9–15 Mar</td><td>3,796</td><td>817</td></tr>
-                  <tr><td>16–22 Mar</td><td>3,671</td><td>691</td></tr>
-                  <tr><td>23–24 Mar</td><td>1,250</td><td>289</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <p class="traction-dd-note">
-              Traffic has grown steadily since launch, with unique visitors reaching 839.
-            </p>
           </div>
 <!-- DATA:visitors-panel:END -->
         </div>
@@ -148,6 +104,16 @@
             <p class="traction-dd-note" id="sharetribe-total-note">Loading live data…</p>
           </div>
 <!-- DATA:signups-panel:END -->
+        </div>
+        <div class="traction-detail-panel" id="panel-growth-reviews" aria-hidden="true">
+<!-- DATA:reviews-panel:START -->
+          <h3 class="traction-detail-title">Reviews — Live from Sharetribe</h3>
+          <div class="traction-dd-content">
+            <p class="traction-dd-intro" id="sharetribe-reviews-intro">Loading live data…</p>
+            <div class="traction-reviews-list" id="sharetribe-reviews-list"></div>
+            <p class="traction-dd-note" id="sharetribe-reviews-note"></p>
+          </div>
+<!-- DATA:reviews-panel:END -->
         </div>
       </div>
     </div>
@@ -190,46 +156,15 @@
             <p class="traction-dd-sub">Closing note</p>
             <p class="traction-dd-intro">The goal is not only to grow traffic, but to improve traffic quality, conversion, and marketplace efficiency over time.</p>
 <!-- DATA:channels-data:START -->
-            <p class="traction-dd-intro">Traffic by channel, from <strong>29 December 2025</strong> to <strong>24 March 2026</strong>:</p>
+            <p class="traction-dd-intro" id="posthog-channels-intro">Loading live channel data…</p>
             <div class="traction-chart-wrap">
-              <svg class="traction-chart" viewBox="0 0 480 220" preserveAspectRatio="xMidYMid meet">
-                  <line x1="50" y1="25" x2="50" y2="175" stroke="var(--border)" stroke-width="1"/>
-                  <line x1="50" y1="175" x2="450" y2="175" stroke="var(--border)" stroke-width="1"/>
-                  <text x="42" y="30" class="traction-chart-axis-y" text-anchor="end">2.5k</text>
-                  <text x="42" y="103" class="traction-chart-axis-y" text-anchor="end">1.2k</text>
-                  <text x="42" y="175" class="traction-chart-axis-y" text-anchor="end">0</text>
-                  <rect x="60" y="29" width="30" height="146" class="traction-chart-bar"/>
-                  <text x="75" y="192" class="traction-chart-axis-x" text-anchor="middle">Paid</text>
-                  <rect x="110" y="96" width="30" height="79" class="traction-chart-bar"/>
-                  <text x="125" y="192" class="traction-chart-axis-x" text-anchor="middle">Organic</text>
-                  <rect x="160" y="136" width="30" height="39" class="traction-chart-bar"/>
-                  <text x="175" y="192" class="traction-chart-axis-x" text-anchor="middle">Direct</text>
-                  <rect x="210" y="147" width="30" height="28" class="traction-chart-bar"/>
-                  <text x="225" y="192" class="traction-chart-axis-x" text-anchor="middle">Social</text>
-                  <rect x="260" y="160" width="30" height="15" class="traction-chart-bar"/>
-                  <text x="275" y="192" class="traction-chart-axis-x" text-anchor="middle">Referral</text>
-                  <rect x="310" y="165" width="30" height="10" class="traction-chart-bar"/>
-                  <text x="325" y="192" class="traction-chart-axis-x" text-anchor="middle">Paid Unk</text>
-                  <rect x="360" y="174" width="30" height="1" class="traction-chart-bar"/>
-                  <text x="375" y="192" class="traction-chart-axis-x" text-anchor="middle">Email</text>
-                  <rect x="410" y="174" width="30" height="1" class="traction-chart-bar"/>
-                  <text x="425" y="192" class="traction-chart-axis-x" text-anchor="middle">Shop</text>
-                </svg>
+              <svg class="traction-chart" id="posthog-channels-chart" viewBox="0 0 480 220" preserveAspectRatio="xMidYMid meet">
+              </svg>
             </div>
             <div class="traction-dd-table-wrap">
               <table class="traction-dd-table">
                 <thead><tr><th>Channel</th><th>Visitors</th><th>Views</th></tr></thead>
-                <tbody>
-                  <tr><td>Paid Search</td><td>2,433</td><td>11,080</td></tr>
-                  <tr><td>Organic Search</td><td>1,313</td><td>5,377</td></tr>
-                  <tr><td>Direct</td><td>646</td><td>7,906</td></tr>
-                  <tr><td>Organic Social</td><td>466</td><td>1,190</td></tr>
-                  <tr><td>Referral</td><td>245</td><td>1,074</td></tr>
-                  <tr><td>Paid Unknown</td><td>168</td><td>438</td></tr>
-                  <tr><td>Email</td><td>21</td><td>104</td></tr>
-                  <tr><td>Organic Shopping</td><td>20</td><td>129</td></tr>
-                  <tr><td>Paid Video</td><td>17</td><td>40</td></tr>
-                  <tr><td>Organic Video</td><td>8</td><td>40</td></tr>
+                <tbody id="posthog-channels-tbody">
                 </tbody>
               </table>
             </div>
@@ -237,82 +172,7 @@
           </div>
         </div>
       </div>
-      <div class="traction-dd" data-tdd="google-search">
-        <button class="traction-dd-header" type="button" aria-expanded="false">
-          <span class="traction-dd-title">Google Search</span>
-          <span class="traction-dd-icon rw-icon" aria-hidden="true"><svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="m6 9 6 6 6-6" />
-</svg></span>
-        </button>
-        <div class="traction-dd-body" aria-hidden="true">
-          <div class="traction-dd-content">
-<!-- DATA:search-data:START -->
-            <p class="traction-dd-intro">Weekly Google Search metrics, from <strong>22 December 2025</strong> to <strong>16 March 2026</strong>:</p>
-            <div class="traction-chart-wrap">
-              <svg class="traction-chart" viewBox="0 0 520 220" preserveAspectRatio="xMidYMid meet">
-                  <line x1="55" y1="25" x2="55" y2="175" stroke="var(--border)" stroke-width="1"/>
-                  <line x1="55" y1="175" x2="480" y2="175" stroke="var(--border)" stroke-width="1"/>
-                  <text x="47" y="30" class="traction-chart-axis-y" text-anchor="end">150</text>
-                  <text x="47" y="103" class="traction-chart-axis-y" text-anchor="end">75</text>
-                  <text x="47" y="175" class="traction-chart-axis-y" text-anchor="end">0</text>
-                  <text x="488" y="30" class="traction-chart-axis-y" text-anchor="start" fill="#2563eb">5k</text>
-                  <text x="488" y="103" class="traction-chart-axis-y" text-anchor="start" fill="#2563eb">2.5k</text>
-                  <text x="488" y="175" class="traction-chart-axis-y" text-anchor="start" fill="#2563eb">0</text>
-                  <path class="traction-chart-line" d="M 55 167 L 90 152 L 126 129 L 161 121 L 197 107 L 232 99 L 268 86 L 303 84 L 338 83 L 374 73 L 409 53 L 445 25 L 480 40"/>
-                  <path class="traction-chart-line traction-chart-line--impressions" d="M 55 164 L 90 152 L 126 142 L 161 141 L 197 130 L 232 123 L 268 123 L 303 130 L 338 111 L 374 24 L 409 27 L 445 50 L 480 67"/>
-                  <text x="55" y="192" class="traction-chart-axis-x" text-anchor="middle">22 Dec</text>
-                  <text x="126" y="192" class="traction-chart-axis-x" text-anchor="middle">5 Jan</text>
-                  <text x="197" y="192" class="traction-chart-axis-x" text-anchor="middle">19 Jan</text>
-                  <text x="268" y="192" class="traction-chart-axis-x" text-anchor="middle">2 Feb</text>
-                  <text x="338" y="192" class="traction-chart-axis-x" text-anchor="middle">16 Feb</text>
-                  <text x="409" y="192" class="traction-chart-axis-x" text-anchor="middle">2 Mar</text>
-                  <text x="480" y="192" class="traction-chart-axis-x" text-anchor="middle">16 Mar</text>
-                  <rect x="340" y="6" width="12" height="3" fill="var(--accent)"/>
-                  <text x="356" y="11" class="traction-chart-axis-y" style="font-size:10px">Clicks</text>
-                  <rect x="410" y="6" width="12" height="3" fill="#2563eb"/>
-                  <text x="426" y="11" class="traction-chart-axis-y" style="font-size:10px">Impressions</text>
-                </svg>
-            </div>
-            <div class="traction-dd-table-wrap">
-              <table class="traction-dd-table traction-dd-table--compact">
-                <thead><tr><th>Period</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                <tbody>
-                  <tr><td>22 Dec</td><td>8</td><td>381</td></tr>
-                  <tr><td>29 Dec</td><td>23</td><td>777</td></tr>
-                  <tr><td>5 Jan</td><td>46</td><td>1,118</td></tr>
-                  <tr><td>12 Jan</td><td>54</td><td>1,138</td></tr>
-                  <tr><td>19 Jan</td><td>68</td><td>1,503</td></tr>
-                  <tr><td>26 Jan</td><td>76</td><td>1,727</td></tr>
-                  <tr><td>2 Feb</td><td>89</td><td>1,729</td></tr>
-                  <tr><td>9 Feb</td><td>91</td><td>1,489</td></tr>
-                  <tr><td>16 Feb</td><td>92</td><td>2,137</td></tr>
-                  <tr><td>23 Feb</td><td>102</td><td>5,047</td></tr>
-                  <tr><td>2 Mar</td><td>122</td><td>4,920</td></tr>
-                  <tr><td>9 Mar</td><td>150</td><td>4,173</td></tr>
-                  <tr><td>16 Mar</td><td>135</td><td>3,591</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <p class="traction-dd-note">
-              Combined search traffic shows strong intent for rooftop tent–related queries across European markets.
-            </p>
-<!-- DATA:search-data:END -->
-          </div>
-        </div>
-      </div>
     </div>
-
-    <p class="traction-caption">
-      SEO visibility is ramping as pages progressively index across European markets.
-    </p>
   </div>
 </section>
 
