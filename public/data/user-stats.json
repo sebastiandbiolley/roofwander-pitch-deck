@@ -1,6 +1,6 @@
 {
-  "totalUsers": 378,
-  "owners": 258,
+  "totalUsers": 379,
+  "owners": 259,
   "renters": 120,
   "timeline": [
     {
@@ -65,7 +65,7 @@
     },
     {
       "month": "2026-04",
-      "owner": 34,
+      "owner": 35,
       "renter": 5
     }
   ]
